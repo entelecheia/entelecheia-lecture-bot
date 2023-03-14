@@ -1,0 +1,32 @@
+{
+    "name": "base-template",
+    "version": "1.0.6",
+    "description": "A template for CI/CD with GitHub Actions",
+    "author": "entelecheia",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/entelecheia/base-template.git"
+    },
+    "keywords": [
+        "GitHub",
+        "Actions",
+        "Template",
+        "CI",
+        "CD"
+    ],
+    "bugs": {
+        "url": "https://github.com/entelecheia/base-template/issues"
+    },
+    "homepage": "https://github.com/entelecheia/base-template#readme",
+    "devDependencies": {
+        "@semantic-release/changelog": "^6.0.2",
+        "@semantic-release/commit-analyzer": "^9.0.2",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/github": "^8.0.7",
+        "@semantic-release/npm": "^9.0.2",
+        "@semantic-release/release-notes-generator": "^10.0.3",
+        "conventional-changelog-conventionalcommits": "^5.0.0",
+        "semantic-release": "^20.1.0"
+    }
+}

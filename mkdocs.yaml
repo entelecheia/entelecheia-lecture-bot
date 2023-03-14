@@ -1,0 +1,13 @@
+site_name: Base Template
+site_url: "https://entelecheia.github.io/base-template/"
+site_description: "Base Template for CI/CD with MkDocs and Semantic Release"
+site_author: entelecheia
+docs_dir: docs/
+repo_name: entelecheia/base-template
+repo_url: "https://github.com/entelecheia/base-template"
+nav:
+  - Home: index.md
+theme:
+  name: material
+  palette:
+    scheme: slate
