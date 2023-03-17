@@ -65,3 +65,7 @@ Browser.runtime.onInstalled.addListener((details) => {
     Browser.runtime.openOptionsPage()
   }
 })
+
+Browser.action.onClicked.addListener(() => {
+  Browser.tabs.create({ url: 'https://lecture.entelecheia.ai' })
+})

@@ -4,7 +4,6 @@ import * as dotenv from 'dotenv'
 import esbuild from 'esbuild'
 import postcssPlugin from 'esbuild-style-plugin'
 import fs from 'fs-extra'
-import process from 'node:process'
 import tailwindcss from 'tailwindcss'
 
 dotenv.config()
@@ -30,7 +29,6 @@ async function runEsbuild() {
     legalComments: 'none',
     define: {
       'process.env.NODE_ENV': '"production"',
-      'process.env.AXIOM_TOKEN': JSON.stringify(process.env.AXIOM_TOKEN || 'UNDEFINED'),
     },
     jsxFactory: 'h',
     jsxFragment: 'Fragment',

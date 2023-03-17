@@ -1,8 +1,11 @@
 {
   "appName": {
-    "message": "ChatGPT for ἐντελέχεια.αι"
+    "message": "LectureBot for ἐντελέχεια.αι"
   },
   "appDesc": {
     "message": "ChatGPT answers your questions about the content of the page you are currently viewing."
+  },
+  "limitingMessage": {
+    "message": "Summarize the content in a few words. Please keep the discussion within the scope of this content."
   }
 }

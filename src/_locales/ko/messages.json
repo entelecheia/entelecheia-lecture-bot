@@ -1,8 +1,11 @@
 {
   "appName": {
-    "message": "ChatGPT for ἐντελέχεια.αι"
+    "message": "LectureBot for ἐντελέχεια.αι"
   },
   "appDesc": {
     "message": "ChatGPT는 현재 보고 있는 페이지의 내용에 대한 질문에 답변합니다."
+  },
+  "limitingMessage": {
+    "message": "내용을 몇 마디로 요약해 보세요. 이 내용의 범위 내에서 토론을 진행해 주시기 바랍니다."
   }
 }

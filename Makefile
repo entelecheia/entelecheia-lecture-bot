@@ -42,3 +42,9 @@ install: ## install dependencies
 
 install-dev: ## install dev dependencies
 	@npm install --only=dev
+
+install-node: ## install node
+	@nvm install --lts
+
+set-default-node: ## set default node
+	@nvm alias default node

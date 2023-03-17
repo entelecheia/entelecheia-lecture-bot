@@ -1,1 +1,1 @@
-# ChatGPT for ἐντελέχεια.αι
+# LectureBot for ἐντελέχεια.αι
