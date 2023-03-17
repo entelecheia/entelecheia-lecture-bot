@@ -1,10 +1,12 @@
-import { h, render } from 'preact'
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { render } from 'preact'
 import '../base.css'
 import { getUserConfig, Theme } from '../config'
 import { detectSystemColorScheme } from '../utils'
 import ChatGPTContainer from './ChatGPTContainer'
 import { SiteConfiguration } from './siteConfig'
 import './styles.scss'
+import { getPossibleElementByQuerySelector } from './utils'
 
 async function mount(question: string, siteConfig: SiteConfiguration) {
   const container = document.createElement('div')
@@ -23,12 +25,12 @@ async function mount(question: string, siteConfig: SiteConfiguration) {
     container.classList.add('gpt-light')
   }
 
-  const sidebarContainer = document.querySelector(siteConfig.sidebarContainerQuery)
+  const sidebarContainer = getPossibleElementByQuerySelector(siteConfig.sidebarContainerQuery)
   if (sidebarContainer) {
     sidebarContainer.prepend(container)
   } else {
     container.classList.add('sidebar-free')
-    const appendContainer = document.querySelector(siteConfig.appendContainerQuery)
+    const appendContainer = getPossibleElementByQuerySelector(siteConfig.appendContainerQuery)
     if (appendContainer) {
       appendContainer.appendChild(container)
     }
@@ -43,14 +45,28 @@ async function mount(question: string, siteConfig: SiteConfiguration) {
 const siteRegex = /lecture\.entelecheia\.ai/
 const siteName = location.hostname.match(siteRegex)![0]
 const siteConfig = {
-  sidebarContainerQuery: '.bd-sidebar-secondary.bd-toc',
-  appendContainerQuery: '#jb-print-docs-body.onlyprint',
+  bodyContainerQuery: ['#jb-print-docs-body.onlyprint'],
+  sidebarContainerQuery: ['.bd-sidebar-secondary.bd-toc'],
+  appendContainerQuery: [],
+  // appendContainerQuery: ['.sidebar-secondary-items.sidebar-secondary__inner'],
+}
+
+function getBodyContent() {
+  const bodyElement = document.querySelector(siteConfig.bodyContainerQuery[0])
+  if (bodyElement) {
+    const maxLength = 1000 // Set the desired max length of the content
+    const bodyContent = bodyElement.textContent || ''
+    const trimmedContent =
+      bodyContent.length > maxLength ? bodyContent.slice(0, maxLength) + '...' : bodyContent
+    return trimmedContent
+  }
+  return ''
 }
 
 async function run() {
   console.debug('Mount ChatGPT on', siteName)
-  const userConfig = await getUserConfig()
-  mount('', siteConfig)
+  const initialQuestion = getBodyContent()
+  mount(initialQuestion, siteConfig)
 }
 
 run()

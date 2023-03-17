@@ -1,4 +1,4 @@
-import { Fragment, h } from 'preact'
+import { Fragment } from 'preact'
 import { useState } from 'react'
 import useSWRImmutable from 'swr/immutable'
 import { TriggerMode } from '../config'

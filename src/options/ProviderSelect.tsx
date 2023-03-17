@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Button, Input, Select, Spinner, Tabs, useInput, useToasts } from '@geist-ui/core'
-import { h } from 'preact'
+import { Fragment } from 'preact'
 import { FC, useCallback, useState } from 'react'
 import useSWR from 'swr'
 import { fetchExtensionConfigs } from '../api'
@@ -42,49 +43,51 @@ const ConfigPanel: FC<ConfigProps> = ({ config, models }) => {
   }, [apiKeyBindings.value, model, models, setToast, tab])
 
   return (
-    <div className="flex flex-col gap-3">
-      <Tabs value={tab} onChange={(v) => setTab(v as ProviderType)}>
-        <Tabs.Item label="ChatGPT webapp" value={ProviderType.ChatGPT}>
-          The API that powers ChatGPT webapp, free, but sometimes unstable
-        </Tabs.Item>
-        <Tabs.Item label="OpenAI API" value={ProviderType.GPT3}>
-          <div className="flex flex-col gap-2">
-            <span>
-              OpenAI official API, more stable,{' '}
-              <span className="font-semibold">charge by usage</span>
-            </span>
-            <div className="flex flex-row gap-2">
-              <Select
-                scale={2 / 3}
-                value={model}
-                onChange={(v) => setModel(v as string)}
-                placeholder="model"
-              >
-                {models.map((m) => (
-                  <Select.Option key={m} value={m}>
-                    {m}
-                  </Select.Option>
-                ))}
-              </Select>
-              <Input htmlType="password" label="API key" scale={2 / 3} {...apiKeyBindings} />
+    <Fragment>
+      <div className="flex flex-col gap-3">
+        <Tabs value={tab} onChange={(v) => setTab(v as ProviderType)}>
+          <Tabs.Item label="ChatGPT webapp" value={ProviderType.ChatGPT}>
+            The API that powers ChatGPT webapp, free, but sometimes unstable
+          </Tabs.Item>
+          <Tabs.Item label="OpenAI API" value={ProviderType.GPT3}>
+            <div className="flex flex-col gap-2">
+              <span>
+                OpenAI official API, more stable,{' '}
+                <span className="font-semibold">charge by usage</span>
+              </span>
+              <div className="flex flex-row gap-2">
+                <Select
+                  scale={2 / 3}
+                  value={model}
+                  onChange={(v) => setModel(v as string)}
+                  placeholder="model"
+                >
+                  {models.map((m) => (
+                    <Select.Option key={m} value={m}>
+                      {m}
+                    </Select.Option>
+                  ))}
+                </Select>
+                <Input htmlType="password" label="API key" scale={2 / 3} {...apiKeyBindings} />
+              </div>
+              <span className="italic text-xs">
+                You can find or create your API key{' '}
+                <a
+                  href="https://platform.openai.com/account/api-keys"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+              </span>
             </div>
-            <span className="italic text-xs">
-              You can find or create your API key{' '}
-              <a
-                href="https://platform.openai.com/account/api-keys"
-                target="_blank"
-                rel="noreferrer"
-              >
-                here
-              </a>
-            </span>
-          </div>
-        </Tabs.Item>
-      </Tabs>
-      <Button scale={2 / 3} ghost style={{ width: 20 }} type="success" onClick={save}>
-        Save
-      </Button>
-    </div>
+          </Tabs.Item>
+        </Tabs>
+        <Button scale={2 / 3} ghost style={{ width: 20 }} type="success" onClick={save}>
+          Save
+        </Button>
+      </div>
+    </Fragment>
   )
 }
 

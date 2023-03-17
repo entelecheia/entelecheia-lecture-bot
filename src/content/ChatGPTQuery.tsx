@@ -1,5 +1,4 @@
 import { GearIcon } from '@primer/octicons-react'
-import { h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 import { memo, useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
@@ -28,6 +27,7 @@ function ChatGPTQuery(props: Props) {
 
   useEffect(() => {
     const port = Browser.runtime.connect()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const listener = (msg: any) => {
       if (msg.text) {
         setAnswer(msg)

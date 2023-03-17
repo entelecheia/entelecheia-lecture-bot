@@ -1,5 +1,4 @@
 import { CheckIcon, CopyIcon, ThumbsdownIcon, ThumbsupIcon } from '@primer/octicons-react'
-import { h } from 'preact'
 import { useEffect } from 'preact/hooks'
 import { memo, useCallback, useState } from 'react'
 import Browser from 'webextension-polyfill'

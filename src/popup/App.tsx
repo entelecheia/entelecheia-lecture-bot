@@ -1,5 +1,4 @@
 import { GearIcon, GlobeIcon } from '@primer/octicons-react'
-import { h } from 'preact'
 import { useCallback } from 'react'
 import useSWR from 'swr'
 import Browser from 'webextension-polyfill'

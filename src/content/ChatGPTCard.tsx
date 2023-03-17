@@ -1,5 +1,4 @@
 import { SearchIcon } from '@primer/octicons-react'
-import { h } from 'preact'
 import { useState } from 'preact/hooks'
 import { TriggerMode } from '../config'
 import ChatGPTQuery, { QueryStatus } from './ChatGPTQuery'

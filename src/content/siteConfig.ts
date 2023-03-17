@@ -1,4 +1,5 @@
 export interface SiteConfiguration {
-  sidebarContainerQuery: string
-  appendContainerQuery: string
+  bodyContainerQuery: string[]
+  sidebarContainerQuery: string[]
+  appendContainerQuery: string[]
 }

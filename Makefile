@@ -24,6 +24,14 @@ help:  ## Display this help
 verify-release: ## verify release
 	@npx semantic-release --verfiy-release
 
+##@ Build
+
+build: ## build the project
+	@npm run build
+
+start: ## start the project
+	@npm run start
+		
 ##@ Setup
 
 install: ## install dependencies
