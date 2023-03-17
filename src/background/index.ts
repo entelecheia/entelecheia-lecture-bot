@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Browser from 'webextension-polyfill'
 import { getProviderConfigs, ProviderType } from '../config'
 import { ChatGPTProvider, getChatGPTAccessToken, sendMessageFeedback } from './providers/chatgpt'
@@ -66,6 +68,6 @@ Browser.runtime.onInstalled.addListener((details) => {
   }
 })
 
-Browser.action.onClicked.addListener(() => {
-  Browser.tabs.create({ url: 'https://lecture.entelecheia.ai' })
-})
+// Browser.browserAction.onClicked.addListener(() => {
+//   Browser.tabs.create({ url: 'https://lecture.entelecheia.ai' });
+// });
