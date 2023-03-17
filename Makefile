@@ -29,6 +29,9 @@ verify-release: ## verify release
 build: ## build the project
 	@npm run build
 
+build-mjs: ## build the project
+	@node build.mjs
+	
 start: ## start the project
 	@npm run start
 		
