@@ -1,0 +1,8 @@
+const API_HOST = 'https://chat.entelcheia.ai'
+
+export async function fetchExtensionConfigs(): Promise<{
+  chatgpt_webapp_model_name: string
+  openai_model_names: string[]
+}> {
+  return fetch(`${API_HOST}/api/config`).then((r) => r.json())
+}

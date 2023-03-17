@@ -1,10 +1,10 @@
-site_name: Base Template
-site_url: "https://entelecheia.github.io/base-template/"
-site_description: "Base Template for CI/CD with MkDocs and Semantic Release"
+site_name: ChatGPT for ἐντελέχεια.αι
+site_url: 'https://chat.entelecheia.ai/'
+site_description: 'ChatGPT answers your questions about the content of the page you are currently viewing.'
 site_author: entelecheia
 docs_dir: docs/
-repo_name: entelecheia/base-template
-repo_url: "https://github.com/entelecheia/base-template"
+repo_name: entelecheia/entelecheia-lecture-bot
+repo_url: 'https://github.com/entelecheia/entelecheia-lecture-bot'
 nav:
   - Home: index.md
 theme:
