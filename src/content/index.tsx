@@ -58,7 +58,13 @@ function getBodyContent() {
     const bodyContent = bodyElement.textContent || ''
     const trimmedContent =
       bodyContent.length > maxLength ? bodyContent.slice(0, maxLength) + '...' : bodyContent
-    return trimmedContent
+
+    // Append the limiting message
+    const limitingMessage =
+      'Summarize the conent in a few words. Please keep the discussion within the scope of this conten.'
+    const initialMessage = `${trimmedContent}\n\n${limitingMessage}`
+
+    return initialMessage
   }
   return ''
 }
