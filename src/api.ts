@@ -1,4 +1,4 @@
-const API_HOST = 'https://chat.entelcheia.ai'
+const API_HOST = 'https://lecture-bot.entelcheia.ai'
 
 export async function fetchExtensionConfigs(): Promise<{
   chatgpt_webapp_model_name: string
