@@ -18,7 +18,6 @@ module.exports = (env, argv) => {
       content: './src/content/index.tsx',
       background: './src/background/index.ts',
       options: './src/options/index.tsx',
-      popup: './src/popup/index.tsx',
     },
     output: {
       path: path.resolve(__dirname, 'build'),
@@ -50,11 +49,6 @@ module.exports = (env, argv) => {
         template: './src/options/index.html',
         filename: 'options.html',
         chunks: ['options'],
-      }),
-      new HtmlWebpackPlugin({
-        template: './src/popup/index.html',
-        filename: 'popup.html',
-        chunks: ['popup'],
       }),
       isProduction &&
         new MiniCssExtractPlugin({
