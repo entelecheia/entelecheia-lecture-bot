@@ -19,8 +19,8 @@
     },
     "homepage": "https://github.com/entelecheia/entelecheia-lecture-bot#readme",
     "scripts": {
-        "build": "webpack --mode production",
-        "start": "webpack serve --mode development",
+        "build": "node build.mjs --production",
+        "dev": "node build.mjs --development",
         "lint": "eslint --ext .js,.mjs,.jsx .",
         "lint:fix": "eslint --ext .js,.mjs,.jsx . --fix",
         "prepare": "husky install",

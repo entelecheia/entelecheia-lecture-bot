@@ -26,14 +26,12 @@ verify-release: ## verify release
 
 ##@ Build
 
+.PHONY: build
 build: ## build the project
-	@npm run build
-
-build-mjs: ## build the project
-	@node build.mjs
+	@node build.mjs --production
 	
-start: ## start the project
-	@npm run start
+dev-build: ## build the project in dev mode
+	@node build.mjs --development
 		
 ##@ Setup
 
@@ -44,7 +42,16 @@ install-dev: ## install dev dependencies
 	@npm install --only=dev
 
 install-node: ## install node
-	@nvm install --lts
+	@export NVM_DIR="$${HOME}/.nvm"; \
+	[ -s "$${NVM_DIR}/nvm.sh" ] && . "$${NVM_DIR}/nvm.sh"; \
+	nvm install --lts
+
+nvm-ls: ## list node versions
+	@export NVM_DIR="$${HOME}/.nvm"; \
+	[ -s "$${NVM_DIR}/nvm.sh" ] && . "$${NVM_DIR}/nvm.sh"; \
+	nvm ls
 
 set-default-node: ## set default node
-	@nvm alias default node
+	@export NVM_DIR="$${HOME}/.nvm"; \
+	[ -s "$${NVM_DIR}/nvm.sh" ] && . "$${NVM_DIR}/nvm.sh"; \
+	nvm alias default node
