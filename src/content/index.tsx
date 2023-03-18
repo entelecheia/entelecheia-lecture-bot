@@ -10,7 +10,7 @@ import { detectSystemColorScheme } from '../utils/system'
 
 async function mount(question: string, siteConfig: SiteConfiguration) {
   const container = document.createElement('div')
-  container.className = 'chat-gpt-container'
+  container.className = 'lecture-bot-container'
 
   const userConfig = await getUserConfig()
   let theme: Theme
@@ -20,9 +20,9 @@ async function mount(question: string, siteConfig: SiteConfiguration) {
     theme = userConfig.theme
   }
   if (theme === Theme.Dark) {
-    container.classList.add('gpt-dark')
+    container.classList.add('bot-dark')
   } else {
-    container.classList.add('gpt-light')
+    container.classList.add('bot-light')
   }
 
   const sidebarContainer = getPossibleElementByQuerySelector(siteConfig.sidebarContainerQuery)

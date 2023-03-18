@@ -12,7 +12,7 @@ function BotContainer(props: Props) {
   const [, setQueryStatus] = useState<QueryStatus>()
   return (
     <>
-      <div className="chat-gpt-card">
+      <div className="lecture-bot-card">
         <BotCard
           question={props.question}
           triggerMode={props.triggerMode}
