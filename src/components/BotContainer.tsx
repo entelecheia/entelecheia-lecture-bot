@@ -1,19 +1,19 @@
 import { useState } from 'react'
-import { TriggerMode } from '../config'
-import ChatGPTCard from './ChatGPTCard'
-import { QueryStatus } from './ChatGPTQuery'
+import { TriggerMode } from '../configs/userConfig'
+import BotCard from './BotCard'
+import { QueryStatus } from './chatgpt/ChatGPTQuery'
 
 interface Props {
   question: string
   triggerMode: TriggerMode
 }
 
-function ChatGPTContainer(props: Props) {
+function BotContainer(props: Props) {
   const [, setQueryStatus] = useState<QueryStatus>()
   return (
     <>
       <div className="chat-gpt-card">
-        <ChatGPTCard
+        <BotCard
           question={props.question}
           triggerMode={props.triggerMode}
           onStatusChange={setQueryStatus}
@@ -23,4 +23,4 @@ function ChatGPTContainer(props: Props) {
   )
 }
 
-export default ChatGPTContainer
+export default BotContainer

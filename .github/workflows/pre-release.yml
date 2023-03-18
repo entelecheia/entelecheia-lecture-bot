@@ -26,5 +26,5 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: Chromium_ChatGPT_Extension_Build_${{ steps.current-time.outputs.formattedTime }}
+          name: Chromium_LectureBot_Extension_Build_${{ steps.current-time.outputs.formattedTime }}
           path: build/chromium/*

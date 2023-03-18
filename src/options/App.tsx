@@ -2,7 +2,8 @@ import { CssBaseline, GeistProvider, Radio, Select, Text, Toggle, useToasts } fr
 import { capitalize } from 'lodash-es'
 import { Fragment } from 'preact'
 import { useCallback, useEffect, useMemo, useState } from 'preact/hooks'
-import '../base.css'
+import Browser from 'webextension-polyfill'
+import '../../styles/base.css'
 import {
   getUserConfig,
   Language,
@@ -10,10 +11,11 @@ import {
   TriggerMode,
   TRIGGER_MODE_TEXT,
   updateUserConfig,
-} from '../config'
-import favicon from '../favicon.png'
-import { detectSystemColorScheme, getExtensionVersion } from '../utils'
+} from '../configs/userConfig'
+import { detectSystemColorScheme, getExtensionVersion } from '../utils/system'
 import ProviderSelect from './ProviderSelect'
+
+const favicon = Browser.runtime.getURL('favicon.png')
 
 function OptionsPage(props: { theme: Theme; onThemeChange: (theme: Theme) => void }) {
   const [triggerMode, setTriggerMode] = useState<TriggerMode>(TriggerMode.Automatically)

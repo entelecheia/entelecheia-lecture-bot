@@ -16,7 +16,7 @@ async function deleteOldDir() {
 
 async function runEsbuild() {
   await esbuild.build({
-    entryPoints: ['src/content/index.tsx', 'src/background/index.ts', 'src/options/index.tsx'],
+    entryPoints: ['src/content/index.tsx', 'src/service/index.ts', 'src/options/index.tsx'],
     bundle: true,
     outdir: outdir,
     treeShaking: true,
@@ -65,19 +65,19 @@ async function build() {
   await runEsbuild()
 
   const commonFiles = [
-    { src: 'build/content/index.js', dst: 'content.js' },
-    { src: 'build/content/index.css', dst: 'content.css' },
-    { src: 'build/background/index.js', dst: 'background.js' },
+    { src: 'build/content/index.js', dst: 'contentScript.js' },
+    { src: 'build/content/index.css', dst: 'contentScript.css' },
+    { src: 'build/service/index.js', dst: 'serviceWorker.js' },
     { src: 'build/options/index.js', dst: 'options.js' },
     { src: 'build/options/index.css', dst: 'options.css' },
-    { src: 'src/options/index.html', dst: 'options.html' },
-    { src: 'src/favicon.png', dst: 'favicon.png' },
-    { src: 'src/_locales', dst: '_locales' },
+    { src: 'static/options/index.html', dst: 'options.html' },
+    { src: 'static/icons/favicon.png', dst: 'favicon.png' },
+    { src: 'static/_locales', dst: '_locales' },
   ]
 
   // chromium
   await copyFiles(
-    [...commonFiles, { src: 'src/manifest.json', dst: 'manifest.json' }],
+    [...commonFiles, { src: 'static/manifest.json', dst: 'manifest.json' }],
     `./${outdir}/chromium`,
   )
 

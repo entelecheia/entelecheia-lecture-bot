@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { createParser } from 'eventsource-parser'
 import { isEmpty } from 'lodash-es'
 import { streamAsyncIterable } from './stream-async-iterable.js'

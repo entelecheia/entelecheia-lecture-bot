@@ -26,7 +26,7 @@
     "activeTab"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "serviceWorker.js"
   },
   "options_ui": {
     "page": "options.html",
@@ -38,10 +38,10 @@
         "https://*.entelecheia.ai/*"
       ],
       "js": [
-        "content.js"
+        "contentScript.js"
       ],
       "css": [
-        "content.css"
+        "contentScript.css"
       ]
     }
   ]

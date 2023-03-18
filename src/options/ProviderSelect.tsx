@@ -3,8 +3,13 @@ import { Button, Input, Select, Spinner, Tabs, useInput, useToasts } from '@geis
 import { Fragment } from 'preact'
 import { FC, useCallback, useState } from 'react'
 import useSWR from 'swr'
-import { fetchExtensionConfigs } from '../api'
-import { getProviderConfigs, ProviderConfigs, ProviderType, saveProviderConfigs } from '../config'
+import {
+  getProviderConfigs,
+  ProviderConfigs,
+  ProviderType,
+  saveProviderConfigs,
+} from '../configs/userConfig'
+import { fetchExtensionConfigs } from '../utils/api'
 
 interface ConfigProps {
   config: ProviderConfigs

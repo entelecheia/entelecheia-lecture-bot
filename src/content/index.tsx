@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { render } from 'preact'
-import '../base.css'
-import { getUserConfig, Theme } from '../config'
-import { detectSystemColorScheme } from '../utils'
-import ChatGPTContainer from './ChatGPTContainer'
-import { SiteConfiguration } from './siteConfig'
-import './styles.scss'
-import { getPossibleElementByQuerySelector } from './utils'
+import '../../styles/base.css'
+import '../../styles/styles.scss'
+import BotContainer from '../components/BotContainer'
+import { SiteConfiguration } from '../configs/siteConfig'
+import { getUserConfig, Theme } from '../configs/userConfig'
+import { getPossibleElementByQuerySelector } from '../utils/query-selector'
+import { detectSystemColorScheme } from '../utils/system'
 
 async function mount(question: string, siteConfig: SiteConfiguration) {
   const container = document.createElement('div')
@@ -37,7 +37,7 @@ async function mount(question: string, siteConfig: SiteConfiguration) {
   }
 
   render(
-    <ChatGPTContainer question={question} triggerMode={userConfig.triggerMode || 'always'} />,
+    <BotContainer question={question} triggerMode={userConfig.triggerMode || 'always'} />,
     container,
   )
 }

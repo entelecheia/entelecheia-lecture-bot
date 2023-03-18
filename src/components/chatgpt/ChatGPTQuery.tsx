@@ -4,7 +4,7 @@ import { memo, useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
 import Browser from 'webextension-polyfill'
-import { Answer } from '../messaging'
+import { Answer } from '../../utils/messaging'
 import ChatGPTFeedback from './ChatGPTFeedback'
 
 export type QueryStatus = 'success' | 'error' | undefined

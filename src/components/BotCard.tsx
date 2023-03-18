@@ -1,7 +1,7 @@
 import { SearchIcon } from '@primer/octicons-react'
 import { useState } from 'preact/hooks'
-import { TriggerMode } from '../config'
-import ChatGPTQuery, { QueryStatus } from './ChatGPTQuery'
+import { TriggerMode } from '../configs/userConfig'
+import ChatGPTQuery, { QueryStatus } from './chatgpt/ChatGPTQuery'
 
 interface Props {
   question: string
@@ -9,7 +9,7 @@ interface Props {
   onStatusChange?: (status: QueryStatus) => void
 }
 
-function ChatGPTCard(props: Props) {
+function BotCard(props: Props) {
   const [triggered, setTriggered] = useState(false)
 
   if (props.triggerMode === TriggerMode.Automatically) {
@@ -27,4 +27,4 @@ function ChatGPTCard(props: Props) {
   )
 }
 
-export default ChatGPTCard
+export default BotCard

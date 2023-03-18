@@ -1,4 +1,4 @@
-import { Answer } from '../messaging'
+import { Answer } from './messaging'
 
 export type Event =
   | {
