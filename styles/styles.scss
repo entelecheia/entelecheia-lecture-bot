@@ -87,3 +87,31 @@
     }
   }
 }
+
+.bot-selection-toolbar {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  padding: 2px;
+  background-color: #ffffff;
+  box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.bot-selection-toolbar-button {
+  margin-left: 2px;
+  padding: 2px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #24292f;
+  cursor: pointer;
+}
+
+.bot-selection-toolbar-button:hover {
+  background-color: #d4d5da;
+}
+.bot-selection-window {
+  height: auto;
+  border-radius: 4px;
+  background-color: var(--theme-color);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+}

@@ -1,16 +1,6 @@
-import { languages } from 'countries-list'
 import { defaults } from 'lodash-es'
 import Browser from 'webextension-polyfill'
-
-/**
- * @typedef {object} Model
- * @property {string} value
- * @property {string} desc
- */
-/**
- * @type {Object.<string,Model>}
- */
-export const languageList = { auto: { name: 'Auto', native: 'Auto' }, ...languages }
+import { actionConfig, ActionConfigType } from './actionConfig'
 
 export enum TriggerMode {
   Automatically = 'automatically',
@@ -40,13 +30,26 @@ export enum Language {
   Korean = 'Korean',
 }
 
-const userConfigWithDefaultValue = {
+type UserConfigType = {
+  triggerMode: TriggerMode
+  theme: Theme
+  language: Language
+  activeAction: Array<keyof ActionConfigType>
+  accessToken: string
+  tokenSavedOn: number
+}
+
+const userConfigWithDefaultValue: UserConfigType = {
   triggerMode: TriggerMode.Automatically,
   theme: Theme.Auto,
   language: Language.Auto,
+  activeAction: Object.keys(actionConfig) as Array<keyof ActionConfigType>,
+  accessToken: '',
+  tokenSavedOn: 0,
 }
 
 export type UserConfig = typeof userConfigWithDefaultValue
+export const defaultConfig = userConfigWithDefaultValue
 
 export async function getUserConfig(): Promise<UserConfig> {
   const result = await Browser.storage.local.get(Object.keys(userConfigWithDefaultValue))

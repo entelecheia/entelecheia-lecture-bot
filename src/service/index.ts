@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Browser from 'webextension-polyfill'
+import { actionConfig, ActionConfigType } from '../configs/actionConfig'
 import { getProviderConfigs, ProviderType } from '../configs/userConfig'
 import { Provider } from '../utils/types'
 import { ChatGPTProvider, getChatGPTAccessToken, sendMessageFeedback } from './apis/chatgpt'
@@ -68,4 +69,39 @@ Browser.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') {
     Browser.runtime.openOptionsPage()
   }
+})
+
+Browser.contextMenus.removeAll().then(() => {
+  const menuId = 'LectureBot-Menu'
+  Browser.contextMenus.create({
+    id: menuId,
+    title: 'ἐντελέχεια.αι',
+    contexts: ['all'],
+  })
+
+  for (const key of Object.keys(actionConfig) as (keyof ActionConfigType)[]) {
+    const action = actionConfig[key]
+    Browser.contextMenus.create({
+      id: menuId + key,
+      parentId: menuId,
+      title: action.label,
+      contexts: ['selection'],
+    })
+  }
+
+  Browser.contextMenus.onClicked.addListener((info, tab) => {
+    const itemId =
+      info.menuItemId === menuId ? 'new' : (info.menuItemId as string).replace(menuId, '')
+    const message = {
+      itemId: itemId,
+      selectionText: info.selectionText,
+    }
+    console.debug('menu clicked', message)
+    if (tab && tab.id !== undefined) {
+      Browser.tabs.sendMessage(tab.id, {
+        type: 'MENU',
+        data: message,
+      })
+    }
+  })
 })

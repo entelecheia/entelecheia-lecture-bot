@@ -1,7 +1,20 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { BracesIcon, CardHeadingIcon, TranslateIcon } from './Icons'
 import { getPreferredLanguage } from './userConfig'
 
-export const ActionConfig = {
+type ActionType = {
+  icon: React.FC<React.SVGProps<SVGSVGElement>>
+  label: string
+  genPrompt: (selection: string) => Promise<string>
+}
+
+export type ActionConfigType = {
+  translate: ActionType
+  summarize: ActionType
+  explain_code: ActionType
+}
+
+export const actionConfig: ActionConfigType = {
   translate: {
     icon: TranslateIcon,
     label: 'Translate',
