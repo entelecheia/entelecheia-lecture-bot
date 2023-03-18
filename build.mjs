@@ -16,7 +16,12 @@ async function deleteOldDir() {
 
 async function runEsbuild() {
   await esbuild.build({
-    entryPoints: ['src/content/index.tsx', 'src/service/index.ts', 'src/options/index.tsx'],
+    entryPoints: [
+      'src/content/index.tsx',
+      'src/service/index.ts',
+      'src/options/index.tsx',
+      'src/popup/index.ts',
+    ],
     bundle: true,
     outdir: outdir,
     treeShaking: true,
@@ -71,6 +76,8 @@ async function build() {
     { src: 'build/options/index.js', dst: 'options.js' },
     { src: 'build/options/index.css', dst: 'options.css' },
     { src: 'static/options/index.html', dst: 'options.html' },
+    { src: 'build/popup/index.js', dst: 'popup.js' },
+    { src: 'static/popup/index.html', dst: 'popup.html' },
     { src: 'static/icons/favicon.png', dst: 'favicon.png' },
     { src: 'static/_locales', dst: '_locales' },
   ]

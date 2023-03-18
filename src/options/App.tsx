@@ -65,15 +65,6 @@ function OptionsPage(props: { theme: Theme; onThemeChange: (theme: Theme) => voi
               LectureBot for ἐντελέχεια.αι(v{getExtensionVersion()})
             </span>
           </div>
-          <div className="flex flex-row gap-3">
-            <a
-              href="https://github.com/entelecheia/entelecheia-lecture-bot"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Source code
-            </a>
-          </div>
         </nav>
         <main className="w-[500px] mx-auto mt-14">
           <Text h2>Options</Text>

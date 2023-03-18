@@ -59,6 +59,8 @@ Browser.runtime.onMessage.addListener(async (message) => {
     Browser.runtime.openOptionsPage()
   } else if (message.type === 'GET_ACCESS_TOKEN') {
     return getChatGPTAccessToken()
+  } else if (message.type === 'OPEN_LECTURE') {
+    Browser.tabs.create({ url: 'https://lecture.entelecheia.ai' })
   }
 })
 
@@ -67,7 +69,3 @@ Browser.runtime.onInstalled.addListener((details) => {
     Browser.runtime.openOptionsPage()
   }
 })
-
-// Browser.browserAction.onClicked.addListener(() => {
-//   Browser.tabs.create({ url: 'https://lecture.entelecheia.ai' });
-// });

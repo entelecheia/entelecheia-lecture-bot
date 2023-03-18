@@ -1,5 +1,16 @@
+import { languages } from 'countries-list'
 import { defaults } from 'lodash-es'
 import Browser from 'webextension-polyfill'
+
+/**
+ * @typedef {object} Model
+ * @property {string} value
+ * @property {string} desc
+ */
+/**
+ * @type {Object.<string,Model>}
+ */
+export const languageList = { auto: { name: 'Auto', native: 'Auto' }, ...languages }
 
 export enum TriggerMode {
   Automatically = 'automatically',
@@ -24,9 +35,9 @@ export enum Theme {
 }
 
 export enum Language {
-  Auto = 'auto',
-  English = 'english',
-  Korean = 'korean',
+  Auto = 'Auto',
+  English = 'English',
+  Korean = 'Korean',
 }
 
 const userConfigWithDefaultValue = {
@@ -45,6 +56,15 @@ export async function getUserConfig(): Promise<UserConfig> {
 export async function updateUserConfig(updates: Partial<UserConfig>) {
   console.debug('update configs', updates)
   return Browser.storage.local.set(updates)
+}
+
+export async function getPreferredLanguage() {
+  return getUserConfig().then((config) => {
+    if (config.language === 'Auto') {
+      return Browser.i18n.getUILanguage()
+    }
+    return config.language
+  })
 }
 
 export enum ProviderType {

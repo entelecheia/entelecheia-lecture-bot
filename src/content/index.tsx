@@ -8,7 +8,7 @@ import { getUserConfig, Theme } from '../configs/userConfig'
 import { getPossibleElementByQuerySelector } from '../utils/query-selector'
 import { detectSystemColorScheme } from '../utils/system'
 
-async function mount(question: string, siteConfig: SiteConfiguration) {
+async function mountCard(question: string, siteConfig: SiteConfiguration) {
   const container = document.createElement('div')
   container.className = 'lecture-bot-container'
 
@@ -72,7 +72,7 @@ function getBodyContent() {
 async function run() {
   console.debug('Mount ChatGPT on', siteName)
   const initialQuestion = getBodyContent()
-  mount(initialQuestion, siteConfig)
+  mountCard(initialQuestion, siteConfig)
 }
 
 run()

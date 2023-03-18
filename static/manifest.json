@@ -16,7 +16,8 @@
       "32": "favicon.png",
       "48": "favicon.png",
       "128": "favicon.png"
-    }
+    },
+    "default_popup": "popup.html"
   },
   "host_permissions": [
     "https://*.openai.com/"
