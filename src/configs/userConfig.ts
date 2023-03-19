@@ -34,6 +34,7 @@ type UserConfigType = {
   triggerMode: TriggerMode
   theme: Theme
   language: Language
+  lockWhenAnswer: boolean
   activeAction: Array<keyof ActionConfigType>
   accessToken: string
   tokenSavedOn: number
@@ -43,6 +44,7 @@ const userConfigWithDefaultValue: UserConfigType = {
   triggerMode: TriggerMode.Automatically,
   theme: Theme.Auto,
   language: Language.Auto,
+  lockWhenAnswer: false,
   activeAction: Object.keys(actionConfig) as Array<keyof ActionConfigType>,
   accessToken: '',
   tokenSavedOn: 0,

@@ -1,4 +1,8 @@
-import { Answer } from './messaging'
+export interface Answer {
+  text: string
+  messageId: string
+  conversationId: string
+}
 
 export type Event =
   | {

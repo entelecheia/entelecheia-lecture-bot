@@ -1,6 +1,6 @@
 import ExpiryMap from 'expiry-map'
 import { getUserConfig } from '../configs/userConfig'
-import { isSafari } from './is-safari'
+import { isSafari } from './isSafari'
 
 const KEY_ACCESS_TOKEN = 'accessToken'
 const cache = new ExpiryMap(10 * 1000)

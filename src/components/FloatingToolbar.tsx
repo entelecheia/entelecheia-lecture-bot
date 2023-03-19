@@ -4,9 +4,9 @@ import Draggable from 'react-draggable'
 import Browser from 'webextension-polyfill'
 import { actionConfig, ActionConfigType } from '../configs/actionConfig'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
-import { useClampWindowSize } from '../hooks/use-clamp-window-size'
-import { isMobile } from '../utils/is-mobile'
-import { setElementPositionInViewport } from '../utils/set-element-position-in-viewport'
+import { useClampWindowSize } from '../hooks/useClampWindowSize'
+import { isMobile } from '../utils/isMobile'
+import { setElementPositionInViewport } from '../utils/setElementPositionInViewport'
 import BotCard from './BotCard'
 
 const favicon = Browser.runtime.getURL('favicon.png')

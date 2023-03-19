@@ -9,7 +9,7 @@ interface Props {
   answerText: string
 }
 
-function ChatGPTFeedback(props: Props) {
+function BotFeedback(props: Props) {
   const [copied, setCopied] = useState(false)
   const [action, setAction] = useState<'thumbsUp' | 'thumbsDown' | null>(null)
 
@@ -80,4 +80,4 @@ function ChatGPTFeedback(props: Props) {
   )
 }
 
-export default memo(ChatGPTFeedback)
+export default memo(BotFeedback)

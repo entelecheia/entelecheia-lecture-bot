@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { TriggerMode } from '../configs/userConfig'
 import BotCard from './BotCard'
-import { QueryStatus } from './chatgpt/ChatGPTQuery'
+import { QueryStatus } from './BotQuery'
 
 interface Props {
   question: string

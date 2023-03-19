@@ -5,10 +5,10 @@ import '../../styles/styles.scss'
 import BotContainer from '../components/BotContainer'
 import { SiteConfiguration } from '../configs/siteConfig'
 import { getUserConfig, Theme } from '../configs/userConfig'
-import { getPossibleElementByQuerySelector } from '../utils/query-selector'
+import { getPossibleElementByQuerySelector } from '../utils/querySelector'
 import { detectSystemColorScheme } from '../utils/system'
 
-async function mountCard(question: string, siteConfig: SiteConfiguration) {
+async function mountBotContainer(question: string, siteConfig: SiteConfiguration) {
   const container = document.createElement('div')
   container.className = 'lecture-bot-container'
 
@@ -72,7 +72,7 @@ function getBodyContent() {
 async function run() {
   console.debug('Mount ChatGPT on', siteName)
   const initialQuestion = getBodyContent()
-  mountCard(initialQuestion, siteConfig)
+  mountBotContainer(initialQuestion, siteConfig)
 }
 
 run()

@@ -3,7 +3,7 @@
 import Browser from 'webextension-polyfill'
 import { actionConfig, ActionConfigType } from '../configs/actionConfig'
 import { getProviderConfigs, ProviderType } from '../configs/userConfig'
-import { Provider } from '../utils/types'
+import { Provider } from '../utils/interfaces'
 import { ChatGPTProvider, getChatGPTAccessToken, sendMessageFeedback } from './apis/chatgpt'
 import { OpenAIProvider } from './apis/openai'
 

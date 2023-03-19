@@ -4,8 +4,8 @@ import { memo, useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
 import Browser from 'webextension-polyfill'
-import { Answer } from '../../utils/messaging'
-import ChatGPTFeedback from './ChatGPTFeedback'
+import { Answer } from '../utils/interfaces'
+import BotFeedback from './BotFeedback'
 
 export type QueryStatus = 'success' | 'error' | undefined
 
@@ -14,7 +14,7 @@ interface Props {
   onStatusChange?: (status: QueryStatus) => void
 }
 
-function ChatGPTQuery(props: Props) {
+function BotQuery(props: Props) {
   const [answer, setAnswer] = useState<Answer | null>(null)
   const [error, setError] = useState('')
   const [retry, setRetry] = useState(0)
@@ -73,7 +73,7 @@ function ChatGPTQuery(props: Props) {
           <span className="cursor-pointer leading-[0]" onClick={openOptionsPage}>
             <GearIcon size={14} />
           </span>
-          <ChatGPTFeedback
+          <BotFeedback
             messageId={answer.messageId}
             conversationId={answer.conversationId}
             answerText={answer.text}
@@ -118,4 +118,4 @@ function ChatGPTQuery(props: Props) {
   return <p className="text-[#b6b8ba] animate-pulse">Waiting for ChatGPT response...</p>
 }
 
-export default memo(ChatGPTQuery)
+export default memo(BotQuery)
