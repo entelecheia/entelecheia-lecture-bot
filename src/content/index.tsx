@@ -37,7 +37,7 @@ async function mountBotContainer(question: string, siteConfig: SiteConfiguration
   }
 
   render(
-    <BotContainer question={question} triggerMode={userConfig.triggerMode || 'always'} />,
+    <BotContainer question={question} triggerMode={userConfig.triggerMode || 'automatically'} />,
     container,
   )
 }
