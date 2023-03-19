@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { BracesIcon, CardHeadingIcon, TranslateIcon } from '../utils/Icons'
+import { BracesIcon, CardHeadingIcon, TranslateIcon } from '../misc/Icons'
 import { getPreferredLanguage } from './userConfig'
 
 type ActionType = {
