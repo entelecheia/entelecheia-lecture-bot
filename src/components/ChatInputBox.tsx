@@ -1,12 +1,12 @@
 import { KeyboardEvent, useEffect, useRef, useState } from 'react'
 import { updateRefHeight } from '../utils/updateRefHeight'
 
-interface InputBoxProps {
+interface ChatInputBoxProps {
   onSubmit: (value: string) => void
   enabled?: boolean
 }
 
-export function InputBox({ onSubmit, enabled }: InputBoxProps) {
+export function ChatInputBox({ onSubmit, enabled }: ChatInputBoxProps) {
   const [value, setValue] = useState<string>('')
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -42,4 +42,4 @@ export function InputBox({ onSubmit, enabled }: InputBoxProps) {
   )
 }
 
-export default InputBox
+export default ChatInputBox

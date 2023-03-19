@@ -12,9 +12,9 @@ import { useClampWindowSize } from '../hooks/useClampWindowSize'
 import { createElementAtPosition } from '../utils/createElementAtPosition'
 import { ConversationRecord, initSession, Session } from '../utils/initSession'
 import { isSafari } from '../utils/isSafari'
+import ChatInputBox from './ChatInputBox'
 import ChatItem from './ChatItem'
 import FloatingToolbar from './FloatingToolbar'
-import InputBox from './InputBox'
 
 const favicon = Browser.runtime.getURL('favicon.png')
 
@@ -247,7 +247,7 @@ function ChatCard(props: ChatCardProps) {
           ),
         )}
       </div>
-      <InputBox
+      <ChatInputBox
         enabled={isReady}
         onSubmit={(question) => {
           const newQuestion = new ChatItemData('question', question + '\n<hr/>')
