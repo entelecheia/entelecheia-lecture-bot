@@ -5,8 +5,10 @@ import '../../styles/base.css'
 import '../../styles/styles.scss'
 import BotContainer from '../components/BotContainer'
 import ChatContainer from '../components/ChatContainer'
+import FloatingToolbar from '../components/FloatingToolbar'
 import { SiteConfiguration } from '../configs/siteConfig'
 import { getUserConfig, Theme } from '../configs/userConfig'
+import { createElementAtPosition } from '../utils/createElementAtPosition'
 import { initSession } from '../utils/initSession'
 import { getPossibleElementByQuerySelector } from '../utils/querySelector'
 import { detectSystemColorScheme } from '../utils/system'
@@ -60,6 +62,58 @@ async function mountBotContainer(question: string, siteConfig: SiteConfiguration
   )
 }
 
+let toolbarContainer: HTMLElement | null = null
+
+async function attachToolbar(): Promise<void> {
+  document.addEventListener('mouseup', (e: MouseEvent) => {
+    if (toolbarContainer && toolbarContainer.contains(e.target as Node)) return
+    if (
+      toolbarContainer &&
+      window.getSelection()?.rangeCount &&
+      toolbarContainer.contains(
+        window.getSelection()?.getRangeAt(0).endContainer.parentElement ?? null,
+      )
+    )
+      return
+
+    if (toolbarContainer) toolbarContainer.remove()
+    setTimeout(() => {
+      const selection = window.getSelection()?.toString()
+      if (selection) {
+        const position = { x: e.clientX + 15, y: e.clientY - 15 }
+        toolbarContainer = createElementAtPosition(position.x, position.y)
+        toolbarContainer.className = 'chatgptbox-toolbar-container'
+        render(
+          <FloatingToolbar
+            session={initSession()}
+            selection={selection}
+            position={position}
+            container={toolbarContainer}
+          />,
+          toolbarContainer,
+        )
+      }
+    })
+  })
+  document.addEventListener('mousedown', (e: MouseEvent) => {
+    if (toolbarContainer && toolbarContainer.contains(e.target as Node)) return
+
+    document.querySelectorAll('.chatgptbox-toolbar-container').forEach((e) => e.remove())
+  })
+  document.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (
+      (toolbarContainer &&
+        !toolbarContainer.contains(e.target as Node) &&
+        (e.target as HTMLElement).nodeName === 'INPUT') ||
+      (e.target as HTMLElement).nodeName === 'TEXTAREA'
+    ) {
+      setTimeout(() => {
+        if (!window.getSelection()?.toString()) toolbarContainer?.remove()
+      })
+    }
+  })
+}
+
 const siteRegex = /lecture\.entelecheia\.ai/
 const siteName = location.hostname.match(siteRegex)![0]
 const siteConfig = {
@@ -92,6 +146,7 @@ async function run() {
   const initialQuestion = getBodyContent()
   mountBotContainer(initialQuestion, siteConfig)
   // mountChatContainer(initialQuestion, siteConfig)
+  attachToolbar()
 }
 
 run()

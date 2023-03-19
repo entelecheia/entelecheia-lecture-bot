@@ -10,24 +10,12 @@ type ActionType = {
 }
 
 export type ActionConfigType = {
-  translate: ActionType
   summarize: ActionType
   explain_code: ActionType
+  translate: ActionType
 }
 
 export const actionConfig: ActionConfigType = {
-  translate: {
-    icon: TranslateIcon,
-    label: 'Translate',
-    genPrompt: async (selection: string) => {
-      const preferredLanguage = await getPreferredLanguage()
-      return (
-        `Translate the following into ${preferredLanguage} and only show me the translated content.` +
-        `If it is already in ${preferredLanguage},` +
-        `translate it into English and only show me the translated content:\n"${selection}"`
-      )
-    },
-  },
   summarize: {
     icon: CardHeadingIcon,
     label: 'Summarize',
@@ -42,6 +30,18 @@ export const actionConfig: ActionConfigType = {
     genPrompt: async (selection: string) => {
       const preferredLanguage = await getPreferredLanguage()
       return `Reply in ${preferredLanguage}. Explain the following code:\n"${selection}"`
+    },
+  },
+  translate: {
+    icon: TranslateIcon,
+    label: 'Translate',
+    genPrompt: async (selection: string) => {
+      const preferredLanguage = await getPreferredLanguage()
+      return (
+        `Translate the following into ${preferredLanguage} and only show me the translated content.` +
+        `If it is already in ${preferredLanguage},` +
+        `translate it into English and only show me the translated content:\n"${selection}"`
+      )
     },
   },
 }

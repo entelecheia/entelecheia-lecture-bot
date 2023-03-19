@@ -9,7 +9,6 @@ import { Session } from '../utils/initSession'
 import { isMobile } from '../utils/isMobile'
 import { setElementPositionInViewport } from '../utils/setElementPositionInViewport'
 import ChatCard from './ChatCard'
-const favicon = Browser.runtime.getURL('favicon.png')
 
 interface FloatingToolbarProps {
   session: Session
@@ -138,10 +137,7 @@ function FloatingToolbar(props: FloatingToolbarProps) {
 
     return (
       <div data-theme={config.theme}>
-        <div className="bot-selection-toolbar">
-          <img src={favicon} width="24" height="24" style={{ userSelect: 'none' }} />
-          {actions}
-        </div>
+        <div className="bot-selection-toolbar">{actions}</div>
       </div>
     )
   }

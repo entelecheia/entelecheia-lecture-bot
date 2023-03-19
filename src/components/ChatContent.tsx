@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef } from 'react'
+import ChatItemData from '../data/ChatItemData'
 import ChatItem from './ChatItem'
-import ChatItemData from './ChatItemData'
 
 interface ChatContentProps {
   chatItemData: ChatItemData[]

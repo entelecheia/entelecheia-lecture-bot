@@ -7,12 +7,12 @@ import { Key, memo, SetStateAction, useCallback, useEffect, useRef, useState } f
 import { WindowDesktop, XLg } from 'react-bootstrap-icons'
 import Browser from 'webextension-polyfill'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
+import ChatItemData from '../data/ChatItemData'
 import { useClampWindowSize } from '../hooks/useClampWindowSize'
 import { createElementAtPosition } from '../utils/createElementAtPosition'
 import { ConversationRecord, initSession, Session } from '../utils/initSession'
 import { isSafari } from '../utils/isSafari'
 import ChatItem from './ChatItem'
-import ChatItemData from './ChatItemData'
 import FloatingToolbar from './FloatingToolbar'
 import InputBox from './InputBox'
 
