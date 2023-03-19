@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { BracesIcon, CardHeadingIcon, TranslateIcon } from './Icons'
+import { BracesIcon, CardHeadingIcon, TranslateIcon } from '../utils/Icons'
 import { getPreferredLanguage } from './userConfig'
 
 type ActionType = {
-  icon: React.FC<React.SVGProps<SVGSVGElement>>
+  icon: any
   label: string
   genPrompt: (selection: string) => Promise<string>
 }

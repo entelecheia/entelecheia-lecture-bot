@@ -3,7 +3,6 @@ import { ChevronDownIcon, LinkExternalIcon, XCircleIcon } from '@primer/octicons
 import { memo, useState } from 'react'
 import ChatFeedback from './ChatFeedback'
 import CopyButton from './CopyButton'
-import MarkdownRender from './MarkdownRender'
 
 interface ChatItemProps {
   type: 'question' | 'answer' | 'error'
@@ -35,7 +34,6 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
               )}
             </div>
           </div>
-          {!collapsed && <MarkdownRender>{content}</MarkdownRender>}
         </div>
       )
     case 'answer':
@@ -84,7 +82,6 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
               )}
             </div>
           </div>
-          {!collapsed && <MarkdownRender>{content}</MarkdownRender>}
         </div>
       )
     case 'error':
@@ -105,7 +102,6 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
               )}
             </div>
           </div>
-          {!collapsed && <MarkdownRender>{content}</MarkdownRender>}
         </div>
       )
   }

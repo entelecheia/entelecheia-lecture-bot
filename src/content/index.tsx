@@ -1,12 +1,30 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { render } from 'preact'
 import '../../styles/base.css'
 import '../../styles/styles.scss'
 import BotContainer from '../components/BotContainer'
+import ChatContainer from '../components/ChatContainer'
 import { SiteConfiguration } from '../configs/siteConfig'
 import { getUserConfig, Theme } from '../configs/userConfig'
+import { initSession } from '../utils/initSession'
 import { getPossibleElementByQuerySelector } from '../utils/querySelector'
 import { detectSystemColorScheme } from '../utils/system'
+
+async function mountChatContainer(question: string, siteConfig: SiteConfiguration) {
+  const container = document.createElement('div')
+  container.className = 'chat-gpt-container'
+
+  render(
+    <ChatContainer
+      session={initSession()}
+      question={question}
+      siteConfig={siteConfig}
+      container={container}
+    />,
+    container,
+  )
+}
 
 async function mountBotContainer(question: string, siteConfig: SiteConfiguration) {
   const container = document.createElement('div')
@@ -73,6 +91,7 @@ async function run() {
   console.debug('Mount ChatGPT on', siteName)
   const initialQuestion = getBodyContent()
   mountBotContainer(initialQuestion, siteConfig)
+  // mountChatContainer(initialQuestion, siteConfig)
 }
 
 run()

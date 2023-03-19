@@ -27,7 +27,7 @@ interface ChatCardProps {
   onClose?: () => void
 }
 
-const ChatCard: React.FC<ChatCardProps> = (props) => {
+function ChatCard(props: ChatCardProps) {
   const [isReady, setIsReady] = useState(!props.question)
   const [port, setPort] = useState(() => Browser.runtime.connect())
   const [session, setSession] = useState(props.session)

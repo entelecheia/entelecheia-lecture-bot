@@ -17,7 +17,7 @@ interface ChatContainerProps {
   container: HTMLElement
 }
 
-const ChatContainer: React.FC<ChatContainerProps> = (props) => {
+function ChatContainer(props: ChatContainerProps) {
   const [triggered, setTriggered] = useState(false)
   const [config, setConfig] = useState(defaultConfig)
   const [render, setRender] = useState(false)
@@ -56,7 +56,7 @@ const ChatContainer: React.FC<ChatContainerProps> = (props) => {
 
     const sidebarContainer = getPossibleElementByQuerySelector(siteConfig.sidebarContainerQuery)
     if (sidebarContainer) {
-      sidebarContainer.prepend(container)
+      sidebarContainer.append(container)
     } else {
       const appendContainer = getPossibleElementByQuerySelector(siteConfig.appendContainerQuery)
       if (appendContainer) {

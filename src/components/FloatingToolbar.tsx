@@ -5,17 +5,17 @@ import Browser from 'webextension-polyfill'
 import { actionConfig, ActionConfigType } from '../configs/actionConfig'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
 import { useClampWindowSize } from '../hooks/useClampWindowSize'
+import { Session } from '../utils/initSession'
 import { isMobile } from '../utils/isMobile'
 import { setElementPositionInViewport } from '../utils/setElementPositionInViewport'
-import BotCard from './BotCard'
-
+import ChatCard from './ChatCard'
 const favicon = Browser.runtime.getURL('favicon.png')
 
 interface FloatingToolbarProps {
-  session: any
+  session: Session
   selection: string
   position: any
-  container: any
+  container: HTMLElement
   triggered?: boolean
   closeable?: boolean
   onClose?: () => void
@@ -24,7 +24,7 @@ interface FloatingToolbarProps {
 
 function FloatingToolbar(props: FloatingToolbarProps) {
   const [selection, setSelection] = useState(props.selection)
-  const [prompt, setPrompt] = useState(props.prompt)
+  const [prompt, setPrompt] = useState(props.prompt || '')
   const [triggered, setTriggered] = useState(props.triggered)
   const [config, setConfig] = useState(defaultConfig)
   const [render, setRender] = useState(false)
@@ -98,7 +98,7 @@ function FloatingToolbar(props: FloatingToolbarProps) {
         >
           <div className="bot-selection-window" style={{ width: windowSize[0] * 0.4 + 'px' }}>
             <div className="lecture-bot-container">
-              <BotCard
+              <ChatCard
                 session={props.session}
                 question={prompt}
                 draggable={true}
@@ -122,16 +122,16 @@ function FloatingToolbar(props: FloatingToolbarProps) {
         const action = actionConfig[key as keyof ActionConfigType]
         const IconComponent = action.icon
         actions.push(
-          <IconComponent
-            width={20}
-            height={20}
+          <div
             className="bot-selection-toolbar-button"
             title={action.label}
             onClick={async () => {
               setPrompt(await action.genPrompt(selection))
               setTriggered(true)
             }}
-          />,
+          >
+            <IconComponent width={20} height={20} />
+          </div>,
         )
       }
     }

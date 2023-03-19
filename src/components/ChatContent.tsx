@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import ChatItem from './ChatItem'
 import ChatItemData from './ChatItemData'
 
@@ -11,37 +11,35 @@ interface ChatContentProps {
   config: any
 }
 
-const ChatContent: React.FC<ChatContentProps> = ({
-  chatItemData,
-  session,
-  port,
-  windowSize,
-  config,
-}) => {
+function ChatContent(props: ChatContentProps) {
   const bodyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (bodyRef.current) {
       bodyRef.current.scrollTop = bodyRef.current.scrollHeight
     }
-  }, [session])
+  }, [props.session])
 
   useEffect(() => {
-    if (config.lockWhenAnswer && bodyRef.current) {
+    if (props.config.lockWhenAnswer && bodyRef.current) {
       bodyRef.current.scrollTop = bodyRef.current.scrollHeight
     }
-  }, [chatItemData, config.lockWhenAnswer])
+  }, [props.chatItemData, props.config.lockWhenAnswer])
 
   return (
-    <div ref={bodyRef} className="markdown-body" style={{ maxHeight: windowSize[1] * 0.75 + 'px' }}>
-      {chatItemData.map((data, idx) => (
+    <div
+      ref={bodyRef}
+      className="markdown-body"
+      style={{ maxHeight: props.windowSize[1] * 0.75 + 'px' }}
+    >
+      {props.chatItemData.map((data, idx) => (
         <ChatItem
           content={data.content}
           key={idx}
           type={data.type}
           session={data.session}
           done={data.done}
-          port={port}
+          port={props.port}
         />
       ))}
     </div>
