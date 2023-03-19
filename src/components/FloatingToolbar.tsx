@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react'
-import Draggable from 'react-draggable'
 import Browser from 'webextension-polyfill'
 import { actionConfig, ActionConfigType } from '../configs/actionConfig'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
@@ -8,7 +8,6 @@ import { useClampWindowSize } from '../hooks/useClampWindowSize'
 import { Session } from '../utils/initSession'
 import { isMobile } from '../utils/isMobile'
 import { setElementPositionInViewport } from '../utils/setElementPositionInViewport'
-import ChatCard from './ChatCard'
 
 interface FloatingToolbarProps {
   session: Session
@@ -87,31 +86,32 @@ function FloatingToolbar(props: FloatingToolbarProps) {
       updatePosition() // avoid jitter
     }
 
-    return (
-      <div data-theme={config.theme}>
-        <Draggable
-          handle=".dragbar"
-          onDrag={dragEvent.onDrag}
-          onStop={dragEvent.onStop}
-          position={virtualPosition}
-        >
-          <div className="bot-selection-window" style={{ width: windowSize[0] * 0.4 + 'px' }}>
-            <div className="lecture-bot-container">
-              <ChatCard
-                session={props.session}
-                question={prompt}
-                draggable={true}
-                closeable={props.closeable}
-                onClose={props.onClose}
-                onUpdate={() => {
-                  updatePosition()
-                }}
-              />
-            </div>
-          </div>
-        </Draggable>
-      </div>
-    )
+    return <div />
+    // return (
+    //   <div data-theme={config.theme}>
+    //     <Draggable
+    //       handle=".dragbar"
+    //       onDrag={dragEvent.onDrag}
+    //       onStop={dragEvent.onStop}
+    //       position={virtualPosition}
+    //     >
+    //       <div className="bot-selection-window" style={{ width: windowSize[0] * 0.4 + 'px' }}>
+    //         <div className="lecture-bot-container">
+    //           <ChatCard
+    //             session={props.session}
+    //             question={prompt}
+    //             draggable={true}
+    //             closeable={props.closeable}
+    //             onClose={props.onClose}
+    //             onUpdate={() => {
+    //               updatePosition()
+    //             }}
+    //           />
+    //         </div>
+    //       </div>
+    //     </Draggable>
+    //   </div>
+    // )
   } else {
     if (config.activeAction.length === 0) return <div />
     const actions = []

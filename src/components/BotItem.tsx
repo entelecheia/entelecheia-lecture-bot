@@ -14,7 +14,7 @@ interface Props {
   onStatusChange?: (status: QueryStatus) => void
 }
 
-function BotQuery(props: Props) {
+function BotItem(props: Props) {
   const [answer, setAnswer] = useState<Answer | null>(null)
   const [error, setError] = useState('')
   const [retry, setRetry] = useState(0)
@@ -118,4 +118,4 @@ function BotQuery(props: Props) {
   return <p className="text-[#b6b8ba] animate-pulse">Waiting for ChatGPT response...</p>
 }
 
-export default memo(BotQuery)
+export default memo(BotItem)

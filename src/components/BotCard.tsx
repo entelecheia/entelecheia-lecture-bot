@@ -1,7 +1,7 @@
 import { SearchIcon } from '@primer/octicons-react'
 import { useState } from 'preact/hooks'
 import { TriggerMode } from '../configs/userConfig'
-import BotQuery, { QueryStatus } from './BotQuery'
+import BotItem, { QueryStatus } from './BotItem'
 
 interface Props {
   question: string
@@ -13,11 +13,11 @@ function BotCard(props: Props) {
   const [triggered, setTriggered] = useState(false)
 
   if (props.triggerMode === TriggerMode.Automatically) {
-    return <BotQuery question={props.question} onStatusChange={props.onStatusChange} />
+    return <BotItem question={props.question} onStatusChange={props.onStatusChange} />
   }
 
   if (triggered) {
-    return <BotQuery question={props.question} onStatusChange={props.onStatusChange} />
+    return <BotItem question={props.question} onStatusChange={props.onStatusChange} />
   }
 
   return (
