@@ -4,7 +4,6 @@ import { memo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
 import { Session } from '../utils/initSession'
-import ChatFeedback from './ChatFeedback'
 import CopyButton from './CopyButton'
 
 interface ChatItemProps {
@@ -48,12 +47,6 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
                   Stop
                 </button>
               )}
-              {done && session && session.conversationId && (
-                <ChatFeedback
-                  messageId={session.messageId || ''}
-                  conversationId={session.conversationId}
-                />
-              )}
               {session && session.conversationId && (
                 <a
                   title="Continue on official website"
@@ -89,4 +82,12 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
       )
   }
 }
+
 export default memo(ChatItem)
+
+// {done && session && session.conversationId && (
+//   <ChatFeedback
+//     messageId={session.messageId || ''}
+//     conversationId={session.conversationId}
+//   />
+// )}

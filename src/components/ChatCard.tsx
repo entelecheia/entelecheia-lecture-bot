@@ -5,12 +5,27 @@ import FileSaver from 'file-saver'
 import { Key, memo, SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 import Browser from 'webextension-polyfill'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
-import ChatItemData from '../data/ChatItemData'
 import { useClampWindowSize } from '../hooks/useClampWindowSize'
 import { ConversationRecord, initSession, Session } from '../utils/initSession'
 import { isSafari } from '../utils/isSafari'
 import ChatInputBox from './ChatInputBox'
 import ChatItem from './ChatItem'
+
+type ChatItemType = 'question' | 'answer' | 'error'
+
+class ChatItemData {
+  type: ChatItemType
+  content: string
+  session: Session | null
+  done: boolean
+
+  constructor(type: ChatItemType, content: string, session: Session | null = null, done = false) {
+    this.type = type
+    this.content = content
+    this.session = session
+    this.done = done
+  }
+}
 
 interface ChatCardProps {
   session: Session
@@ -27,20 +42,22 @@ function ChatCard(props: ChatCardProps) {
   const [session, setSession] = useState(props.session)
   const windowSize = useClampWindowSize([0, Infinity], [250, 1100])
   const bodyRef = useRef<HTMLDivElement>(null)
-  const [chatItemData, setChatItemData] = useState(() => {
-    if (props.session.conversationRecords?.length === 0) {
-      if (props.question) {
-        return [new ChatItemData('answer', 'Waiting for response...')]
-      } else return []
-    } else {
-      const ret = []
-      for (const record of props.session.conversationRecords || []) {
-        ret.push(new ChatItemData('question', record.question + '\n', props.session, true))
-        ret.push(new ChatItemData('answer', record.answer + '\n', props.session, true))
+  const [chatItemData, setChatItemData] = useState<ChatItemData[]>(
+    (() => {
+      if (props.session.conversationRecords?.length === 0) {
+        if (props.question) {
+          return [new ChatItemData('answer', 'Waiting for response...', props.session)]
+        } else return []
+      } else {
+        const ret = []
+        for (const record of props.session.conversationRecords || []) {
+          ret.push(new ChatItemData('question', record.question + '\n', props.session, true))
+          ret.push(new ChatItemData('answer', record.answer + '\n', props.session, true))
+        }
+        return ret
       }
-      return ret
-    }
-  })
+    })(),
+  )
   const [config, setConfig] = useState(defaultConfig)
 
   useEffect(() => {
@@ -73,18 +90,15 @@ function ChatCard(props: ChatCardProps) {
   }, [port, props.question]) // usually only triggered once
 
   const UpdateAnswer = useCallback(
-    (value: unknown, appended: boolean, newType: ChatItemData['type'], done = false) => {
-      setChatItemData((old: any) => {
+    (value: string, appended: boolean, newType: ChatItemType, done = false) => {
+      setChatItemData((old) => {
         const copy = [...old]
-        const index = copy.reverse().findIndex((v: { type: string }) => v.type === 'answer')
-        if (index === -1) return copy.reverse()
-        copy[copy.length - 1 - index] = new ChatItemData(
-          newType,
-          appended ? copy[copy.length - 1 - index].content + value : value,
-        )
-        copy[copy.length - 1 - index].session = { ...session }
-        copy[copy.length - 1 - index].done = done
-        return copy.reverse()
+        const index = copy.findLastIndex((v: ChatItemData) => v.type === 'answer')
+        if (index === -1) return copy
+        copy[index] = new ChatItemData(newType, appended ? copy[index].content + value : value)
+        copy[index].session = { ...session }
+        copy[index].done = done
+        return copy
       })
     },
     [session],
@@ -219,7 +233,7 @@ function ChatCard(props: ChatCardProps) {
           try {
             port.postMessage({ session: newSession })
           } catch (e) {
-            UpdateAnswer(e, false, 'error')
+            UpdateAnswer((e as Error).toString(), false, 'error')
           }
         }}
       />

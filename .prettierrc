@@ -13,5 +13,10 @@
         "parser": "json"
       }
     }
-  ]
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
 }

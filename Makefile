@@ -28,10 +28,10 @@ verify-release: ## verify release
 
 .PHONY: build
 build: ## build the project
-	@node build.mjs --production
+	@npm run build
 	
 dev-build: ## build the project in dev mode
-	@node build.mjs --development
+	@npm run dev
 		
 ##@ Setup
 

@@ -117,7 +117,7 @@ async function attachToolbar(): Promise<void> {
 const siteRegex = /lecture\.entelecheia\.ai/
 const siteName = location.hostname.match(siteRegex)![0]
 const siteConfig = {
-  bodyContainerQuery: ['#jb-print-docs-body.onlyprint'],
+  bodyContainerQuery: ['.bd-article'],
   sidebarContainerQuery: ['.bd-sidebar-secondary.bd-toc'],
   appendContainerQuery: [],
   // appendContainerQuery: ['.sidebar-secondary-items.sidebar-secondary__inner'],
