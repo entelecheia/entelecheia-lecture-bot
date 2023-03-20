@@ -1,6 +1,7 @@
 import { defaults } from 'lodash-es'
 import Browser from 'webextension-polyfill'
 import { actionConfig, ActionConfigType } from './actionConfig'
+import { chatgptApiModelKeys, gptApiModelKeys } from './apiConfig'
 
 export enum TriggerMode {
   Automatically = 'automatically',
@@ -82,6 +83,12 @@ export async function getPreferredLanguage() {
     }
     return config.language
   })
+}
+
+export function isUsingApiKey(config: UserConfig) {
+  return (
+    gptApiModelKeys.includes(config.modelName) || chatgptApiModelKeys.includes(config.modelName)
+  )
 }
 
 export enum ProviderType {

@@ -2,8 +2,8 @@ import ExpiryMap from 'expiry-map'
 import { getUserConfig } from '../configs/userConfig'
 import { isSafari } from './isSafari'
 
-const KEY_ACCESS_TOKEN = 'accessToken'
-const cache = new ExpiryMap(10 * 1000)
+export const KEY_ACCESS_TOKEN = 'accessToken'
+export const cache = new ExpiryMap(10 * 1000)
 
 async function getAccessToken(): Promise<string> {
   if (cache.get(KEY_ACCESS_TOKEN)) {

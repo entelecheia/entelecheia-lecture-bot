@@ -31,9 +31,7 @@ export function ChatInputBox({ onSubmit, enabled }: ChatInputBoxProps) {
       disabled={!enabled}
       className="interact-input"
       placeholder={
-        enabled
-          ? 'Type your question here\nEnter to send, shift + enter to break line'
-          : 'Wait for the answer to finish and then continue here'
+        enabled ? 'Type your question here...' : 'Wait for the previous question to be answered...'
       }
       value={value}
       onChange={(e) => setValue(e.currentTarget.value)}

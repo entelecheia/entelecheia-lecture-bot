@@ -144,7 +144,7 @@ function getBodyContent() {
 async function run() {
   console.debug('Mount ChatGPT on', siteName)
   const initialQuestion = getBodyContent()
-  mountBotContainer(initialQuestion, siteConfig)
+  // mountBotContainer(initialQuestion, siteConfig)
   mountChatContainer(initialQuestion, siteConfig)
   attachToolbar()
 }

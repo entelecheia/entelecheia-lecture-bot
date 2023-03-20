@@ -30,13 +30,13 @@ function ChatCard(props: ChatCardProps) {
   const [chatItemData, setChatItemData] = useState(() => {
     if (props.session.conversationRecords?.length === 0) {
       if (props.question) {
-        return [new ChatItemData('answer', '<p class="chat-loading">Waiting for response...</p>')]
+        return [new ChatItemData('answer', 'Waiting for response...')]
       } else return []
     } else {
       const ret = []
       for (const record of props.session.conversationRecords || []) {
-        ret.push(new ChatItemData('question', record.question + '\n<hr/>', props.session, true))
-        ret.push(new ChatItemData('answer', record.answer + '\n<hr/>', props.session, true))
+        ret.push(new ChatItemData('question', record.question + '\n', props.session, true))
+        ret.push(new ChatItemData('answer', record.answer + '\n', props.session, true))
       }
       return ret
     }
@@ -114,7 +114,7 @@ function ChatCard(props: ChatCardProps) {
         setSession(msg.session)
       }
       if (msg.done) {
-        UpdateAnswer('\n<hr/>', true, 'answer', true)
+        UpdateAnswer('\n', true, 'answer', true)
         setIsReady(true)
       }
       if (msg.error) {
@@ -140,7 +140,7 @@ function ChatCard(props: ChatCardProps) {
             )
             break
           default:
-            setChatItemData([...chatItemData, new ChatItemData('error', msg.error + '\n<hr/>')])
+            setChatItemData([...chatItemData, new ChatItemData('error', msg.error + '\n')])
             break
         }
         setIsReady(true)
@@ -170,7 +170,7 @@ function ChatCard(props: ChatCardProps) {
           onClick={() => {
             let output = ''
             session.conversationRecords?.forEach((data: ConversationRecord) => {
-              output += `Question:\n\n${data.question}\n\nAnswer:\n\n${data.answer}\n\n<hr/>\n\n`
+              output += `Question:\n\n${data.question}\n\nAnswer:\n\n${data.answer}\n\n`
             })
             const blob = new Blob([output], { type: 'text/plain;charset=utf-8' })
             FileSaver.saveAs(blob, 'conversation.md')
@@ -209,11 +209,8 @@ function ChatCard(props: ChatCardProps) {
       <ChatInputBox
         enabled={isReady}
         onSubmit={(question) => {
-          const newQuestion = new ChatItemData('question', question + '\n<hr/>')
-          const newAnswer = new ChatItemData(
-            'answer',
-            '<p class="chat-loading">Waiting for response...</p>',
-          )
+          const newQuestion = new ChatItemData('question', question + '\n')
+          const newAnswer = new ChatItemData('answer', 'Waiting for response...')
           setChatItemData([...chatItemData, newQuestion, newAnswer])
           setIsReady(false)
 

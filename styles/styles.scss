@@ -120,6 +120,7 @@
       color: #ff6347;
     }
   }
+
   .interact-input {
     // box-sizing: border-box;
     padding: 5px 15px;
@@ -128,7 +129,7 @@
     // border-top: 1px solid var(--theme-border-color);
     width: 100%;
     // background-color: var(--theme-color);
-    // color: var(--font-color);
+    color: var(--font-color);
     resize: none;
     max-height: 240px;
   }

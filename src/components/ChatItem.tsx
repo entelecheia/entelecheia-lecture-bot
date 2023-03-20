@@ -1,51 +1,42 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChevronDownIcon, LinkExternalIcon, XCircleIcon } from '@primer/octicons-react'
-import { memo, useState } from 'react'
+import { LinkExternalIcon } from '@primer/octicons-react'
+import { memo } from 'react'
+import ReactMarkdown from 'react-markdown'
+import rehypeHighlight from 'rehype-highlight'
+import { Session } from '../utils/initSession'
 import ChatFeedback from './ChatFeedback'
 import CopyButton from './CopyButton'
 
 interface ChatItemProps {
   type: 'question' | 'answer' | 'error'
   content: string
-  session: any
+  session: Session
   done: boolean
   port: any
 }
 
 function ChatItem({ type, content, session, done, port }: ChatItemProps) {
-  const [collapsed, setCollapsed] = useState(false)
-
   switch (type) {
     case 'question':
       return (
         <div className={type} dir="auto">
           <div className="chat-header">
             <p>You:</p>
-            <div style={{ display: 'flex', gap: '15px' }}>
-              <CopyButton contentFn={() => content} size={14} />
-              {!collapsed ? (
-                <span
-                  title="Collapse"
-                  className="chat-util-icon"
-                  onClick={() => setCollapsed(true)}
-                >
-                  <XCircleIcon size={14} />
-                </span>
-              ) : (
-                <span title="Expand" className="chat-util-icon" onClick={() => setCollapsed(false)}>
-                  <ChevronDownIcon size={14} />
-                </span>
-              )}
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <CopyButton contentFn={() => content} size={12} />
             </div>
           </div>
+          <ReactMarkdown rehypePlugins={[[rehypeHighlight, { detect: true }]]}>
+            {content}
+          </ReactMarkdown>
         </div>
       )
     case 'answer':
       return (
         <div className={type} dir="auto">
           <div className="chat-header">
-            <p>{session ? 'ChatGPT:' : 'Loading...'}</p>
-            <div style={{ display: 'flex', gap: '15px' }}>
+            <p>{session ? 'AI:' : 'Loading...'}</p>
+            <div style={{ display: 'flex', gap: '10px' }}>
               {!done && (
                 <button
                   type="button"
@@ -59,7 +50,7 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
               )}
               {done && session && session.conversationId && (
                 <ChatFeedback
-                  messageId={session.messageId}
+                  messageId={session.messageId || ''}
                   conversationId={session.conversationId}
                 />
               )}
@@ -74,22 +65,12 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
                   <LinkExternalIcon size={14} />
                 </a>
               )}
-              {session && <CopyButton contentFn={() => content} size={14} />}
-              {!collapsed ? (
-                <span
-                  title="Collapse"
-                  className="chat-util-icon"
-                  onClick={() => setCollapsed(true)}
-                >
-                  <XCircleIcon size={14} />
-                </span>
-              ) : (
-                <span title="Expand" className="chat-util-icon" onClick={() => setCollapsed(false)}>
-                  <ChevronDownIcon size={14} />
-                </span>
-              )}
+              {session && <CopyButton contentFn={() => content} size={12} />}
             </div>
           </div>
+          <ReactMarkdown rehypePlugins={[[rehypeHighlight, { detect: true }]]}>
+            {content}
+          </ReactMarkdown>
         </div>
       )
     case 'error':
@@ -97,23 +78,13 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
         <div className={type} dir="auto">
           <div className="chat-header">
             <p>Error:</p>
-            <div style={{ display: 'flex', gap: '15px' }}>
-              <CopyButton contentFn={() => content} size={14} />
-              {!collapsed ? (
-                <span
-                  title="Collapse"
-                  className="chat-util-icon"
-                  onClick={() => setCollapsed(true)}
-                >
-                  <XCircleIcon size={14} />
-                </span>
-              ) : (
-                <span title="Expand" className="chat-util-icon" onClick={() => setCollapsed(false)}>
-                  <ChevronDownIcon size={14} />
-                </span>
-              )}
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <CopyButton contentFn={() => content} size={12} />
             </div>
           </div>
+          <ReactMarkdown rehypePlugins={[[rehypeHighlight, { detect: true }]]}>
+            {content}
+          </ReactMarkdown>
         </div>
       )
   }
