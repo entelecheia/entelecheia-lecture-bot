@@ -62,7 +62,7 @@ function OptionsPage(props: { theme: Theme; onThemeChange: (theme: Theme) => voi
           <div className="flex flex-row items-center gap-2">
             <img src={favicon} className="w-10 h-10 rounded-lg" />
             <span className="font-semibold">
-              LectureBot for ἐντελέχεια.αι(v{getExtensionVersion()})
+              LectureBot for ἐντελέχεια.άι(v{getExtensionVersion()})
             </span>
           </div>
         </nav>

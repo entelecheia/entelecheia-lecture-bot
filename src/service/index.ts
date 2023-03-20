@@ -74,7 +74,7 @@ Browser.runtime.onInstalled.addListener((details) => {
 //   const menuId = 'LectureBot-Menu'
 //   Browser.contextMenus.create({
 //     id: menuId,
-//     title: 'ἐντελέχεια.αι',
+//     title: 'ἐντελέχεια.άι',
 //     contexts: ['all'],
 //   })
 

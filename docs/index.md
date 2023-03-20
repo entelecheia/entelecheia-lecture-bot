@@ -1,1 +1,1 @@
-# LectureBot for ἐντελέχεια.αι
+# LectureBot for ἐντελέχεια.άι
