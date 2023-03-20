@@ -34,9 +34,15 @@ type UserConfigType = {
   triggerMode: TriggerMode
   theme: Theme
   language: Language
-  lockWhenAnswer: boolean
-  activeAction: Array<keyof ActionConfigType>
+  modelName: string
+  apiKey: string
   accessToken: string
+  ChatGptWebApiUrl: string
+  ChatGptWebApiPath: string
+  OpenAiApiUrl: string
+  //
+  activeAction: Array<keyof ActionConfigType>
+  lockWhenAnswer: boolean
   tokenSavedOn: number
 }
 
@@ -44,9 +50,15 @@ const userConfigWithDefaultValue: UserConfigType = {
   triggerMode: TriggerMode.Automatically,
   theme: Theme.Auto,
   language: Language.Auto,
-  lockWhenAnswer: false,
-  activeAction: Object.keys(actionConfig) as Array<keyof ActionConfigType>,
+  modelName: 'chatgptFree35',
+  apiKey: '',
   accessToken: '',
+  ChatGptWebApiUrl: 'https://chat.openai.com',
+  ChatGptWebApiPath: '/backend-api/conversation',
+  OpenAiApiUrl: 'https://api.openai.com',
+  //
+  activeAction: Object.keys(actionConfig) as Array<keyof ActionConfigType>,
+  lockWhenAnswer: false,
   tokenSavedOn: 0,
 }
 

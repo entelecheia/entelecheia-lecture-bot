@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Browser from 'webextension-polyfill'
+import { ChatGPTProvider, getChatGPTAccessToken, sendMessageFeedback } from '../apis/chatgpt'
+import { OpenAIProvider } from '../apis/openai'
 import { getProviderConfigs, ProviderType } from '../configs/userConfig'
 import { Provider } from '../utils/interfaces'
-import { ChatGPTProvider, getChatGPTAccessToken, sendMessageFeedback } from './apis/chatgpt'
-import { OpenAIProvider } from './apis/openai'
 
 async function generateAnswers(port: Browser.Runtime.Port, question: string) {
   const providerConfigs = await getProviderConfigs()

@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { createParser } from 'eventsource-parser'
 import { isEmpty } from 'lodash-es'
-import { streamAsyncIterable } from './streamSsyncIterable.js'
+import { streamAsyncIterable } from './streamAsyncIterable.js'
 
+// This function is used to fetch a resource over SSE and call a callback function for each
+// message received.
 export async function fetchSSE(
   resource: string,
   options: RequestInit & { onMessage: (message: string) => void },

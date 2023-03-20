@@ -1,22 +1,16 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DownloadIcon } from '@primer/octicons-react'
+import { DownloadIcon, GearIcon } from '@primer/octicons-react'
 import FileSaver from 'file-saver'
-import { render } from 'preact'
 import { Key, memo, SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
-import { WindowDesktop, XLg } from 'react-bootstrap-icons'
 import Browser from 'webextension-polyfill'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
 import ChatItemData from '../data/ChatItemData'
 import { useClampWindowSize } from '../hooks/useClampWindowSize'
-import { createElementAtPosition } from '../utils/createElementAtPosition'
 import { ConversationRecord, initSession, Session } from '../utils/initSession'
 import { isSafari } from '../utils/isSafari'
 import ChatInputBox from './ChatInputBox'
 import ChatItem from './ChatItem'
-import FloatingToolbar from './FloatingToolbar'
-
-const favicon = Browser.runtime.getURL('favicon.png')
 
 interface ChatCardProps {
   session: Session
@@ -105,6 +99,7 @@ function ChatCard(props: ChatCardProps) {
       port.onDisconnect.removeListener(listener)
     }
   }, [port])
+
   useEffect(() => {
     const listener = (msg: {
       answer: any
@@ -157,53 +152,17 @@ function ChatCard(props: ChatCardProps) {
     }
   }, [UpdateAnswer, chatItemData, port.onMessage])
 
+  const openOptionsPage = useCallback(() => {
+    Browser.runtime.sendMessage({ type: 'OPEN_OPTIONS_PAGE' })
+  }, [])
+
   return (
     <div className="chat-inner">
       <div className="chat-header">
-        {!props.closeable ? (
-          <img
-            src={favicon}
-            width="20"
-            height="20"
-            style={{ margin: '5px 15px 0px', userSelect: 'none' }}
-          />
-        ) : (
-          <XLg
-            className="chat-util-icon"
-            style={{ margin: '5px 15px 0px' }}
-            title="Close the Window"
-            size={16}
-            onClick={() => {
-              if (props.onClose) props.onClose()
-            }}
-          />
-        )}
-        {props.draggable ? (
-          <div className="dragbar" />
-        ) : (
-          <WindowDesktop
-            className="chat-util-icon"
-            title="Float the Window"
-            size={16}
-            onClick={() => {
-              const position = { x: window.innerWidth / 2 - 300, y: window.innerHeight / 2 - 200 }
-              const toolbarContainer = createElementAtPosition(position.x, position.y)
-              toolbarContainer.className = 'toolbar-container-not-queryable'
-              render(
-                <FloatingToolbar
-                  session={session}
-                  selection=""
-                  position={position}
-                  container={toolbarContainer}
-                  closeable={true}
-                  triggered={true}
-                  onClose={() => toolbarContainer.remove()}
-                />,
-                toolbarContainer,
-              )
-            }}
-          />
-        )}
+        <span className="cursor-pointer leading-[0]" onClick={openOptionsPage}>
+          <GearIcon size={14} />
+        </span>
+        <span className="font-bold">ἐντελέχεια.άι</span>
         <span
           title="Save Conversation"
           className="chat-util-icon"
@@ -220,7 +179,7 @@ function ChatCard(props: ChatCardProps) {
           <DownloadIcon size={16} />
         </span>
       </div>
-      <hr />
+      {/* <hr /> */}
       <div
         ref={bodyRef}
         className="markdown-body"

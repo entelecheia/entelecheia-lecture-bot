@@ -12,7 +12,8 @@ import {
   TRIGGER_MODE_TEXT,
   updateUserConfig,
 } from '../configs/userConfig'
-import { detectSystemColorScheme, getExtensionVersion } from '../utils/system'
+import { detectSystemColorScheme } from '../utils/detectSystemColorScheme'
+import { getExtensionVersion } from '../utils/getExtensionVersion'
 import ProviderSelect from './ProviderSelect'
 
 const favicon = Browser.runtime.getURL('favicon.png')

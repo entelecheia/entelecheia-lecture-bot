@@ -1,7 +1,7 @@
 import ExpiryMap from 'expiry-map'
 import { v4 as uuidv4 } from 'uuid'
-import { fetchSSE } from '../../utils/fetchSSE'
-import { GenerateAnswerParams, Provider } from '../../utils/interfaces'
+import { fetchSSE } from '../utils/fetchSSE'
+import { GenerateAnswerParams, Provider } from '../utils/interfaces'
 
 async function request(token: string, method: string, path: string, data?: unknown) {
   return fetch(`https://chat.openai.com/backend-api${path}`, {

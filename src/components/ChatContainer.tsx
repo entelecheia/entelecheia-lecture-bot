@@ -6,8 +6,8 @@ import { useCallback, useEffect, useState } from 'react'
 import Browser from 'webextension-polyfill'
 import { SiteConfiguration } from '../configs/siteConfig'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
+import { getPossibleElementByQuerySelector } from '../utils/getPossibleElementByQuerySelector'
 import { Session } from '../utils/initSession'
-import { getPossibleElementByQuerySelector } from '../utils/querySelector'
 import ChatCard from './ChatCard'
 
 interface ChatContainerProps {

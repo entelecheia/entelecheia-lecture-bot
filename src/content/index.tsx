@@ -9,9 +9,9 @@ import FloatingToolbar from '../components/FloatingToolbar'
 import { SiteConfiguration } from '../configs/siteConfig'
 import { getUserConfig, Theme } from '../configs/userConfig'
 import { createElementAtPosition } from '../utils/createElementAtPosition'
+import { detectSystemColorScheme } from '../utils/detectSystemColorScheme'
+import { getPossibleElementByQuerySelector } from '../utils/getPossibleElementByQuerySelector'
 import { initSession } from '../utils/initSession'
-import { getPossibleElementByQuerySelector } from '../utils/querySelector'
-import { detectSystemColorScheme } from '../utils/system'
 
 async function mountChatContainer(question: string, siteConfig: SiteConfiguration) {
   const container = document.createElement('div')

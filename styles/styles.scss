@@ -273,7 +273,9 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    gap: 5px;
     color: var(--font-color);
 
     p {
@@ -291,6 +293,8 @@
     }
 
     .chat-util-icon {
+      display: flex;
+      gap: 6px;
       cursor: pointer;
     }
 

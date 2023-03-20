@@ -1,7 +1,7 @@
 export type ConversationRecord = {
   question: string
   answer: string
-  error: string
+  error?: string
 }
 
 export interface Session {
