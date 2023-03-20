@@ -15,7 +15,7 @@ import { detectSystemColorScheme } from '../utils/system'
 
 async function mountChatContainer(question: string, siteConfig: SiteConfiguration) {
   const container = document.createElement('div')
-  container.className = 'chat-gpt-container'
+  container.className = 'lecture-chat-container'
 
   render(
     <ChatContainer
@@ -145,7 +145,7 @@ async function run() {
   console.debug('Mount ChatGPT on', siteName)
   const initialQuestion = getBodyContent()
   mountBotContainer(initialQuestion, siteConfig)
-  // mountChatContainer(initialQuestion, siteConfig)
+  mountChatContainer(initialQuestion, siteConfig)
   attachToolbar()
 }
 

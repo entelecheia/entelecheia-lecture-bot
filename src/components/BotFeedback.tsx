@@ -60,16 +60,16 @@ function BotFeedback(props: Props) {
   }, [copied])
 
   return (
-    <div className="gpt-feedback">
+    <div className="chat-feedback">
       <span
         onClick={clickThumbsUp}
-        className={action === 'thumbsUp' ? 'gpt-feedback-selected' : undefined}
+        className={action === 'thumbsUp' ? 'chat-feedback-selected' : undefined}
       >
         <ThumbsupIcon size={14} />
       </span>
       <span
         onClick={clickThumbsDown}
-        className={action === 'thumbsDown' ? 'gpt-feedback-selected' : undefined}
+        className={action === 'thumbsDown' ? 'chat-feedback-selected' : undefined}
       >
         <ThumbsdownIcon size={14} />
       </span>

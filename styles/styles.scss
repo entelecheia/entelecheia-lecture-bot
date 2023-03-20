@@ -1,5 +1,39 @@
 @import 'light.scss';
 @import 'dark.scss';
+@import 'github-markdown-css/github-markdown.css';
+@import 'github-markdown-css/github-markdown-dark.css';
+@import 'github-markdown-css/github-markdown-light.css';
+// @import 'highlight.js/scss/github.scss';
+// @import 'highlight.js/scss/github-dark.scss';
+
+[data-theme='auto'] {
+  @media screen and (prefers-color-scheme: dark) {
+    --font-color: #c9d1d9;
+    --theme-color: #202124;
+    --theme-border-color: #3c4043;
+    --dragbar-color: #3c4043;
+  }
+  @media screen and (prefers-color-scheme: light) {
+    --font-color: #24292f;
+    --theme-color: #eaecf0;
+    --theme-border-color: #aeafb2;
+    --dragbar-color: #dfe0e1;
+  }
+}
+
+[data-theme='dark'] {
+  --font-color: #c9d1d9;
+  --theme-color: #202124;
+  --theme-border-color: #3c4043;
+  --dragbar-color: #3c4043;
+}
+
+[data-theme='light'] {
+  --font-color: #24292f;
+  --theme-color: #eaecf0;
+  --theme-border-color: #aeafb2;
+  --dragbar-color: #ccced0;
+}
 
 .lecture-bot-container {
   margin-bottom: 30px;
@@ -29,7 +63,7 @@
     gap: 6px;
   }
 
-  #gpt-answer.markdown-body.bot-markdown {
+  #chat-answer.markdown-body.bot-markdown {
     font-size: 15px;
     line-height: 1.6;
 
@@ -75,14 +109,14 @@
     margin-bottom: 10px;
     gap: 5px;
 
-    .gpt-feedback {
+    .chat-feedback {
       margin-left: auto;
       display: flex;
       gap: 6px;
       cursor: pointer;
     }
 
-    .gpt-feedback-selected {
+    .chat-feedback-selected {
       color: #ff6347;
     }
   }
@@ -129,13 +163,17 @@
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
 }
 
-.chat-gpt-container {
+.lecture-chat-sidebar-free {
+  margin-left: 60px;
+}
+
+.lecture-chat-container {
   width: 100%;
   flex-basis: 0;
   flex-grow: 1;
   margin-bottom: 20px;
 
-  .gpt-inner {
+  .chat-inner {
     border-radius: 8px;
     border: 1px solid;
     overflow: hidden;
@@ -188,9 +226,9 @@
     cursor: pointer;
   }
 
-  .gpt-loading {
+  .chat-loading {
     color: var(--font-color);
-    animation: gpt-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: chat-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
   .code-copy-btn {
@@ -230,7 +268,7 @@
     }
   }
 
-  .gpt-header {
+  .chat-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -242,17 +280,17 @@
       font-weight: bold;
     }
 
-    .gpt-feedback {
+    .chat-feedback {
       display: flex;
       gap: 6px;
       cursor: pointer;
     }
 
-    .gpt-feedback-selected {
+    .chat-feedback-selected {
       color: #f08080;
     }
 
-    .gpt-util-icon {
+    .chat-util-icon {
       cursor: pointer;
     }
 

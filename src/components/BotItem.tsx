@@ -67,7 +67,7 @@ function BotItem(props: Props) {
 
   if (answer) {
     return (
-      <div className="markdown-body bot-markdown" id="gpt-answer" dir="auto">
+      <div className="markdown-body bot-markdown" id="chat-answer" dir="auto">
         <div className="bot-header">
           <span className="font-bold">ἐντελέχεια.άι</span>
           <span className="cursor-pointer leading-[0]" onClick={openOptionsPage}>

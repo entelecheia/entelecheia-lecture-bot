@@ -1,12 +1,9 @@
 import archiver from 'archiver'
 import autoprefixer from 'autoprefixer'
-import * as dotenv from 'dotenv'
 import esbuild from 'esbuild'
 import postcssPlugin from 'esbuild-style-plugin'
 import fs from 'fs-extra'
 import tailwindcss from 'tailwindcss'
-
-dotenv.config()
 
 const outdir = 'build'
 
@@ -21,20 +18,19 @@ async function runEsbuild() {
       'src/service/index.ts',
       'src/options/index.tsx',
       'src/popup/index.ts',
+      'src/styles/styles.mjs',
     ],
     bundle: true,
     outdir: outdir,
     treeShaking: true,
     minify: true,
     legalComments: 'none',
-    define: {
-      'process.env.NODE_ENV': '"production"',
-    },
     jsxFactory: 'h',
     jsxFragment: 'Fragment',
     jsx: 'automatic',
     loader: {
       '.png': 'dataurl',
+      '.scss': 'css',
     },
     plugins: [
       postcssPlugin({
@@ -75,10 +71,10 @@ async function build() {
     { src: 'build/service/index.js', dst: 'serviceWorker.js' },
     { src: 'build/options/index.js', dst: 'options.js' },
     { src: 'build/options/index.css', dst: 'options.css' },
-    { src: 'static/options/index.html', dst: 'options.html' },
     { src: 'build/popup/index.js', dst: 'popup.js' },
+    { src: 'src/favicon.png', dst: 'favicon.png' },
+    { src: 'static/options/index.html', dst: 'options.html' },
     { src: 'static/popup/index.html', dst: 'popup.html' },
-    { src: 'static/icons/favicon.png', dst: 'favicon.png' },
     { src: 'static/_locales', dst: '_locales' },
   ]
 

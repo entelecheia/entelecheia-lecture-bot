@@ -22,7 +22,7 @@ function CopyButton({ className, contentFn, size }: CopyButtonProps) {
   }
 
   return (
-    <span title="Copy" className={`gpt-util-icon ${className ? className : ''}`} onClick={onClick}>
+    <span title="Copy" className={`chat-util-icon ${className ? className : ''}`} onClick={onClick}>
       {copied ? <CheckIcon size={size} /> : <CopyIcon size={size} />}
     </span>
   )

@@ -36,7 +36,7 @@ function ChatCard(props: ChatCardProps) {
   const [chatItemData, setChatItemData] = useState(() => {
     if (props.session.conversationRecords?.length === 0) {
       if (props.question) {
-        return [new ChatItemData('answer', '<p class="gpt-loading">Waiting for response...</p>')]
+        return [new ChatItemData('answer', '<p class="chat-loading">Waiting for response...</p>')]
       } else return []
     } else {
       const ret = []
@@ -158,8 +158,8 @@ function ChatCard(props: ChatCardProps) {
   }, [UpdateAnswer, chatItemData, port.onMessage])
 
   return (
-    <div className="gpt-inner">
-      <div className="gpt-header">
+    <div className="chat-inner">
+      <div className="chat-header">
         {!props.closeable ? (
           <img
             src={favicon}
@@ -169,7 +169,7 @@ function ChatCard(props: ChatCardProps) {
           />
         ) : (
           <XLg
-            className="gpt-util-icon"
+            className="chat-util-icon"
             style={{ margin: '5px 15px 0px' }}
             title="Close the Window"
             size={16}
@@ -182,7 +182,7 @@ function ChatCard(props: ChatCardProps) {
           <div className="dragbar" />
         ) : (
           <WindowDesktop
-            className="gpt-util-icon"
+            className="chat-util-icon"
             title="Float the Window"
             size={16}
             onClick={() => {
@@ -206,7 +206,7 @@ function ChatCard(props: ChatCardProps) {
         )}
         <span
           title="Save Conversation"
-          className="gpt-util-icon"
+          className="chat-util-icon"
           style={{ margin: '15px 15px 10px' }}
           onClick={() => {
             let output = ''
@@ -253,7 +253,7 @@ function ChatCard(props: ChatCardProps) {
           const newQuestion = new ChatItemData('question', question + '\n<hr/>')
           const newAnswer = new ChatItemData(
             'answer',
-            '<p class="gpt-loading">Waiting for response...</p>',
+            '<p class="chat-loading">Waiting for response...</p>',
           )
           setChatItemData([...chatItemData, newQuestion, newAnswer])
           setIsReady(false)

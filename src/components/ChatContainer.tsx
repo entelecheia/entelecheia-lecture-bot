@@ -50,7 +50,7 @@ function ChatContainer(props: ChatContainerProps) {
 
     const container = props.container
     const siteConfig = props.siteConfig
-    container.classList.remove('sidebar-free')
+    container.classList.remove('lecture-chat-sidebar-free')
 
     if (!siteConfig) return
 
@@ -60,7 +60,7 @@ function ChatContainer(props: ChatContainerProps) {
     } else {
       const appendContainer = getPossibleElementByQuerySelector(siteConfig.appendContainerQuery)
       if (appendContainer) {
-        container.classList.add('sidebar-free')
+        container.classList.add('lecture-chat-sidebar-free')
         appendContainer.appendChild(container)
       }
     }
@@ -83,7 +83,7 @@ function ChatContainer(props: ChatContainerProps) {
                   }
                   return (
                     <p
-                      className="gpt-inner manual-btn icon-and-text"
+                      className="chat-inner manual-btn icon-and-text"
                       onClick={() => setTriggered(true)}
                     >
                       <SearchIcon size="small" /> Ask ChatGPT
@@ -92,7 +92,7 @@ function ChatContainer(props: ChatContainerProps) {
               }
             else
               return (
-                <p className="gpt-inner icon-and-text">
+                <p className="chat-inner icon-and-text">
                   <LightBulbIcon size="small" /> No Input Found
                 </p>
               )

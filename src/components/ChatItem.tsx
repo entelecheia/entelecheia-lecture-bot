@@ -19,16 +19,20 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
     case 'question':
       return (
         <div className={type} dir="auto">
-          <div className="gpt-header">
+          <div className="chat-header">
             <p>You:</p>
             <div style={{ display: 'flex', gap: '15px' }}>
               <CopyButton contentFn={() => content} size={14} />
               {!collapsed ? (
-                <span title="Collapse" className="gpt-util-icon" onClick={() => setCollapsed(true)}>
+                <span
+                  title="Collapse"
+                  className="chat-util-icon"
+                  onClick={() => setCollapsed(true)}
+                >
                   <XCircleIcon size={14} />
                 </span>
               ) : (
-                <span title="Expand" className="gpt-util-icon" onClick={() => setCollapsed(false)}>
+                <span title="Expand" className="chat-util-icon" onClick={() => setCollapsed(false)}>
                   <ChevronDownIcon size={14} />
                 </span>
               )}
@@ -39,7 +43,7 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
     case 'answer':
       return (
         <div className={type} dir="auto">
-          <div className="gpt-header">
+          <div className="chat-header">
             <p>{session ? 'ChatGPT:' : 'Loading...'}</p>
             <div style={{ display: 'flex', gap: '15px' }}>
               {!done && (
@@ -72,11 +76,15 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
               )}
               {session && <CopyButton contentFn={() => content} size={14} />}
               {!collapsed ? (
-                <span title="Collapse" className="gpt-util-icon" onClick={() => setCollapsed(true)}>
+                <span
+                  title="Collapse"
+                  className="chat-util-icon"
+                  onClick={() => setCollapsed(true)}
+                >
                   <XCircleIcon size={14} />
                 </span>
               ) : (
-                <span title="Expand" className="gpt-util-icon" onClick={() => setCollapsed(false)}>
+                <span title="Expand" className="chat-util-icon" onClick={() => setCollapsed(false)}>
                   <ChevronDownIcon size={14} />
                 </span>
               )}
@@ -87,16 +95,20 @@ function ChatItem({ type, content, session, done, port }: ChatItemProps) {
     case 'error':
       return (
         <div className={type} dir="auto">
-          <div className="gpt-header">
+          <div className="chat-header">
             <p>Error:</p>
             <div style={{ display: 'flex', gap: '15px' }}>
               <CopyButton contentFn={() => content} size={14} />
               {!collapsed ? (
-                <span title="Collapse" className="gpt-util-icon" onClick={() => setCollapsed(true)}>
+                <span
+                  title="Collapse"
+                  className="chat-util-icon"
+                  onClick={() => setCollapsed(true)}
+                >
                   <XCircleIcon size={14} />
                 </span>
               ) : (
-                <span title="Expand" className="gpt-util-icon" onClick={() => setCollapsed(false)}>
+                <span title="Expand" className="chat-util-icon" onClick={() => setCollapsed(false)}>
                   <ChevronDownIcon size={14} />
                 </span>
               )}
