@@ -142,9 +142,6 @@ async function run() {
   const initialQuestion = getBodyContent()
   const session = initSession()
 
-  // Create the ChatContainer once and keep a reference to it
-  let chatContainerRef: typeof ChatContainer | null = null
-
   const container = document.createElement('div')
   container.className = 'lecture-chat-container'
   render(
@@ -153,16 +150,12 @@ async function run() {
       question={initialQuestion}
       siteConfig={siteConfig}
       container={container}
-      ref={(ref: any) => (chatContainerRef = ref)}
     />,
     container,
   )
 
   function handlePromptGenerated(prompt: string) {
-    // Update the prompt in the ChatContainer
-    // if (chatContainerRef) {
-    //   chatContainerRef.current.setQuestion(prompt)
-    // }
+    window.postMessage({ type: 'NEW_PROMPT', prompt }, '*')
   }
 
   // Call mountChatContainer with the initialQuestion as the initial prompt

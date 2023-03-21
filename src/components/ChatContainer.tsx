@@ -15,7 +15,6 @@ interface ChatContainerProps {
   question: string
   siteConfig: SiteConfiguration
   container: HTMLElement
-  ref: any
 }
 
 function ChatContainer(props: ChatContainerProps) {
@@ -33,6 +32,20 @@ function ChatContainer(props: ChatContainerProps) {
   useEffect(() => {
     setQuestion(question || '')
   }, [question])
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'NEW_PROMPT') {
+        const newPrompt = event.data.prompt
+        setQuestion(newPrompt)
+      }
+    }
+
+    window.addEventListener('message', handleMessage)
+    return () => {
+      window.removeEventListener('message', handleMessage)
+    }
+  }, [])
 
   useEffect(() => {
     const listener = (changes: Browser.Storage.StorageAreaOnChangedChangesType<any, any>) => {
