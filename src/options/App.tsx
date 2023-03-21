@@ -8,8 +8,8 @@ import {
   getUserConfig,
   Language,
   ThemeMode,
+  TiggerModeText,
   TriggerMode,
-  TRIGGER_MODE_TEXT,
   updateUserConfig,
 } from '../configs/userConfig'
 import { detectSystemColorScheme } from '../utils/detectSystemColorScheme'
@@ -76,7 +76,7 @@ function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode
             value={triggerMode}
             onChange={(val) => onTriggerModeChange(val as TriggerMode)}
           >
-            {Object.entries(TRIGGER_MODE_TEXT).map(([value, texts]) => {
+            {Object.entries(TiggerModeText).map(([value, texts]) => {
               return (
                 <Radio key={value} value={value}>
                   {texts.title}
@@ -120,7 +120,7 @@ function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode
             ))}
           </Select>
           <Text h3 className="mt-5 mb-0">
-            AI Provider
+            API Provider
           </Text>
           <ProviderSelect />
           <Text h3 className="mt-8">

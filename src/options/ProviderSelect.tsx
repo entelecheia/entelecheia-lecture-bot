@@ -3,13 +3,14 @@ import { Button, Input, Select, Spinner, Tabs, useInput, useToasts } from '@geis
 import { Fragment } from 'preact'
 import { FC, useCallback, useState } from 'react'
 import useSWR from 'swr'
-import { getApiConfigs } from '../configs/apiConfig'
 import {
+  getApiConfigs,
   getProviderConfigs,
   ProviderConfigs,
   ProviderType,
   saveProviderConfigs,
-} from '../configs/userConfig'
+} from '../configs/apiConfig'
+// import { Models, chatgptWebModelKeys, gptApiModelKeys, chatgptApiModelKeys} from '../configs/apiConfig'
 
 interface ConfigProps {
   config: ProviderConfigs

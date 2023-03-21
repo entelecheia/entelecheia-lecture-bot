@@ -1,6 +1,47 @@
+import Browser from 'webextension-polyfill'
+
 type ModelInfo = {
   value: string
   desc: string
+}
+
+export enum ProviderType {
+  ChatGPT = 'chatgpt',
+  GPT3 = 'gpt3',
+}
+
+interface GPT3ProviderConfig {
+  model: string
+  apiKey: string
+}
+
+export interface ProviderConfigs {
+  provider: ProviderType
+  configs: {
+    [ProviderType.GPT3]: GPT3ProviderConfig | undefined
+  }
+}
+
+export async function getProviderConfigs(): Promise<ProviderConfigs> {
+  const { provider = ProviderType.ChatGPT } = await Browser.storage.local.get('provider')
+  const configKey = `provider:${ProviderType.GPT3}`
+  const result = await Browser.storage.local.get(configKey)
+  return {
+    provider,
+    configs: {
+      [ProviderType.GPT3]: result[configKey],
+    },
+  }
+}
+
+export async function saveProviderConfigs(
+  provider: ProviderType,
+  configs: ProviderConfigs['configs'],
+) {
+  return Browser.storage.local.set({
+    provider,
+    [`provider:${ProviderType.GPT3}`]: configs[ProviderType.GPT3],
+  })
 }
 
 export const Models: Record<string, ModelInfo> = {
