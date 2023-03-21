@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { CheckIcon, CopyIcon } from '@primer/octicons-react'
 import { useEffect, useState } from 'react'
 import Browser from 'webextension-polyfill'
 import { actionConfig, ActionConfigType } from '../configs/actionConfig'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
-import { useClampWindowSize } from '../hooks/useClampWindowSize'
 import { Session } from '../utils/initSession'
 import { isMobile } from '../utils/isMobile'
 import { setElementPositionInViewport } from '../utils/setElementPositionInViewport'
@@ -28,7 +28,8 @@ function FloatingToolbar(props: FloatingToolbarProps) {
   const [render, setRender] = useState(false)
   const [position, setPosition] = useState(props.position)
   const [virtualPosition, setVirtualPosition] = useState({ x: 0, y: 0 })
-  const windowSize = useClampWindowSize([750, 1500], [0, Infinity])
+  const [copied, setCopied] = useState(false)
+  // const windowSize = useClampWindowSize([750, 1500], [0, Infinity])
 
   useEffect(() => {
     getUserConfig()
@@ -115,6 +116,24 @@ function FloatingToolbar(props: FloatingToolbarProps) {
   } else {
     if (config.activeAction.length === 0) return <div />
     const actions = []
+    actions.push(
+      <div
+        className="bot-selection-toolbar-button"
+        title="Copy"
+        onClick={async () => {
+          navigator.clipboard
+            .writeText(selection)
+            .then(() => setCopied(true))
+            .then(() =>
+              setTimeout(() => {
+                setCopied(false)
+              }, 600),
+            )
+        }}
+      >
+        {copied ? <CheckIcon size={16} /> : <CopyIcon size={16} />}
+      </div>,
+    )
 
     for (const key in actionConfig) {
       if (config.activeAction.includes(key as keyof ActionConfigType)) {
@@ -129,7 +148,7 @@ function FloatingToolbar(props: FloatingToolbarProps) {
               setTriggered(true)
             }}
           >
-            <IconComponent width={20} height={20} />
+            <IconComponent width={16} height={16} />
           </div>,
         )
       }
