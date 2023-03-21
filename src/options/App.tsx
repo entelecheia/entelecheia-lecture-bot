@@ -7,7 +7,7 @@ import '../../styles/base.css'
 import {
   getUserConfig,
   Language,
-  Theme,
+  ThemeMode,
   TriggerMode,
   TRIGGER_MODE_TEXT,
   updateUserConfig,
@@ -18,7 +18,7 @@ import ProviderSelect from './ProviderSelect'
 
 const favicon = Browser.runtime.getURL('favicon.png')
 
-function OptionsPage(props: { theme: Theme; onThemeChange: (theme: Theme) => void }) {
+function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode) => void }) {
   const [triggerMode, setTriggerMode] = useState<TriggerMode>(TriggerMode.Automatically)
   const [language, setLanguage] = useState<Language>(Language.Auto)
   const { setToast } = useToasts()
@@ -40,8 +40,8 @@ function OptionsPage(props: { theme: Theme; onThemeChange: (theme: Theme) => voi
   )
 
   const onThemeChange = useCallback(
-    (theme: Theme) => {
-      updateUserConfig({ theme })
+    (theme: ThemeMode) => {
+      updateUserConfig({ themeMode: theme })
       props.onThemeChange(theme)
       setToast({ text: 'Changes saved', type: 'success' })
     },
@@ -88,8 +88,12 @@ function OptionsPage(props: { theme: Theme; onThemeChange: (theme: Theme) => voi
           <Text h3 className="mt-5">
             Theme
           </Text>
-          <Radio.Group value={props.theme} onChange={(val) => onThemeChange(val as Theme)} useRow>
-            {Object.entries(Theme).map(([k, v]) => {
+          <Radio.Group
+            value={props.theme}
+            onChange={(val) => onThemeChange(val as ThemeMode)}
+            useRow
+          >
+            {Object.entries(ThemeMode).map(([k, v]) => {
               return (
                 <Radio key={v} value={v}>
                   {k}
@@ -135,17 +139,17 @@ function OptionsPage(props: { theme: Theme; onThemeChange: (theme: Theme) => voi
 }
 
 function App() {
-  const [theme, setTheme] = useState(Theme.Auto)
+  const [theme, setTheme] = useState(ThemeMode.Auto)
 
   const themeType = useMemo(() => {
-    if (theme === Theme.Auto) {
+    if (theme === ThemeMode.Auto) {
       return detectSystemColorScheme()
     }
     return theme
   }, [theme])
 
   useEffect(() => {
-    getUserConfig().then((config) => setTheme(config.theme))
+    getUserConfig().then((config) => setTheme(config.themeMode))
   }, [])
 
   return (

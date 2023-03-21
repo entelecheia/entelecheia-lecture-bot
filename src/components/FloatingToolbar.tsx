@@ -155,7 +155,7 @@ function FloatingToolbar(props: FloatingToolbarProps) {
     }
 
     return (
-      <div data-theme={config.theme}>
+      <div data-theme={config.themeMode}>
         <div className="bot-selection-toolbar">{actions}</div>
       </div>
     )

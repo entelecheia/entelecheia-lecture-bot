@@ -19,7 +19,7 @@ export const TRIGGER_MODE_TEXT = {
   },
 }
 
-export enum Theme {
+export enum ThemeMode {
   Auto = 'auto',
   Light = 'light',
   Dark = 'dark',
@@ -33,7 +33,7 @@ export enum Language {
 
 type UserConfigType = {
   triggerMode: TriggerMode
-  theme: Theme
+  themeMode: ThemeMode
   language: Language
   modelName: string
   apiKey: string
@@ -49,7 +49,7 @@ type UserConfigType = {
 
 const userConfigWithDefaultValue: UserConfigType = {
   triggerMode: TriggerMode.Automatically,
-  theme: Theme.Auto,
+  themeMode: ThemeMode.Auto,
   language: Language.Auto,
   modelName: 'chatgptFree35',
   apiKey: '',

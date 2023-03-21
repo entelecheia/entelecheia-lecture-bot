@@ -6,6 +6,7 @@ import '../../styles/styles.scss'
 import ChatContainer from '../components/ChatContainer'
 import FloatingToolbar from '../components/FloatingToolbar'
 import { SiteConfiguration } from '../configs/siteConfig'
+import { ThemeMode, updateUserConfig } from '../configs/userConfig'
 import { createElementAtPosition } from '../utils/createElementAtPosition'
 import { initSession } from '../utils/initSession'
 
@@ -103,12 +104,38 @@ function getBodyContent() {
   return ''
 }
 
+// ...
+
+function handleThemeSwitchButtonClick(event: MouseEvent) {
+  const button = event.target as HTMLElement
+  const themeSwitch = button.closest('.theme-switch')
+
+  if (themeSwitch) {
+    const mode = themeSwitch.getAttribute('data-mode') as ThemeMode
+    updateUserConfig({ themeMode: mode })
+    console.log('Theme mode changed:', mode)
+  }
+}
+
+async function addThemeChangeListener() {
+  document.addEventListener('click', (event) => {
+    if (
+      (event.target as HTMLElement).classList.contains('theme-switch-button') ||
+      (event.target as HTMLElement).closest('.theme-switch-button')
+    ) {
+      handleThemeSwitchButtonClick(event)
+    }
+  })
+}
+
 async function run() {
   console.debug('Mount ChatGPT on', siteName)
   const initialQuestion = getBodyContent()
   // mountBotContainer(initialQuestion, siteConfig)
   mountChatContainer(initialQuestion, siteConfig)
   attachToolbar()
+  // Add theme change listener
+  addThemeChangeListener()
 }
 
 run()

@@ -71,7 +71,7 @@ function ChatContainer(props: ChatContainerProps) {
   return (
     <>
       {render && (
-        <div data-theme={config.theme}>
+        <div data-theme={config.themeMode}>
           {(() => {
             if (question)
               switch (config.triggerMode) {

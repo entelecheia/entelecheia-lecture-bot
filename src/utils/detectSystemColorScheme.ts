@@ -1,8 +1,8 @@
-import { Theme } from '../configs/userConfig'
+import { ThemeMode } from '../configs/userConfig'
 
 export function detectSystemColorScheme() {
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return Theme.Dark
+    return ThemeMode.Dark
   }
-  return Theme.Light
+  return ThemeMode.Light
 }
