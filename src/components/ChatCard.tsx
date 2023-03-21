@@ -6,8 +6,7 @@ import { Key, memo, SetStateAction, useCallback, useEffect, useRef, useState } f
 import Browser from 'webextension-polyfill'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
 import { useClampWindowSize } from '../hooks/useClampWindowSize'
-import { ConversationRecord, initSession, Session } from '../utils/initSession'
-import { isSafari } from '../utils/isSafari'
+import { ConversationRecord, initSession, isSafari, Session } from '../utils'
 import ChatInputBox from './ChatInputBox'
 import ChatItem from './ChatItem'
 

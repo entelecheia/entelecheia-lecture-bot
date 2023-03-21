@@ -5,9 +5,7 @@ import { useEffect, useState } from 'react'
 import Browser from 'webextension-polyfill'
 import { actionConfig, ActionConfigType } from '../configs/actionConfig'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
-import { Session } from '../utils/initSession'
-import { isMobile } from '../utils/isMobile'
-import { setElementPositionInViewport } from '../utils/setElementPositionInViewport'
+import { isMobile, Session, setElementPositionInViewport } from '../utils'
 
 interface FloatingToolbarProps {
   session: Session

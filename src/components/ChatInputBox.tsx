@@ -1,5 +1,5 @@
 import { KeyboardEvent, useEffect, useRef, useState } from 'react'
-import { updateRefHeight } from '../utils/updateRefHeight'
+import { updateRefHeight } from '../utils'
 
 interface ChatInputBoxProps {
   onSubmit: (value: string) => void

@@ -1,4 +1,4 @@
-import { Braces, CardHeading, Translate } from 'react-bootstrap-icons'
+import { Braces, CardHeading, ChatSquareDots, Translate } from 'react-bootstrap-icons'
 import favicon from '../favicon.png'
 
 export function TranslateIcon() {
@@ -11,6 +11,10 @@ export function CardHeadingIcon() {
 
 export function BracesIcon() {
   return <Braces />
+}
+
+export function ChatSquareDotsIcon() {
+  return <ChatSquareDots />
 }
 
 // exoport favicon from '../favicon.png'

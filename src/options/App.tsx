@@ -12,8 +12,7 @@ import {
   TriggerMode,
   updateUserConfig,
 } from '../configs/userConfig'
-import { detectSystemColorScheme } from '../utils/detectSystemColorScheme'
-import { getExtensionVersion } from '../utils/getExtensionVersion'
+import { detectSystemColorScheme, getExtensionVersion } from '../utils'
 import ApiSelect from './ApiSelect'
 
 const favicon = Browser.runtime.getURL('favicon.png')

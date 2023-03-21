@@ -6,7 +6,7 @@ import { generateAnswersWithChatgptWebApi, sendMessageFeedback } from '../apis/c
 import { generateAnswersWithChatgptApi, generateAnswersWithGptCompletionApi } from '../apis/openai'
 import { chatgptApiModelKeys, chatgptWebModelKeys, gptApiModelKeys } from '../configs/apiConfig'
 import { getUserConfig, isUsingApiKey } from '../configs/userConfig'
-import { cache, getAccessToken, KEY_ACCESS_TOKEN } from '../utils/getAccessToken'
+import { cache, getAccessToken, KEY_ACCESS_TOKEN } from '../utils'
 
 Browser.runtime.onConnect.addListener((port) => {
   console.debug('connected')

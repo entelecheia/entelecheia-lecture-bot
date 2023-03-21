@@ -4,13 +4,13 @@ import { isEmpty } from 'lodash-es'
 import Browser from 'webextension-polyfill'
 import { maxResponseTokenLength, Models } from '../configs/apiConfig'
 import { getUserConfig } from '../configs/userConfig'
-import { fetchServerSentEvents } from '../utils/fetchServerSentEvents'
 import {
+  fetchServerSentEvents,
   getChatGptConversationPairs,
   getNonChatGptConversationPairs,
-} from '../utils/getConversationPairs'
+} from '../utils'
 
-import { Session } from '../utils/initSession'
+import { Session } from '../utils'
 
 const getChatgptPromptBase = async () => {
   return `You are a helpful, creative, clever, and very friendly assistant. You are familiar with various languages in the world.`

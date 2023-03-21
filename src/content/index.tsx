@@ -6,29 +6,28 @@ import '../../styles/base.css'
 import '../../styles/styles.scss'
 import ChatContainer from '../components/ChatContainer'
 import FloatingToolbar from '../components/FloatingToolbar'
-// import { SiteConfiguration } from '../configs/siteConfig'
+import { SiteConfiguration } from '../configs/siteConfig'
 import { ThemeMode, updateUserConfig } from '../configs/userConfig'
-import { createElementAtPosition } from '../utils/createElementAtPosition'
-import { initSession, Session } from '../utils/initSession'
+import { createElementAtPosition, initSession, Session } from '../utils'
 
-// async function mountChatContainer(
-//   session: Session,
-//   question: string,
-//   siteConfig: SiteConfiguration,
-// ) {
-//   const container = document.createElement('div')
-//   container.className = 'lecture-chat-container'
+async function mountChatContainer(
+  session: Session,
+  question: string,
+  siteConfig: SiteConfiguration,
+) {
+  const container = document.createElement('div')
+  container.className = 'lecture-chat-container'
 
-//   render(
-//     <ChatContainer
-//       session={session}
-//       question={question}
-//       siteConfig={siteConfig}
-//       container={container}
-//     />,
-//     container,
-//   )
-// }
+  render(
+    <ChatContainer
+      session={session}
+      question={question}
+      siteConfig={siteConfig}
+      container={container}
+    />,
+    container,
+  )
+}
 
 let toolbarContainer: HTMLElement | null = null
 
@@ -142,24 +141,12 @@ async function run() {
   const initialQuestion = getBodyContent()
   const session = initSession()
 
-  const container = document.createElement('div')
-  container.className = 'lecture-chat-container'
-  render(
-    <ChatContainer
-      session={session}
-      question={initialQuestion}
-      siteConfig={siteConfig}
-      container={container}
-    />,
-    container,
-  )
-
   function handlePromptGenerated(prompt: string) {
     window.postMessage({ type: 'NEW_PROMPT', prompt }, '*')
   }
 
   // Call mountChatContainer with the initialQuestion as the initial prompt
-  // mountChatContainer(session, initialQuestion, siteConfig)
+  mountChatContainer(session, initialQuestion, siteConfig)
   attachToolbar(session, handlePromptGenerated)
   // Add theme change listener
   addThemeChangeListener()

@@ -3,7 +3,7 @@ import { LinkExternalIcon } from '@primer/octicons-react'
 import { memo } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
-import { Session } from '../utils/initSession'
+import { Session } from '../utils'
 import CopyButton from './CopyButton'
 
 interface ChatItemProps {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { BracesIcon, CardHeadingIcon, TranslateIcon } from '../misc/Icons'
+import { BracesIcon, CardHeadingIcon, ChatSquareDotsIcon, TranslateIcon } from '../misc/Icons'
 import { getPreferredLanguage } from './userConfig'
 
 type ActionType = {
@@ -10,12 +10,21 @@ type ActionType = {
 }
 
 export type ActionConfigType = {
+  explain: ActionType
   summarize: ActionType
   explain_code: ActionType
   translate: ActionType
 }
 
 export const actionConfig: ActionConfigType = {
+  explain: {
+    icon: ChatSquareDotsIcon,
+    label: 'Explain',
+    genPrompt: async (selection: string) => {
+      const preferredLanguage = await getPreferredLanguage()
+      return `Reply in ${preferredLanguage}. Explain the following:\n"${selection}"`
+    },
+  },
   summarize: {
     icon: CardHeadingIcon,
     label: 'Summarize',

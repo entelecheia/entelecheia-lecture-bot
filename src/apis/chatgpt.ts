@@ -4,8 +4,7 @@ import { isEmpty } from 'lodash-es'
 import Browser from 'webextension-polyfill'
 import { chatgptWebModelKeys, Models } from '../configs/apiConfig'
 import { getUserConfig } from '../configs/userConfig'
-import { fetchServerSentEvents } from '../utils/fetchServerSentEvents'
-import { Session } from '../utils/initSession'
+import { fetchServerSentEvents, Session } from '../utils'
 
 async function request(token: string, method: string, path: string, data?: unknown) {
   const apiUrl = (await getUserConfig()).ChatGptWebApiUrl
