@@ -1,17 +1,25 @@
-import ExpiryMap from 'expiry-map'
-import { v4 as uuidv4 } from 'uuid'
-import { fetchSSE } from '../utils/fetchSSE'
-import { GenerateAnswerParams, Provider } from '../utils/interfaces'
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { isEmpty } from 'lodash-es'
+import Browser from 'webextension-polyfill'
+import { chatgptWebModelKeys, Models } from '../configs/apiConfig'
+import { getUserConfig } from '../configs/userConfig'
+import { fetchServerSentEvents } from '../utils/fetchServerSentEvents'
+import { Session } from '../utils/initSession'
 
 async function request(token: string, method: string, path: string, data?: unknown) {
-  return fetch(`https://chat.openai.com/backend-api${path}`, {
+  const apiUrl = (await getUserConfig()).ChatGptWebApiUrl
+  const response = await fetch(`${apiUrl}/backend-api${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: data === undefined ? undefined : JSON.stringify(data),
+    body: JSON.stringify(data),
   })
+  const responseText = await response.text()
+  console.debug(`request: ${path}`, responseText)
+  return { response, responseText }
 }
 
 export async function sendMessageFeedback(token: string, data: unknown) {
@@ -26,110 +34,132 @@ export async function setConversationProperty(
   await request(token, 'PATCH', `/conversation/${conversationId}`, propertyObject)
 }
 
-const KEY_ACCESS_TOKEN = 'accessToken'
-
-const cache = new ExpiryMap(10 * 1000)
-
-export async function getChatGPTAccessToken(): Promise<string> {
-  if (cache.get(KEY_ACCESS_TOKEN)) {
-    return cache.get(KEY_ACCESS_TOKEN)
-  }
-  const resp = await fetch('https://chat.openai.com/api/auth/session')
-  if (resp.status === 403) {
-    throw new Error('CLOUDFLARE')
-  }
-  const data = await resp.json().catch(() => ({}))
-  if (!data.accessToken) {
-    throw new Error('UNAUTHORIZED')
-  }
-  cache.set(KEY_ACCESS_TOKEN, data.accessToken)
-  return data.accessToken
+export async function sendModerations(
+  token: string,
+  question: string,
+  conversationId: string,
+  messageId: string,
+) {
+  await request(token, 'POST', `/moderations`, {
+    conversation_id: conversationId,
+    input: question,
+    message_id: messageId,
+    model: 'text-moderation-playground',
+  })
 }
 
-export class ChatGPTProvider implements Provider {
-  constructor(private token: string) {
-    this.token = token
-  }
+// export async function getModels(token: string): Promise<string[] | undefined> {
+//   const response = JSON.parse((await request(token, 'GET', '/models')).responseText)
+//   if (response.models) return response.models.map((m: any) => m.slug)
+// }
+export async function getModels(
+  token: string,
+): Promise<{ slug: string; title: string; description: string; max_tokens: number }[]> {
+  const resp = JSON.parse((await request(token, 'GET', '/models')).responseText)
+  return resp.models
+}
 
-  private async fetchModels(): Promise<
-    { slug: string; title: string; description: string; max_tokens: number }[]
-  > {
-    const resp = await request(this.token, 'GET', '/models').then((r) => r.json())
-    return resp.models
-  }
-
-  private async getModelName(): Promise<string> {
-    try {
-      const models = await this.fetchModels()
-      return models[0].slug
-    } catch (err) {
-      console.error(err)
-      return 'text-davinci-002-render'
+export async function generateAnswersWithChatgptWebApi(
+  port: Browser.Runtime.Port,
+  question: string,
+  session: Session,
+  accessToken: string,
+): Promise<void> {
+  const deleteConversation = () => {
+    if (session.conversationId) {
+      setConversationProperty(accessToken, session.conversationId, { is_visible: false })
     }
   }
 
-  async generateAnswer(params: GenerateAnswerParams) {
-    let conversationId: string | undefined
-
-    const cleanup = () => {
-      if (conversationId) {
-        setConversationProperty(this.token, conversationId, { is_visible: false })
-      }
+  const controller = new AbortController()
+  const stopListener = (msg: any) => {
+    if (msg.stop) {
+      console.debug('stop generating')
+      port.postMessage({ done: true })
+      controller.abort()
+      port.onMessage.removeListener(stopListener)
     }
+  }
+  port.onMessage.addListener(stopListener)
+  port.onDisconnect.addListener(() => {
+    console.debug('port disconnected')
+    controller.abort()
+    deleteConversation()
+  })
 
-    const modelName = await this.getModelName()
-    console.debug('Using model:', modelName)
+  const models = await getModels(accessToken).catch(() => {
+    port.onMessage.removeListener(stopListener)
+  })
+  console.debug('models', models)
+  const config = await getUserConfig()
+  const selectedModel = Models[config.modelName].value
+  const usedModel =
+    models && models.find((model) => model.slug === selectedModel)
+      ? selectedModel
+      : Models[chatgptWebModelKeys[0]].value
+  console.debug('usedModel', usedModel)
 
-    await fetchSSE('https://chat.openai.com/backend-api/conversation', {
-      method: 'POST',
-      signal: params.signal,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.token}`,
-      },
-      body: JSON.stringify({
-        action: 'next',
-        messages: [
-          {
-            id: uuidv4(),
-            role: 'user',
-            content: {
-              content_type: 'text',
-              parts: [params.prompt],
-            },
+  let answer = ''
+  await fetchServerSentEvents(`${config.ChatGptWebApiUrl}${config.ChatGptWebApiPath}`, {
+    method: 'POST',
+    signal: controller.signal,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      action: 'next',
+      conversation_id: session.conversationId,
+      messages: [
+        {
+          id: session.messageId,
+          role: 'user',
+          content: {
+            content_type: 'text',
+            parts: [question],
           },
-        ],
-        model: modelName,
-        parent_message_id: uuidv4(),
-      }),
-      onMessage(message: string) {
-        console.debug('sse message', message)
-        if (message === '[DONE]') {
-          params.onEvent({ type: 'done' })
-          cleanup()
-          return
-        }
-        let data
-        try {
-          data = JSON.parse(message)
-        } catch (err) {
-          console.error(err)
-          return
-        }
-        const text = data.message?.content?.parts?.[0]
-        if (text) {
-          conversationId = data.conversation_id
-          params.onEvent({
-            type: 'answer',
-            data: {
-              text,
-              messageId: data.message.id,
-              conversationId: data.conversation_id,
-            },
-          })
-        }
-      },
-    })
-    return { cleanup }
-  }
+        },
+      ],
+      model: usedModel,
+      parent_message_id: session.parentMessageId,
+    }),
+    onMessage(message) {
+      console.debug('sse message', message)
+      if (message === '[DONE]') {
+        if (!session.conversationRecords) session.conversationRecords = []
+        session.conversationRecords.push({ question: question, answer: answer })
+        console.debug('conversation history', { content: session.conversationRecords })
+        port.postMessage({ answer: null, done: true, session: session })
+        return
+      }
+      let data
+      try {
+        data = JSON.parse(message)
+      } catch (error) {
+        console.debug('json error', error)
+        return
+      }
+      if (data.conversation_id) session.conversationId = data.conversation_id
+      if (data.message?.id) session.parentMessageId = data.message.id
+
+      answer = data.message?.content?.parts?.[0]
+      if (answer) {
+        port.postMessage({ answer: answer, done: false, session: session })
+      }
+    },
+    async onStart() {},
+    async onEnd() {
+      port.onMessage.removeListener(stopListener)
+    },
+
+    async onError(resp: Response | Error) {
+      if (resp instanceof Error) throw resp
+      port.onMessage.removeListener(stopListener)
+      if (resp.status === 403) {
+        throw new Error('CLOUDFLARE')
+      }
+      const error = await resp.json().catch(() => ({}))
+      throw new Error(!isEmpty(error) ? JSON.stringify(error) : `${resp.status} ${resp.statusText}`)
+    },
+  })
 }

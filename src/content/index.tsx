@@ -3,14 +3,10 @@
 import { render } from 'preact'
 import '../../styles/base.css'
 import '../../styles/styles.scss'
-import BotContainer from '../components/BotContainer'
 import ChatContainer from '../components/ChatContainer'
 import FloatingToolbar from '../components/FloatingToolbar'
 import { SiteConfiguration } from '../configs/siteConfig'
-import { getUserConfig, Theme } from '../configs/userConfig'
 import { createElementAtPosition } from '../utils/createElementAtPosition'
-import { detectSystemColorScheme } from '../utils/detectSystemColorScheme'
-import { getPossibleElementByQuerySelector } from '../utils/getPossibleElementByQuerySelector'
 import { initSession } from '../utils/initSession'
 
 async function mountChatContainer(question: string, siteConfig: SiteConfiguration) {
@@ -24,40 +20,6 @@ async function mountChatContainer(question: string, siteConfig: SiteConfiguratio
       siteConfig={siteConfig}
       container={container}
     />,
-    container,
-  )
-}
-
-async function mountBotContainer(question: string, siteConfig: SiteConfiguration) {
-  const container = document.createElement('div')
-  container.className = 'lecture-bot-container'
-
-  const userConfig = await getUserConfig()
-  let theme: Theme
-  if (userConfig.theme === Theme.Auto) {
-    theme = detectSystemColorScheme()
-  } else {
-    theme = userConfig.theme
-  }
-  if (theme === Theme.Dark) {
-    container.classList.add('bot-dark')
-  } else {
-    container.classList.add('bot-light')
-  }
-
-  const sidebarContainer = getPossibleElementByQuerySelector(siteConfig.sidebarContainerQuery)
-  if (sidebarContainer) {
-    sidebarContainer.append(container)
-  } else {
-    container.classList.add('sidebar-free')
-    const appendContainer = getPossibleElementByQuerySelector(siteConfig.appendContainerQuery)
-    if (appendContainer) {
-      appendContainer.appendChild(container)
-    }
-  }
-
-  render(
-    <BotContainer question={question} triggerMode={userConfig.triggerMode || 'automatically'} />,
     container,
   )
 }
