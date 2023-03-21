@@ -1,7 +1,7 @@
 import { defaults } from 'lodash-es'
 import Browser from 'webextension-polyfill'
 import { actionConfig, ActionConfigType } from './actionConfig'
-import { chatgptApiModelKeys, gptApiModelKeys } from './apiConfig'
+import { chatgptApiModelKeys, gptApiModelKeys, Models } from './apiConfig'
 
 export enum TriggerMode {
   Automatically = 'automatically',
@@ -87,6 +87,8 @@ export async function getPreferredLanguage() {
 
 export function isUsingApiKey(config: UserConfig) {
   return (
-    gptApiModelKeys.includes(config.modelName) || chatgptApiModelKeys.includes(config.modelName)
+    config.modelName &&
+    Models[config.modelName] &&
+    (gptApiModelKeys.includes(config.modelName) || chatgptApiModelKeys.includes(config.modelName))
   )
 }

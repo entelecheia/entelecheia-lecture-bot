@@ -14,7 +14,7 @@ import {
 } from '../configs/userConfig'
 import { detectSystemColorScheme } from '../utils/detectSystemColorScheme'
 import { getExtensionVersion } from '../utils/getExtensionVersion'
-import ProviderSelect from './ProviderSelect'
+import ApiSelect from './ApiSelect'
 
 const favicon = Browser.runtime.getURL('favicon.png')
 
@@ -59,7 +59,7 @@ function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode
   return (
     <Fragment>
       <div className="container mx-auto">
-        <nav className="flex flex-row justify-between items-center mt-5 px-2">
+        <nav className="flex flex-row justify-center items-center mt-5 px-2 mx-auto">
           <div className="flex flex-row items-center gap-2">
             <img src={favicon} className="w-10 h-10 rounded-lg" />
             <span className="font-semibold">
@@ -122,7 +122,7 @@ function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode
           <Text h3 className="mt-5 mb-0">
             API Provider
           </Text>
-          <ProviderSelect />
+          <ApiSelect />
           <Text h3 className="mt-8">
             Misc
           </Text>

@@ -18,6 +18,7 @@ interface FloatingToolbarProps {
   closeable?: boolean
   onClose?: () => void
   prompt?: string
+  onPromptGenerated?: (prompt: string) => void
 }
 
 function FloatingToolbar(props: FloatingToolbarProps) {
@@ -88,31 +89,6 @@ function FloatingToolbar(props: FloatingToolbarProps) {
     }
 
     return <div />
-    // return (
-    //   <div data-theme={config.theme}>
-    //     <Draggable
-    //       handle=".dragbar"
-    //       onDrag={dragEvent.onDrag}
-    //       onStop={dragEvent.onStop}
-    //       position={virtualPosition}
-    //     >
-    //       <div className="bot-selection-window" style={{ width: windowSize[0] * 0.4 + 'px' }}>
-    //         <div className="lecture-bot-container">
-    //           <ChatCard
-    //             session={props.session}
-    //             question={prompt}
-    //             draggable={true}
-    //             closeable={props.closeable}
-    //             onClose={props.onClose}
-    //             onUpdate={() => {
-    //               updatePosition()
-    //             }}
-    //           />
-    //         </div>
-    //       </div>
-    //     </Draggable>
-    //   </div>
-    // )
   } else {
     if (config.activeAction.length === 0) return <div />
     const actions = []
@@ -144,7 +120,11 @@ function FloatingToolbar(props: FloatingToolbarProps) {
             className="bot-selection-toolbar-button"
             title={action.label}
             onClick={async () => {
-              setPrompt(await action.genPrompt(selection))
+              const generatedPrompt = await action.genPrompt(selection)
+              if (props.onPromptGenerated) {
+                props.onPromptGenerated(generatedPrompt)
+              }
+              setPrompt(generatedPrompt)
               setTriggered(true)
             }}
           >

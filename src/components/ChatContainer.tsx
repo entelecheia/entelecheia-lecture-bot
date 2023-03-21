@@ -15,20 +15,24 @@ interface ChatContainerProps {
   question: string
   siteConfig: SiteConfiguration
   container: HTMLElement
+  ref: any
 }
 
 function ChatContainer(props: ChatContainerProps) {
   const [triggered, setTriggered] = useState(false)
   const [config, setConfig] = useState(defaultConfig)
   const [render, setRender] = useState(false)
-
-  const question = props.question
+  const [question, setQuestion] = useState(props.question || '')
 
   useEffect(() => {
     getUserConfig()
       .then(setConfig)
       .then(() => setRender(true))
   }, [])
+
+  useEffect(() => {
+    setQuestion(question || '')
+  }, [question])
 
   useEffect(() => {
     const listener = (changes: Browser.Storage.StorageAreaOnChangedChangesType<any, any>) => {

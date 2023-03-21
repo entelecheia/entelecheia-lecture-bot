@@ -7,7 +7,7 @@ type ModelInfo = {
 
 export enum ProviderType {
   ChatGPT = 'chatgpt',
-  GPT3 = 'gpt3',
+  OpenAI = 'openai',
 }
 
 interface GPT3ProviderConfig {
@@ -18,18 +18,18 @@ interface GPT3ProviderConfig {
 export interface ProviderConfigs {
   provider: ProviderType
   configs: {
-    [ProviderType.GPT3]: GPT3ProviderConfig | undefined
+    [ProviderType.OpenAI]: GPT3ProviderConfig | undefined
   }
 }
 
 export async function getProviderConfigs(): Promise<ProviderConfigs> {
   const { provider = ProviderType.ChatGPT } = await Browser.storage.local.get('provider')
-  const configKey = `provider:${ProviderType.GPT3}`
+  const configKey = `provider:${ProviderType.OpenAI}`
   const result = await Browser.storage.local.get(configKey)
   return {
     provider,
     configs: {
-      [ProviderType.GPT3]: result[configKey],
+      [ProviderType.OpenAI]: result[configKey],
     },
   }
 }
@@ -40,8 +40,12 @@ export async function saveProviderConfigs(
 ) {
   return Browser.storage.local.set({
     provider,
-    [`provider:${ProviderType.GPT3}`]: configs[ProviderType.GPT3],
+    [`provider:${ProviderType.OpenAI}`]: configs[ProviderType.OpenAI],
   })
+}
+export interface ModelConfig {
+  modelName: string
+  modelInfo: ModelInfo
 }
 
 export const Models: Record<string, ModelInfo> = {

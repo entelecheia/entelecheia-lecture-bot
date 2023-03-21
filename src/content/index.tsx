@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { render } from 'preact'
@@ -5,29 +6,36 @@ import '../../styles/base.css'
 import '../../styles/styles.scss'
 import ChatContainer from '../components/ChatContainer'
 import FloatingToolbar from '../components/FloatingToolbar'
-import { SiteConfiguration } from '../configs/siteConfig'
+// import { SiteConfiguration } from '../configs/siteConfig'
 import { ThemeMode, updateUserConfig } from '../configs/userConfig'
 import { createElementAtPosition } from '../utils/createElementAtPosition'
-import { initSession } from '../utils/initSession'
+import { initSession, Session } from '../utils/initSession'
 
-async function mountChatContainer(question: string, siteConfig: SiteConfiguration) {
-  const container = document.createElement('div')
-  container.className = 'lecture-chat-container'
+// async function mountChatContainer(
+//   session: Session,
+//   question: string,
+//   siteConfig: SiteConfiguration,
+// ) {
+//   const container = document.createElement('div')
+//   container.className = 'lecture-chat-container'
 
-  render(
-    <ChatContainer
-      session={initSession()}
-      question={question}
-      siteConfig={siteConfig}
-      container={container}
-    />,
-    container,
-  )
-}
+//   render(
+//     <ChatContainer
+//       session={session}
+//       question={question}
+//       siteConfig={siteConfig}
+//       container={container}
+//     />,
+//     container,
+//   )
+// }
 
 let toolbarContainer: HTMLElement | null = null
 
-async function attachToolbar(): Promise<void> {
+async function attachToolbar(
+  sesseion: Session,
+  handlePromptGenerated: (prompt: string) => void,
+): Promise<void> {
   document.addEventListener('mouseup', (e: MouseEvent) => {
     if (toolbarContainer && toolbarContainer.contains(e.target as Node)) return
     if (
@@ -45,13 +53,14 @@ async function attachToolbar(): Promise<void> {
       if (selection) {
         const position = { x: e.clientX + 15, y: e.clientY - 15 }
         toolbarContainer = createElementAtPosition(position.x, position.y)
-        toolbarContainer.className = 'chatgptbox-toolbar-container'
+        toolbarContainer.className = 'lecture-bot-toolbar-container'
         render(
           <FloatingToolbar
-            session={initSession()}
+            session={sesseion}
             selection={selection}
             position={position}
             container={toolbarContainer}
+            onPromptGenerated={handlePromptGenerated}
           />,
           toolbarContainer,
         )
@@ -61,7 +70,7 @@ async function attachToolbar(): Promise<void> {
   document.addEventListener('mousedown', (e: MouseEvent) => {
     if (toolbarContainer && toolbarContainer.contains(e.target as Node)) return
 
-    document.querySelectorAll('.chatgptbox-toolbar-container').forEach((e) => e.remove())
+    document.querySelectorAll('.lecture-bot-toolbar-container').forEach((e) => e.remove())
   })
   document.addEventListener('keydown', (e: KeyboardEvent) => {
     if (
@@ -129,11 +138,36 @@ async function addThemeChangeListener() {
 }
 
 async function run() {
-  console.debug('Mount ChatGPT on', siteName)
+  console.debug('Mount LectureBotfor ἐντελέχεια.άι on', siteName)
   const initialQuestion = getBodyContent()
-  // mountBotContainer(initialQuestion, siteConfig)
-  mountChatContainer(initialQuestion, siteConfig)
-  attachToolbar()
+  const session = initSession()
+
+  // Create the ChatContainer once and keep a reference to it
+  let chatContainerRef: typeof ChatContainer | null = null
+
+  const container = document.createElement('div')
+  container.className = 'lecture-chat-container'
+  render(
+    <ChatContainer
+      session={session}
+      question={initialQuestion}
+      siteConfig={siteConfig}
+      container={container}
+      ref={(ref: any) => (chatContainerRef = ref)}
+    />,
+    container,
+  )
+
+  function handlePromptGenerated(prompt: string) {
+    // Update the prompt in the ChatContainer
+    // if (chatContainerRef) {
+    //   chatContainerRef.current.setQuestion(prompt)
+    // }
+  }
+
+  // Call mountChatContainer with the initialQuestion as the initial prompt
+  // mountChatContainer(session, initialQuestion, siteConfig)
+  attachToolbar(session, handlePromptGenerated)
   // Add theme change listener
   addThemeChangeListener()
 }

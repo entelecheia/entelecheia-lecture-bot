@@ -69,6 +69,14 @@ function ChatCard(props: ChatCardProps) {
   })
 
   useEffect(() => {
+    if (props.question && chatItemData.length === 0) {
+      const newQuestion = new ChatItemData('question', props.question + '\n')
+      const newAnswer = new ChatItemData('answer', 'Waiting for response...')
+      setChatItemData([...chatItemData, newQuestion, newAnswer])
+    }
+  }, [props.question, chatItemData])
+
+  useEffect(() => {
     if (bodyRef.current) {
       bodyRef.current.scrollTop = bodyRef.current.scrollHeight
     }
