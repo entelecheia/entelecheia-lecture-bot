@@ -41,7 +41,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Upload release assets
-        if: steps.semantic_release.outputs.new_release_published == 'true'
+        if: steps.semantic_release.outputs.new_release_version != ''
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
