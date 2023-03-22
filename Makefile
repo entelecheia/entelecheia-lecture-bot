@@ -19,6 +19,24 @@
 help:  ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
+##@ Git Branches
+
+show-branches: ## show all branches
+	@git show-branch --list
+
+beta-checkout: ## checkout the dev branch
+	@branch=$(shell echo $${branch:-"beta"}) && \
+	    git show-branch --list | grep -q $${branch} && \
+		git checkout $${branch}
+
+beta-checkout-upstream: ## create and checkout the dev branch, and set the upstream
+	@branch=$(shell echo $${branch:-"beta"}) && \
+		git checkout -B $${branch} && \
+		git push --set-upstream origin $${branch} || true
+
+main-checkout: ## checkout the main branch
+	@git checkout main
+
 ##@ Releases
 
 verify-release: ## verify release

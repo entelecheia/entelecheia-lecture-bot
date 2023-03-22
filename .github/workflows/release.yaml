@@ -4,9 +4,10 @@ name: Release
 on:
   workflow_call:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      # - main
+      - beta
 
 permissions:
   contents: write
@@ -37,7 +38,6 @@ jobs:
         uses: cycjimmy/semantic-release-action@v3
         with:
           extra_plugins: '@semantic-release/changelog,@semantic-release/git,@semantic-release/github'
-          branch: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
