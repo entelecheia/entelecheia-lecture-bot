@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.5...v1.0.6) (2023-03-22)
+
+
+### Bug Fixes
+
+* toolbar action ([627a495](https://github.com/entelecheia/entelecheia-lecture-bot/commit/627a495e0f9ed16f80deb53f2bf79f350baee0fb))
+
 ## [1.0.5](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.4...v1.0.5) (2023-03-22)
 
 
