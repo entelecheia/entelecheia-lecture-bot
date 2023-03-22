@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.3...v1.0.4) (2023-03-22)
+
+
+### Bug Fixes
+
+* releaserc ([dcf3819](https://github.com/entelecheia/entelecheia-lecture-bot/commit/dcf38197fafe3e0572086eb3b39dd00db772a874))
+
 ## [1.0.3](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.2...v1.0.3) (2023-03-22)
 
 
