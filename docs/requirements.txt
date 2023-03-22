@@ -1,0 +1,4 @@
+mkdocs-material
+markdown-include
+mkdocs-toc-md
+html5lib

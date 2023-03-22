@@ -5,7 +5,7 @@ import postcssPlugin from 'esbuild-style-plugin'
 import fs from 'fs-extra'
 import tailwindcss from 'tailwindcss'
 
-const outdir = 'build'
+const outdir = 'dist'
 
 async function deleteOldDir() {
   await fs.remove(outdir)
@@ -66,12 +66,12 @@ async function build() {
   await runEsbuild()
 
   const commonFiles = [
-    { src: 'build/content/index.js', dst: 'contentScript.js' },
-    { src: 'build/content/index.css', dst: 'contentScript.css' },
-    { src: 'build/service/index.js', dst: 'serviceWorker.js' },
-    { src: 'build/options/index.js', dst: 'options.js' },
-    { src: 'build/options/index.css', dst: 'options.css' },
-    { src: 'build/popup/index.js', dst: 'popup.js' },
+    { src: 'dist/content/index.js', dst: 'contentScript.js' },
+    { src: 'dist/content/index.css', dst: 'contentScript.css' },
+    { src: 'dist/service/index.js', dst: 'serviceWorker.js' },
+    { src: 'dist/options/index.js', dst: 'options.js' },
+    { src: 'dist/options/index.css', dst: 'options.css' },
+    { src: 'dist/popup/index.js', dst: 'popup.js' },
     { src: 'src/favicon.png', dst: 'favicon.png' },
     { src: 'static/options/index.html', dst: 'options.html' },
     { src: 'static/popup/index.html', dst: 'popup.html' },
@@ -81,10 +81,10 @@ async function build() {
   // chromium
   await copyFiles(
     [...commonFiles, { src: 'static/manifest.json', dst: 'manifest.json' }],
-    `./${outdir}/chromium`,
+    `./${outdir}/chrome`,
   )
 
-  await zipFolder(`./${outdir}/chromium`)
+  await zipFolder(`./${outdir}/chrome`)
 
   console.log('Build success.')
 }

@@ -4,6 +4,9 @@ name: Release
 on:
   workflow_call:
   workflow_dispatch:
+  # push:
+  #   branches:
+  #     - main
 
 permissions:
   contents: write
@@ -17,21 +20,35 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "lts/*"
+          node-version: 'lts/*'
+
       - name: Install dependencies
         run: npm ci
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
+
+      - name: Run build
+        run: npm run build
+
+      - name: Semantic release
+        id: semantic_release
+        uses: cycjimmy/semantic-release-action@v3
         with:
-          name: docs
-          path: docs/pdfs
-      - name: Release
+          extra_plugins: '@semantic-release/changelog,@semantic-release/git,@semantic-release/github'
+          branch: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+
+      - name: Upload release assets
+        if: steps.semantic_release.outputs.new_release_published == 'true'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.semantic_release.outputs.upload_url }}
+          asset_path: ./dist/chrome.zip
+          asset_name: entelecheia-ai-chrome-${{ steps.semantic_release.outputs.new_release_version }}.zip
+          asset_content_type: application/zip

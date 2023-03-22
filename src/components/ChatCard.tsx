@@ -142,20 +142,20 @@ function ChatCard(props: ChatCardProps) {
         switch (msg.error) {
           case 'UNAUTHORIZED':
             UpdateAnswer(
-              `UNAUTHORIZED<br>Please login at https://chat.openai.com first${
-                isSafari() ? '<br>Then open https://chat.openai.com/api/auth/session' : ''
-              }<br>And refresh this page or type you question again` +
-                `<br><br>Consider creating an api key at https://platform.openai.com/account/api-keys<hr>`,
+              `UNAUTHORIZED\nPlease login at https://chat.openai.com first${
+                isSafari() ? 'Then open https://chat.openai.com/api/auth/session' : ''
+              }\nAnd refresh this page or type you question again.` +
+                `\n\nConsider creating an api key at https://platform.openai.com/account/api-keys`,
               false,
               'error',
             )
             break
           case 'CLOUDFLARE':
             UpdateAnswer(
-              `OpenAI Security Check Required<br>Please open ${
+              `OpenAI Security Check Required\nPlease open ${
                 isSafari() ? 'https://chat.openai.com/api/auth/session' : 'https://chat.openai.com'
-              }<br>And refresh this page or type you question again` +
-                `<br><br>Consider creating an api key at https://platform.openai.com/account/api-keys<hr>`,
+              }\nAnd refresh this page or type you question again.` +
+                `\n\nConsider creating an api key at https://platform.openai.com/account/api-keys`,
               false,
               'error',
             )

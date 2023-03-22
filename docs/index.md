@@ -1,1 +1,1 @@
-# LectureBot for ἐντελέχεια.άι
+{!README.md!}
