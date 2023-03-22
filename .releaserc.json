@@ -67,9 +67,11 @@
       "@semantic-release/github",
       {
         "assets": [
-          [
-            "docs/pdfs"
-          ]
+          {
+            "path": "dist/chrome.zip",
+            "name": "entelecheia-ai-chrome-${nextRelease.version}.zip",
+            "contentType": "application/zip"
+          }
         ]
       }
     ],
@@ -79,7 +81,8 @@
         "assets": [
           "docs/CHANGELOG.md",
           "package.json",
-          "package-lock.json"
+          "package-lock.json",
+          "static/manifest.json"
         ],
         "message": "chore(release): :rocket: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }

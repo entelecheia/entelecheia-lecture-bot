@@ -39,14 +39,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Upload release assets
-        if: steps.semantic_release.outputs.new_release_version != ''
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.semantic_release.outputs.upload_url }}
-          asset_path: ./dist/chrome.zip
-          asset_name: entelecheia-ai-chrome-${{ steps.semantic_release.outputs.new_release_version }}.zip
-          asset_content_type: application/zip
