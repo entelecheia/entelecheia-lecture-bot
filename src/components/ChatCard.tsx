@@ -6,7 +6,7 @@ import { Key, memo, SetStateAction, useCallback, useEffect, useRef, useState } f
 import Browser from 'webextension-polyfill'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
 import { useClampWindowSize } from '../hooks/useClampWindowSize'
-import { ConversationRecord, initSession, isSafari, Session } from '../utils'
+import { ConversationRecord, initSession, Session } from '../utils'
 import ChatInputBox from './ChatInputBox'
 import ChatItem from './ChatItem'
 
@@ -150,22 +150,13 @@ function ChatCard(props: ChatCardProps) {
       }
       if (msg.error) {
         switch (msg.error) {
-          case 'UNAUTHORIZED':
+          case 'UNAUTHORIZED' || 'CLOUDFLARE':
             UpdateAnswer(
-              `UNAUTHORIZED\nPlease login at https://chat.openai.com first${
-                isSafari() ? 'Then open https://chat.openai.com/api/auth/session' : ''
-              }\nAnd refresh this page or type you question again.` +
-                `\n\nConsider creating an api key at https://platform.openai.com/account/api-keys`,
-              false,
-              'error',
-            )
-            break
-          case 'CLOUDFLARE':
-            UpdateAnswer(
-              `OpenAI Security Check Required\nPlease open ${
-                isSafari() ? 'https://chat.openai.com/api/auth/session' : 'https://chat.openai.com'
-              }\nAnd refresh this page or type you question again.` +
-                `\n\nConsider creating an api key at https://platform.openai.com/account/api-keys`,
+              `**ACCESS DENIED**: Kindly log in at [https://chat.openai.com](https://chat.openai.com) first.
+              Afterward, refresh this webpage or re-enter your inquiry. 
+              You may also want to create an API key at 
+              [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
+              for enhanced functionality.`,
               false,
               'error',
             )
