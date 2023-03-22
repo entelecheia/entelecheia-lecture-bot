@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.6...v1.0.7) (2023-03-22)
+
+
+### Bug Fixes
+
+* update message for UNAUTHORIZED error ([8d4dc32](https://github.com/entelecheia/entelecheia-lecture-bot/commit/8d4dc3260b3ff768bc0a077408626b8f45c9ef41))
+
 ## [1.0.6](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.5...v1.0.6) (2023-03-22)
 
 
