@@ -4,11 +4,19 @@
     "next",
     "next-major",
     {
-      "name": "beta",
+      "name": "beta*",
       "prerelease": true
     },
     {
-      "name": "alpha",
+      "name": "alpha*",
+      "prerelease": true
+    },
+    {
+      "name": "dev*",
+      "prerelease": "alpha"
+    },
+    {
+      "name": "rc*",
       "prerelease": true
     }
   ],

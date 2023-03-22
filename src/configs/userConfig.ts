@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-types */
 import { defaults } from 'lodash-es'
 import Browser from 'webextension-polyfill'
-import { actionConfig, ActionConfigType } from './actionConfig'
-import { chatgptApiModelKeys, gptApiModelKeys, Models } from './apiConfig'
+import { BracesIcon, CardHeadingIcon, ChatSquareDotsIcon, TranslateIcon } from '../misc/Icons'
 
 export enum TriggerMode {
   Automatically = 'automatically',
@@ -30,6 +31,82 @@ export enum Language {
   English = 'English',
   Korean = 'Korean',
 }
+type ModelInfo = {
+  value: string
+  desc: string
+}
+
+export interface ModelConfig {
+  modelName: string
+  modelInfo: ModelInfo
+}
+
+export const Models: Record<string, ModelInfo> = {
+  chatgptFree35: { value: 'text-davinci-002-render-sha', desc: 'ChatGPT (Web)' },
+  chatgptPlus4: { value: 'gpt-4', desc: 'ChatGPT (Web, GPT-4)' },
+  chatgptApi35: { value: 'gpt-3.5-turbo', desc: 'ChatGPT (GPT-3.5-turbo)' },
+  chatgptApi4_8k: { value: 'gpt-4', desc: 'ChatGPT (GPT-4-8k)' },
+  chatgptApi4_32k: { value: 'gpt-4-32k', desc: 'ChatGPT (GPT-4-32k)' },
+  gptApiDavinci: { value: 'text-davinci-003', desc: 'GPT-3.5' },
+}
+
+export const chatgptWebModelKeys: string[] = ['chatgptFree35', 'chatgptPlus4']
+export const gptApiModelKeys: string[] = ['gptApiDavinci']
+export const chatgptApiModelKeys: string[] = ['chatgptApi35', 'chatgptApi4_8k', 'chatgptApi4_32k']
+
+export const maxResponseTokenLength = 1000
+
+type ActionType = {
+  icon: any
+  label: string
+  genPrompt: (selection: string) => Promise<string>
+}
+
+export type ActionConfigType = {
+  explain: ActionType
+  summarize: ActionType
+  explain_code: ActionType
+  translate: ActionType
+}
+
+export const actionConfig: ActionConfigType = {
+  explain: {
+    icon: ChatSquareDotsIcon,
+    label: 'Explain',
+    genPrompt: async (selection: string) => {
+      const preferredLanguage = await getPreferredLanguage()
+      return `Reply in ${preferredLanguage}. Explain the following:\n"${selection}"`
+    },
+  },
+  summarize: {
+    icon: CardHeadingIcon,
+    label: 'Summarize',
+    genPrompt: async (selection: string) => {
+      const preferredLanguage = await getPreferredLanguage()
+      return `Reply in ${preferredLanguage}. Summarize the following as concisely as possible:\n"${selection}"`
+    },
+  },
+  explain_code: {
+    icon: BracesIcon,
+    label: 'Explain Code',
+    genPrompt: async (selection: string) => {
+      const preferredLanguage = await getPreferredLanguage()
+      return `Reply in ${preferredLanguage}. Explain the following code:\n"${selection}"`
+    },
+  },
+  translate: {
+    icon: TranslateIcon,
+    label: 'Translate',
+    genPrompt: async (selection: string) => {
+      const preferredLanguage = await getPreferredLanguage()
+      return (
+        `Translate the following into ${preferredLanguage} and only show me the translated content.` +
+        `If it is already in ${preferredLanguage},` +
+        `translate it into English and only show me the translated content:\n"${selection}"`
+      )
+    },
+  },
+}
 
 type UserConfigType = {
   triggerMode: TriggerMode
@@ -47,7 +124,7 @@ type UserConfigType = {
   tokenSavedOn: number
 }
 
-const userConfigWithDefaultValue: UserConfigType = {
+export const defaultConfig: UserConfigType = {
   triggerMode: TriggerMode.Automatically,
   themeMode: ThemeMode.Auto,
   language: Language.Auto,
@@ -63,15 +140,12 @@ const userConfigWithDefaultValue: UserConfigType = {
   tokenSavedOn: 0,
 }
 
-export type UserConfig = typeof userConfigWithDefaultValue
-export const defaultConfig = userConfigWithDefaultValue
-
-export async function getUserConfig(): Promise<UserConfig> {
-  const result = await Browser.storage.local.get(Object.keys(userConfigWithDefaultValue))
-  return defaults(result, userConfigWithDefaultValue)
+export async function getUserConfig(): Promise<UserConfigType> {
+  const result = await Browser.storage.local.get(Object.keys(defaultConfig))
+  return defaults(result, defaultConfig)
 }
 
-export async function updateUserConfig(updates: Partial<UserConfig>) {
+export async function updateUserConfig(updates: Partial<UserConfigType>) {
   console.debug('update configs', updates)
   return Browser.storage.local.set(updates)
 }
@@ -85,7 +159,7 @@ export async function getPreferredLanguage() {
   })
 }
 
-export function isUsingApiKey(config: UserConfig) {
+export function isUsingApiKey(config: UserConfigType) {
   return (
     config.modelName &&
     Models[config.modelName] &&

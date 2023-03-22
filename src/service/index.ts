@@ -2,10 +2,19 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { v4 as uuidv4 } from 'uuid'
 import Browser from 'webextension-polyfill'
-import { generateAnswersWithChatgptWebApi, sendMessageFeedback } from '../apis/chatgpt'
-import { generateAnswersWithChatgptApi, generateAnswersWithGptCompletionApi } from '../apis/openai'
-import { chatgptApiModelKeys, chatgptWebModelKeys, gptApiModelKeys } from '../configs/apiConfig'
-import { getUserConfig, isUsingApiKey } from '../configs/userConfig'
+import {
+  generateAnswersWithChatgptApi,
+  generateAnswersWithChatgptWebApi,
+  generateAnswersWithGptCompletionApi,
+  sendMessageFeedback,
+} from '../apis'
+import {
+  chatgptApiModelKeys,
+  chatgptWebModelKeys,
+  getUserConfig,
+  gptApiModelKeys,
+  isUsingApiKey,
+} from '../configs'
 import { cache, getAccessToken, KEY_ACCESS_TOKEN } from '../utils'
 
 Browser.runtime.onConnect.addListener((port) => {

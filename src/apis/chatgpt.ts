@@ -2,8 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { isEmpty } from 'lodash-es'
 import Browser from 'webextension-polyfill'
-import { chatgptWebModelKeys, Models } from '../configs/apiConfig'
-import { getUserConfig } from '../configs/userConfig'
+import { chatgptWebModelKeys, getUserConfig, Models } from '../configs'
 import { fetchServerSentEvents, Session } from '../utils'
 
 async function request(token: string, method: string, path: string, data?: unknown) {
