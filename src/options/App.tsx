@@ -6,7 +6,7 @@ import Browser from 'webextension-polyfill'
 import '../../styles/base.css'
 import {
   getUserConfig,
-  Language,
+  LanguageMode,
   ThemeMode,
   TiggerModeText,
   TriggerMode,
@@ -19,13 +19,13 @@ const favicon = Browser.runtime.getURL('favicon.png')
 
 function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode) => void }) {
   const [triggerMode, setTriggerMode] = useState<TriggerMode>(TriggerMode.Automatically)
-  const [language, setLanguage] = useState<Language>(Language.Auto)
+  const [language, setLanguage] = useState<LanguageMode>(LanguageMode.Auto)
   const { setToast } = useToasts()
 
   useEffect(() => {
     getUserConfig().then((config) => {
       setTriggerMode(config.triggerMode)
-      setLanguage(config.language)
+      setLanguage(config.chatLanguage)
     })
   }, [])
 
@@ -48,8 +48,8 @@ function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode
   )
 
   const onLanguageChange = useCallback(
-    (language: Language) => {
-      updateUserConfig({ language })
+    (language: LanguageMode) => {
+      updateUserConfig({ chatLanguage: language })
       setToast({ text: 'Changes saved', type: 'success' })
     },
     [setToast],
@@ -110,9 +110,9 @@ function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode
           <Select
             value={language}
             placeholder="Choose one"
-            onChange={(val) => onLanguageChange(val as Language)}
+            onChange={(val) => onLanguageChange(val as LanguageMode)}
           >
-            {Object.entries(Language).map(([k, v]) => (
+            {Object.entries(LanguageMode).map(([k, v]) => (
               <Select.Option key={k} value={v}>
                 {capitalize(v)}
               </Select.Option>

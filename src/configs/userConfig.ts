@@ -1,8 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
+import { Language, languages } from 'countries-list'
 import { defaults } from 'lodash-es'
 import Browser from 'webextension-polyfill'
 import { BracesIcon, CardHeadingIcon, ChatSquareDotsIcon, TranslateIcon } from '../misc/Icons'
+
+interface CustomLanguage {
+  name: string
+  native: string
+}
+
+interface LanguageList {
+  [key: string]: Language
+  auto: CustomLanguage
+}
+
+export const languageList: LanguageList = {
+  auto: { name: 'Auto', native: 'Auto' },
+  ...languages,
+}
+
+export async function getUILanguage() {
+  return languageList[navigator.language.substring(0, 2)].name
+}
 
 export enum TriggerMode {
   Automatically = 'automatically',
@@ -26,11 +46,12 @@ export enum ThemeMode {
   Dark = 'dark',
 }
 
-export enum Language {
+export enum LanguageMode {
   Auto = 'Auto',
   English = 'English',
   Korean = 'Korean',
 }
+
 type ModelInfo = {
   value: string
   desc: string
@@ -75,7 +96,7 @@ export const actionConfig: ActionConfigType = {
     label: 'Explain',
     genPrompt: async (selection: string) => {
       const preferredLanguage = await getPreferredLanguage()
-      return `Reply in ${preferredLanguage}. Explain the following:\n"${selection}"`
+      return `Explain the following in ${preferredLanguage}:\n"${selection}"`
     },
   },
   summarize: {
@@ -83,7 +104,7 @@ export const actionConfig: ActionConfigType = {
     label: 'Summarize',
     genPrompt: async (selection: string) => {
       const preferredLanguage = await getPreferredLanguage()
-      return `Reply in ${preferredLanguage}. Summarize the following as concisely as possible:\n"${selection}"`
+      return `Summarize the following as concisely as possible in ${preferredLanguage}:\n"${selection}"`
     },
   },
   explain_code: {
@@ -91,7 +112,7 @@ export const actionConfig: ActionConfigType = {
     label: 'Explain Code',
     genPrompt: async (selection: string) => {
       const preferredLanguage = await getPreferredLanguage()
-      return `Reply in ${preferredLanguage}. Explain the following code:\n"${selection}"`
+      return `Explain the following code in ${preferredLanguage}:\n"${selection}"`
     },
   },
   translate: {
@@ -111,7 +132,8 @@ export const actionConfig: ActionConfigType = {
 type UserConfigType = {
   triggerMode: TriggerMode
   themeMode: ThemeMode
-  language: Language
+  chatLanguage: LanguageMode
+  uiLanguage: string
   modelName: string
   apiKey: string
   accessToken: string
@@ -127,7 +149,8 @@ type UserConfigType = {
 export const defaultConfig: UserConfigType = {
   triggerMode: TriggerMode.Automatically,
   themeMode: ThemeMode.Auto,
-  language: Language.Auto,
+  chatLanguage: LanguageMode.Auto,
+  uiLanguage: navigator.language.substring(0, 2),
   modelName: 'chatgptFree35',
   apiKey: '',
   accessToken: '',
@@ -152,10 +175,10 @@ export async function updateUserConfig(updates: Partial<UserConfigType>) {
 
 export async function getPreferredLanguage() {
   return getUserConfig().then((config) => {
-    if (config.language === 'Auto') {
-      return Browser.i18n.getUILanguage()
+    if (config.uiLanguage === 'Auto') {
+      return getUILanguage()
     }
-    return config.language
+    return config.chatLanguage
   })
 }
 

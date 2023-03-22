@@ -35,6 +35,14 @@ interface ChatCardProps {
   onClose?: () => void
 }
 
+function usePrevious(value: any) {
+  const ref = useRef()
+  useEffect(() => {
+    ref.current = value
+  })
+  return ref.current
+}
+
 function ChatCard(props: ChatCardProps) {
   const [isReady, setIsReady] = useState(!props.question)
   const [port, setPort] = useState(() => Browser.runtime.connect())
@@ -58,6 +66,7 @@ function ChatCard(props: ChatCardProps) {
     })(),
   )
   const [config, setConfig] = useState(defaultConfig)
+  const prevQuestion = usePrevious(props.question)
 
   useEffect(() => {
     getUserConfig().then(setConfig)
@@ -68,12 +77,13 @@ function ChatCard(props: ChatCardProps) {
   })
 
   useEffect(() => {
-    if (props.question && chatItemData.length === 0) {
+    if (props.question && (!prevQuestion || prevQuestion !== props.question) && isReady) {
       const newQuestion = new ChatItemData('question', props.question + '\n')
       const newAnswer = new ChatItemData('answer', 'Waiting for response...')
       setChatItemData([...chatItemData, newQuestion, newAnswer])
+      setIsReady(false)
     }
-  }, [props.question, chatItemData])
+  }, [props.question, isReady, prevQuestion, chatItemData])
 
   useEffect(() => {
     if (bodyRef.current) {
