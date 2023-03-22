@@ -4,7 +4,7 @@ import { useCallback } from 'preact/hooks'
 import { useEffect, useState } from 'react'
 import { getUserConfig, Models, updateUserConfig } from '../configs'
 
-function ApiSelect() {
+function ApiOption() {
   const [modelDesc, setModelDesc] = useState(Models['chatgptFree35'].desc)
   const [apiKey, setApiKey] = useState('')
   const { setToast } = useToasts()
@@ -68,4 +68,4 @@ function ApiSelect() {
   )
 }
 
-export default ApiSelect
+export default ApiOption

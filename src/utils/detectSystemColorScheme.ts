@@ -1,4 +1,4 @@
-import { ThemeMode } from '../configs/userConfig'
+import { ThemeMode } from '../configs'
 
 export function detectSystemColorScheme() {
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {

@@ -11,9 +11,9 @@ import {
   TiggerModeText,
   TriggerMode,
   updateUserConfig,
-} from '../configs/userConfig'
+} from '../configs'
 import { detectSystemColorScheme, getExtensionVersion } from '../utils'
-import ApiSelect from './ApiSelect'
+import ApiOption from './ApiOption'
 
 const favicon = Browser.runtime.getURL('favicon.png')
 
@@ -121,7 +121,7 @@ function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode
           <Text h3 className="mt-5 mb-0">
             API Provider
           </Text>
-          <ApiSelect />
+          <ApiOption />
         </main>
       </div>
     </Fragment>

@@ -2,8 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { isEmpty } from 'lodash-es'
 import Browser from 'webextension-polyfill'
-import { maxResponseTokenLength, Models } from '../configs'
-import { getUserConfig } from '../configs/userConfig'
+import { getUserConfig, maxResponseTokenLength, Models } from '../configs'
 import {
   fetchServerSentEvents,
   getChatGptConversationPairs,
