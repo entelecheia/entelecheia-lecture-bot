@@ -35,15 +35,7 @@ jobs:
 
       - name: Semantic release
         id: semantic_release
-        uses: cycjimmy/semantic-release-action@v3
-        with:
-          extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/exec
-            @semantic-release/git
-            @semantic-release/github
-            @semantic-release/release-notes-generator
-            @semantic-release/commit-analyzer
+        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
