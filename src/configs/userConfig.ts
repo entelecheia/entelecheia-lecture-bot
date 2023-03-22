@@ -1,7 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-types */
+import { Language, languages } from 'countries-list'
 import { defaults } from 'lodash-es'
 import Browser from 'webextension-polyfill'
-import { actionConfig, ActionConfigType } from './actionConfig'
-import { chatgptApiModelKeys, gptApiModelKeys, Models } from './apiConfig'
+import { BracesIcon, CardHeadingIcon, ChatSquareDotsIcon, TranslateIcon } from '../misc/Icons'
+
+interface CustomLanguage {
+  name: string
+  native: string
+}
+
+interface LanguageList {
+  [key: string]: Language
+  auto: CustomLanguage
+}
+
+export const languageList: LanguageList = {
+  auto: { name: 'Auto', native: 'Auto' },
+  ...languages,
+}
+
+export async function getUILanguage() {
+  return languageList[navigator.language.substring(0, 2)].name
+}
 
 export enum TriggerMode {
   Automatically = 'automatically',
@@ -25,16 +46,94 @@ export enum ThemeMode {
   Dark = 'dark',
 }
 
-export enum Language {
+export enum LanguageMode {
   Auto = 'Auto',
   English = 'English',
   Korean = 'Korean',
 }
 
+type ModelInfo = {
+  value: string
+  desc: string
+}
+
+export interface ModelConfig {
+  modelName: string
+  modelInfo: ModelInfo
+}
+
+export const Models: Record<string, ModelInfo> = {
+  chatgptFree35: { value: 'text-davinci-002-render-sha', desc: 'ChatGPT (Web)' },
+  chatgptPlus4: { value: 'gpt-4', desc: 'ChatGPT (Web, GPT-4)' },
+  chatgptApi35: { value: 'gpt-3.5-turbo', desc: 'ChatGPT (GPT-3.5-turbo)' },
+  chatgptApi4_8k: { value: 'gpt-4', desc: 'ChatGPT (GPT-4-8k)' },
+  chatgptApi4_32k: { value: 'gpt-4-32k', desc: 'ChatGPT (GPT-4-32k)' },
+  gptApiDavinci: { value: 'text-davinci-003', desc: 'GPT-3.5' },
+}
+
+export const chatgptWebModelKeys: string[] = ['chatgptFree35', 'chatgptPlus4']
+export const gptApiModelKeys: string[] = ['gptApiDavinci']
+export const chatgptApiModelKeys: string[] = ['chatgptApi35', 'chatgptApi4_8k', 'chatgptApi4_32k']
+
+export const maxResponseTokenLength = 1000
+
+type ActionType = {
+  icon: any
+  label: string
+  genPrompt: (selection: string) => Promise<string>
+}
+
+export type ActionConfigType = {
+  explain: ActionType
+  summarize: ActionType
+  explain_code: ActionType
+  translate: ActionType
+}
+
+export const actionConfig: ActionConfigType = {
+  explain: {
+    icon: ChatSquareDotsIcon,
+    label: 'Explain',
+    genPrompt: async (selection: string) => {
+      const preferredLanguage = await getPreferredLanguage()
+      return `Explain the following in ${preferredLanguage}:\n"${selection}"`
+    },
+  },
+  summarize: {
+    icon: CardHeadingIcon,
+    label: 'Summarize',
+    genPrompt: async (selection: string) => {
+      const preferredLanguage = await getPreferredLanguage()
+      return `Summarize the following as concisely as possible in ${preferredLanguage}:\n"${selection}"`
+    },
+  },
+  explain_code: {
+    icon: BracesIcon,
+    label: 'Explain Code',
+    genPrompt: async (selection: string) => {
+      const preferredLanguage = await getPreferredLanguage()
+      return `Explain the following code in ${preferredLanguage}:\n"${selection}"`
+    },
+  },
+  translate: {
+    icon: TranslateIcon,
+    label: 'Translate',
+    genPrompt: async (selection: string) => {
+      const preferredLanguage = await getPreferredLanguage()
+      return (
+        `Translate the following into ${preferredLanguage} and only show me the translated content.` +
+        `If it is already in ${preferredLanguage},` +
+        `translate it into English and only show me the translated content:\n"${selection}"`
+      )
+    },
+  },
+}
+
 type UserConfigType = {
   triggerMode: TriggerMode
   themeMode: ThemeMode
-  language: Language
+  chatLanguage: LanguageMode
+  uiLanguage: string
   modelName: string
   apiKey: string
   accessToken: string
@@ -47,10 +146,11 @@ type UserConfigType = {
   tokenSavedOn: number
 }
 
-const userConfigWithDefaultValue: UserConfigType = {
+export const defaultConfig: UserConfigType = {
   triggerMode: TriggerMode.Automatically,
   themeMode: ThemeMode.Auto,
-  language: Language.Auto,
+  chatLanguage: LanguageMode.Auto,
+  uiLanguage: navigator.language.substring(0, 2),
   modelName: 'chatgptFree35',
   apiKey: '',
   accessToken: '',
@@ -63,29 +163,26 @@ const userConfigWithDefaultValue: UserConfigType = {
   tokenSavedOn: 0,
 }
 
-export type UserConfig = typeof userConfigWithDefaultValue
-export const defaultConfig = userConfigWithDefaultValue
-
-export async function getUserConfig(): Promise<UserConfig> {
-  const result = await Browser.storage.local.get(Object.keys(userConfigWithDefaultValue))
-  return defaults(result, userConfigWithDefaultValue)
+export async function getUserConfig(): Promise<UserConfigType> {
+  const result = await Browser.storage.local.get(Object.keys(defaultConfig))
+  return defaults(result, defaultConfig)
 }
 
-export async function updateUserConfig(updates: Partial<UserConfig>) {
+export async function updateUserConfig(updates: Partial<UserConfigType>) {
   console.debug('update configs', updates)
   return Browser.storage.local.set(updates)
 }
 
 export async function getPreferredLanguage() {
   return getUserConfig().then((config) => {
-    if (config.language === 'Auto') {
-      return Browser.i18n.getUILanguage()
+    if (config.uiLanguage === 'Auto') {
+      return getUILanguage()
     }
-    return config.language
+    return config.chatLanguage
   })
 }
 
-export function isUsingApiKey(config: UserConfig) {
+export function isUsingApiKey(config: UserConfigType) {
   return (
     config.modelName &&
     Models[config.modelName] &&

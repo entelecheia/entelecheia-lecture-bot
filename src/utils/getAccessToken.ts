@@ -1,5 +1,5 @@
 import ExpiryMap from 'expiry-map'
-import { getUserConfig } from '../configs/userConfig'
+import { getUserConfig } from '../configs'
 import { isSafari } from './isSafari'
 
 export const KEY_ACCESS_TOKEN = 'accessToken'

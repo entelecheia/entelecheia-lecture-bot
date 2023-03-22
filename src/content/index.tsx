@@ -6,8 +6,7 @@ import '../../styles/base.css'
 import '../../styles/styles.scss'
 import ChatContainer from '../components/ChatContainer'
 import FloatingToolbar from '../components/FloatingToolbar'
-import { SiteConfiguration } from '../configs/siteConfig'
-import { ThemeMode, updateUserConfig } from '../configs/userConfig'
+import { SiteConfiguration, ThemeMode, updateUserConfig } from '../configs'
 import { createElementAtPosition, initSession, Session } from '../utils'
 
 async function mountChatContainer(

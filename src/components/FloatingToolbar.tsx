@@ -3,8 +3,7 @@
 import { CheckIcon, CopyIcon } from '@primer/octicons-react'
 import { useEffect, useState } from 'react'
 import Browser from 'webextension-polyfill'
-import { actionConfig, ActionConfigType } from '../configs/actionConfig'
-import { defaultConfig, getUserConfig } from '../configs/userConfig'
+import { actionConfig, ActionConfigType, defaultConfig, getUserConfig } from '../configs'
 import { isMobile, Session, setElementPositionInViewport } from '../utils'
 
 interface FloatingToolbarProps {

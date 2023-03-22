@@ -2,41 +2,38 @@
 import { Button, Input, Select, Text, useInput, useToasts } from '@geist-ui/core'
 import { useCallback } from 'preact/hooks'
 import { useEffect, useState } from 'react'
-import { Models } from '../configs/apiConfig'
-import { defaultConfig, getUserConfig, updateUserConfig, UserConfig } from '../configs/userConfig'
+import { getUserConfig, Models, updateUserConfig } from '../configs'
 
-function ApiSelect() {
-  const [config, setConfig] = useState(defaultConfig)
+function ApiOption() {
+  const [modelDesc, setModelDesc] = useState(Models['chatgptFree35'].desc)
+  const [apiKey, setApiKey] = useState('')
   const { setToast } = useToasts()
-  const { bindings: apiKeyBindings } = useInput(config.apiKey ?? '')
+  const { bindings: apiKeyBindings } = useInput(apiKey)
 
   useEffect(() => {
-    getUserConfig().then(setConfig)
+    getUserConfig().then((config) => {
+      setModelDesc(Models[config.modelName].desc)
+      setApiKey(config.apiKey)
+    })
   }, [])
 
-  const updateConfig = useCallback(
-    (value: Partial<UserConfig>) => {
-      updateUserConfig(value)
-      setConfig((prevConfig) => ({ ...prevConfig, ...value })) // Update local state
-      setToast({ text: 'Changes saved', type: 'success' })
+  const onModelChange = useCallback(
+    (modelDesc: string) => {
+      const modelName = Object.entries(Models).find(([, model]) => model.desc === modelDesc)?.[0]
+      updateUserConfig({ modelName })
+      setToast({ text: 'Model changed to ' + modelDesc, type: 'success' })
     },
     [setToast],
   )
 
-  const saveApiKey = useCallback(() => {
+  const onSaveApiKey = useCallback(() => {
     if (!apiKeyBindings.value) {
       alert('Please enter your OpenAI API key')
       return
     }
-    updateConfig({ apiKey: apiKeyBindings.value })
-  }, [apiKeyBindings.value, updateConfig])
-
-  const onModelChange = useCallback(
-    (modelName: string) => {
-      updateConfig({ modelName })
-    },
-    [updateConfig],
-  )
+    updateUserConfig({ apiKey: apiKeyBindings.value })
+    setToast({ text: 'Changes saved', type: 'success' })
+  }, [apiKeyBindings.value, setToast])
 
   return (
     <>
@@ -46,7 +43,7 @@ function ApiSelect() {
       </Text>
       <div className="flex flex-row gap-2">
         <Select
-          value={config.modelName && Models[config.modelName] ? Models[config.modelName].desc : ''}
+          value={modelDesc}
           placeholder="Choose one"
           onChange={(val) => onModelChange(val as string)}
         >
@@ -57,8 +54,8 @@ function ApiSelect() {
           ))}
         </Select>
         <Input htmlType="password" label="API key" {...apiKeyBindings}></Input>
-        <Button scale={2 / 3} ghost style={{ width: 10 }} type="success" onClick={saveApiKey}>
-          Save
+        <Button scale={2 / 3} ghost style={{ width: 10 }} type="success" onClick={onSaveApiKey}>
+          Save Key
         </Button>
       </div>
       <span className="italic text-xs">
@@ -71,4 +68,4 @@ function ApiSelect() {
   )
 }
 
-export default ApiSelect
+export default ApiOption

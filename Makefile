@@ -24,13 +24,13 @@ help:  ## Display this help
 show-branches: ## show all branches
 	@git show-branch --list
 
-beta-checkout: ## checkout the dev branch
-	@branch=$(shell echo $${branch:-"beta"}) && \
+dev-checkout: ## checkout the dev branch
+	@branch=$(shell echo $${branch:-"dev"}) && \
 	    git show-branch --list | grep -q $${branch} && \
 		git checkout $${branch}
 
-beta-checkout-upstream: ## create and checkout the dev branch, and set the upstream
-	@branch=$(shell echo $${branch:-"beta"}) && \
+dev-checkout-upstream: ## create and checkout the dev branch, and set the upstream
+	@branch=$(shell echo $${branch:-"dev"}) && \
 		git checkout -B $${branch} && \
 		git push --set-upstream origin $${branch} || true
 
