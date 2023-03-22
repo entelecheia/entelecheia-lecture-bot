@@ -52,6 +52,12 @@
       }
     ],
     [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "node ./github/script/update-manifest-version.js ${nextRelease.version}"
+      }
+    ],
+    [
       "@semantic-release/npm",
       {
         "npmPublish": false
