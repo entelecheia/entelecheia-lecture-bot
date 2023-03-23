@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.7...v1.0.8) (2023-03-23)
+
+
+### Bug Fixes
+
+* minor bugs, TODO: session management ([e162178](https://github.com/entelecheia/entelecheia-lecture-bot/commit/e16217854fd86d9f7297fa6f5837728362651bbf))
+
 ## [1.0.7](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.6...v1.0.7) (2023-03-22)
 
 
