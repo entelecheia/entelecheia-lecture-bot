@@ -7,6 +7,7 @@ import {
   generateAnswersWithChatgptWebApi,
   generateAnswersWithGptCompletionApi,
   sendMessageFeedback,
+  setConversationProperty,
 } from '../apis'
 import {
   chatgptApiModelKeys,
@@ -16,6 +17,13 @@ import {
   isUsingApiKey,
 } from '../configs'
 import { cache, getAccessToken, KEY_ACCESS_TOKEN } from '../utils'
+
+async function deleteConversation(conversationId: string) {
+  const accessToken = await getAccessToken()
+  if (conversationId) {
+    await setConversationProperty(accessToken, conversationId, { is_visible: false })
+  }
+}
 
 Browser.runtime.onConnect.addListener((port) => {
   console.debug('connected')
@@ -75,6 +83,8 @@ Browser.runtime.onMessage.addListener(async (message) => {
     return getAccessToken()
   } else if (message.type === 'OPEN_LECTURE') {
     Browser.tabs.create({ url: 'https://lecture.entelecheia.ai' })
+  } else if (message.type === 'DELETE_CONVERSATION') {
+    deleteConversation(message.conversationId)
   }
 })
 

@@ -44,11 +44,27 @@ function usePrevious(value: any) {
 }
 
 function ChatCard(props: ChatCardProps) {
+  // Component states
   const [isReady, setIsReady] = useState(!props.question)
   const [port, setPort] = useState(() => Browser.runtime.connect())
   const [session, setSession] = useState(props.session)
+  const [config, setConfig] = useState(defaultConfig)
+
+  const prevQuestion = usePrevious(props.question)
   const windowSize = useClampWindowSize([0, Infinity], [250, 1100])
   const bodyRef = useRef<HTMLDivElement>(null)
+
+  // Load and set user configuration
+  useEffect(() => {
+    getUserConfig().then(setConfig)
+  }, [])
+
+  // Handle onUpdate callback if provided
+  useEffect(() => {
+    if (props.onUpdate) props.onUpdate()
+  })
+
+  // Initialize chatItemData
   const [chatItemData, setChatItemData] = useState<ChatItemData[]>(
     (() => {
       if (props.session.conversationRecords?.length === 0) {
@@ -65,16 +81,6 @@ function ChatCard(props: ChatCardProps) {
       }
     })(),
   )
-  const [config, setConfig] = useState(defaultConfig)
-  const prevQuestion = usePrevious(props.question)
-
-  useEffect(() => {
-    getUserConfig().then(setConfig)
-  }, [])
-
-  useEffect(() => {
-    if (props.onUpdate) props.onUpdate()
-  })
 
   useEffect(() => {
     if (props.question && (!prevQuestion || prevQuestion !== props.question) && isReady) {
@@ -124,6 +130,7 @@ function ChatCard(props: ChatCardProps) {
   useEffect(() => {
     const listener = () => {
       setPort(Browser.runtime.connect())
+      setIsReady(true)
     }
     port.onDisconnect.addListener(listener)
     return () => {

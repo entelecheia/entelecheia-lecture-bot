@@ -175,7 +175,7 @@ export async function updateUserConfig(updates: Partial<UserConfigType>) {
 
 export async function getPreferredLanguage() {
   return getUserConfig().then((config) => {
-    if (config.uiLanguage === 'Auto') {
+    if (config.chatLanguage === 'Auto') {
       return getUILanguage()
     }
     return config.chatLanguage

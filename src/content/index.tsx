@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { render } from 'preact'
+import Browser from 'webextension-polyfill'
 import '../../styles/base.css'
 import '../../styles/styles.scss'
 import ChatContainer from '../components/ChatContainer'
@@ -143,6 +144,17 @@ async function run() {
   function handlePromptGenerated(prompt: string) {
     window.postMessage({ type: 'NEW_PROMPT', prompt }, '*')
   }
+
+  const onUrlChange = () => {
+    // Send a message to the background script to delete the conversation when the context changes.
+    const message = {
+      type: 'DELETE_CONVERSATION',
+      conversationId: session.conversationId,
+    }
+    Browser.runtime.sendMessage(message)
+  }
+
+  window.addEventListener('popstate', onUrlChange)
 
   // Call mountChatContainer with the initialQuestion as the initial prompt
   mountChatContainer(session, initialQuestion, siteConfig)

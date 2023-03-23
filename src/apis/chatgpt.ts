@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { isEmpty } from 'lodash-es'
@@ -82,7 +83,7 @@ export async function generateAnswersWithChatgptWebApi(
   port.onDisconnect.addListener(() => {
     console.debug('port disconnected')
     controller.abort()
-    deleteConversation()
+    // deleteConversation()
   })
 
   const models = await getModels(accessToken).catch(() => {
