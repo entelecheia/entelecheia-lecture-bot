@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.8...v1.0.9) (2023-03-23)
+
+
+### Bug Fixes
+
+* remove activeTab permission ([899e496](https://github.com/entelecheia/entelecheia-lecture-bot/commit/899e49610acfcfe3c10c7afc2dd72e9326e15e23))
+
 ## [1.0.8](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.7...v1.0.8) (2023-03-23)
 
 
