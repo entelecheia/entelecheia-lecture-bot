@@ -54,7 +54,7 @@
         "rehype-raw": "^6.1.1",
         "remark-gfm": "^3.0.1",
         "remark-math": "^5.1.1",
-        "swr": "^2.0.0",
+        "swr": "^2.1.1",
         "uuid": "^9.0.0",
         "webextension-polyfill-ts": "^0.26.0"
     },
