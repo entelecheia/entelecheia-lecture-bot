@@ -23,8 +23,7 @@
     "https://*.openai.com/"
   ],
   "permissions": [
-    "storage",
-    "activeTab"
+    "storage"
   ],
   "background": {
     "service_worker": "serviceWorker.js"
