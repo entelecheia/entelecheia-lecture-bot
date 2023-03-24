@@ -20,7 +20,7 @@ interface FloatingToolbarProps {
 
 function FloatingToolbar(props: FloatingToolbarProps) {
   const [selection, setSelection] = useState(props.selection)
-  const [prompt, setPrompt] = useState(props.prompt || '')
+  // const [prompt, setPrompt] = useState(props.prompt || '')
   const [triggered, setTriggered] = useState(props.triggered)
   const [config, setConfig] = useState(defaultConfig)
   const [render, setRender] = useState(false)
@@ -121,7 +121,7 @@ function FloatingToolbar(props: FloatingToolbarProps) {
               if (props.onPromptGenerated) {
                 props.onPromptGenerated(generatedPrompt)
               }
-              setPrompt(generatedPrompt)
+              // setPrompt(generatedPrompt)
               setTriggered(true)
             }}
           >

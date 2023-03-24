@@ -84,12 +84,12 @@ function ChatCard(props: ChatCardProps) {
 
   useEffect(() => {
     if (props.question && (!prevQuestion || prevQuestion !== props.question) && isReady) {
-      const newQuestion = new ChatItemData('question', props.question + '\n')
-      const newAnswer = new ChatItemData('answer', 'Waiting for response...')
+      const newQuestion = new ChatItemData('question', props.question + '\n', session)
+      const newAnswer = new ChatItemData('answer', 'Waiting for response...', session)
       setChatItemData([...chatItemData, newQuestion, newAnswer])
       setIsReady(false)
     }
-  }, [props.question, isReady, prevQuestion, chatItemData])
+  }, [props.question, isReady, prevQuestion, chatItemData, session])
 
   useEffect(() => {
     if (bodyRef.current) {

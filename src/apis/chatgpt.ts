@@ -83,7 +83,7 @@ export async function generateAnswersWithChatgptWebApi(
   port.onDisconnect.addListener(() => {
     console.debug('port disconnected')
     controller.abort()
-    // deleteConversation()
+    deleteConversation()
   })
 
   const models = await getModels(accessToken).catch(() => {
