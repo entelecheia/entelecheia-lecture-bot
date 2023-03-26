@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.10...v1.0.11) (2023-03-26)
+
+
+### Bug Fixes
+
+* keep conversation as long as conversationId exists ([3681dfb](https://github.com/entelecheia/entelecheia-lecture-bot/commit/3681dfb4a3d70c0b0d37f979a8534bf99a6ff0d1))
+
 ## [1.0.10](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.9...v1.0.10) (2023-03-24)
 
 
