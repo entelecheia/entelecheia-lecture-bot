@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Language, languages } from 'countries-list'
 import { defaults } from 'lodash-es'
+import { v4 as uuidv4 } from 'uuid'
 import Browser from 'webextension-polyfill'
 import { BracesIcon, CardHeadingIcon, ChatSquareDotsIcon, TranslateIcon } from '../misc/Icons'
 
@@ -144,6 +145,8 @@ type UserConfigType = {
   activeAction: Array<keyof ActionConfigType>
   lockWhenAnswer: boolean
   tokenSavedOn: number
+  messageId: string | null
+  conversationId: string | null
 }
 
 export const defaultConfig: UserConfigType = {
@@ -161,6 +164,8 @@ export const defaultConfig: UserConfigType = {
   activeAction: Object.keys(actionConfig) as Array<keyof ActionConfigType>,
   lockWhenAnswer: false,
   tokenSavedOn: 0,
+  messageId: uuidv4(),
+  conversationId: null,
 }
 
 export async function getUserConfig(): Promise<UserConfigType> {

@@ -8,7 +8,7 @@ import '../../styles/styles.scss'
 import ChatContainer from '../components/ChatContainer'
 import FloatingToolbar from '../components/FloatingToolbar'
 import { SiteConfiguration, ThemeMode, updateUserConfig } from '../configs'
-import { createElementAtPosition, initSession, Session } from '../utils'
+import { createElementAtPosition, Session } from '../utils'
 
 async function mountChatContainer(
   session: Session,
@@ -136,10 +136,16 @@ async function addThemeChangeListener() {
   })
 }
 
+async function getSessionData() {
+  const session = await Browser.runtime.sendMessage({ type: 'GET_SESSION' })
+  return session
+}
+
 async function run() {
   console.debug('Mount LectureBotfor ἐντελέχεια.άι on', siteName)
   const initialQuestion = getBodyContent()
-  const session = initSession()
+  // const session = initSession()
+  const session = await getSessionData()
 
   function handlePromptGenerated(prompt: string) {
     window.postMessage({ type: 'NEW_PROMPT', prompt }, '*')

@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { isEmpty } from 'lodash-es'
 import Browser from 'webextension-polyfill'
-import { chatgptWebModelKeys, getUserConfig, Models } from '../configs'
+import { chatgptWebModelKeys, getUserConfig, Models, updateUserConfig } from '../configs'
 import { fetchServerSentEvents, Session } from '../utils'
 
 async function request(token: string, method: string, path: string, data?: unknown) {
@@ -64,11 +64,11 @@ export async function generateAnswersWithChatgptWebApi(
   session: Session,
   accessToken: string,
 ): Promise<void> {
-  const deleteConversation = () => {
-    if (session.conversationId) {
-      setConversationProperty(accessToken, session.conversationId, { is_visible: false })
-    }
-  }
+  // const deleteConversation = () => {
+  //   if (session.conversationId) {
+  //     setConversationProperty(accessToken, session.conversationId, { is_visible: false })
+  //   }
+  // }
 
   const controller = new AbortController()
   const stopListener = (msg: any) => {
@@ -83,7 +83,7 @@ export async function generateAnswersWithChatgptWebApi(
   port.onDisconnect.addListener(() => {
     console.debug('port disconnected')
     controller.abort()
-    deleteConversation()
+    // deleteConversation()
   })
 
   const models = await getModels(accessToken).catch(() => {
@@ -138,8 +138,14 @@ export async function generateAnswersWithChatgptWebApi(
         console.debug('json error', error)
         return
       }
-      if (data.conversation_id) session.conversationId = data.conversation_id
-      if (data.message?.id) session.parentMessageId = data.message.id
+      if (data.conversation_id) {
+        session.conversationId = data.conversation_id
+        updateUserConfig({ conversationId: data.conversation_id })
+      }
+      if (data.message?.id) {
+        session.parentMessageId = data.message.id
+        updateUserConfig({ messageId: data.message.id })
+      }
 
       answer = data.message?.content?.parts?.[0]
       if (answer) {
@@ -158,7 +164,18 @@ export async function generateAnswersWithChatgptWebApi(
         throw new Error('CLOUDFLARE')
       }
       const error = await resp.json().catch(() => ({}))
-      throw new Error(!isEmpty(error) ? JSON.stringify(error) : `${resp.status} ${resp.statusText}`)
+      console.debug('resp', resp)
+      if (!isEmpty(error)) console.debug('error', error)
+      if (!isEmpty(error) && error.detail === 'Conversation not found') {
+        console.debug('conversation not found')
+        updateUserConfig({ conversationId: null, messageId: null })
+        // retry
+        throw new Error('RETRY')
+      } else {
+        throw new Error(
+          !isEmpty(error) ? JSON.stringify(error) : `${resp.status} ${resp.statusText}`,
+        )
+      }
     },
   })
 }

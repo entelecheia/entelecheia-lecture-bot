@@ -6,7 +6,7 @@ import { Key, memo, SetStateAction, useCallback, useEffect, useRef, useState } f
 import Browser from 'webextension-polyfill'
 import { defaultConfig, getUserConfig } from '../configs/userConfig'
 import { useClampWindowSize } from '../hooks/useClampWindowSize'
-import { ConversationRecord, initSession, Session } from '../utils'
+import { ConversationRecord, Session } from '../utils'
 import ChatInputBox from './ChatInputBox'
 import ChatItem from './ChatItem'
 
@@ -35,13 +35,13 @@ interface ChatCardProps {
   onClose?: () => void
 }
 
-function usePrevious(value: any) {
-  const ref = useRef()
-  useEffect(() => {
-    ref.current = value
-  })
-  return ref.current
-}
+// function usePrevious(value: any) {
+//   const ref = useRef()
+//   useEffect(() => {
+//     ref.current = value
+//   })
+//   return ref.current
+// }
 
 function ChatCard(props: ChatCardProps) {
   // Component states
@@ -49,8 +49,9 @@ function ChatCard(props: ChatCardProps) {
   const [port, setPort] = useState(() => Browser.runtime.connect())
   const [session, setSession] = useState(props.session)
   const [config, setConfig] = useState(defaultConfig)
+  const [prevQuestion, setPrevQuestion] = useState('')
 
-  const prevQuestion = usePrevious(props.question)
+  // const prevQuestion = usePrevious(props.question)
   const windowSize = useClampWindowSize([0, Infinity], [250, 1100])
   const bodyRef = useRef<HTMLDivElement>(null)
 
@@ -83,13 +84,31 @@ function ChatCard(props: ChatCardProps) {
   )
 
   useEffect(() => {
-    if (props.question && (!prevQuestion || prevQuestion !== props.question) && isReady) {
-      const newQuestion = new ChatItemData('question', props.question + '\n', session)
+    const question = props.question
+    if (question && prevQuestion === '') {
+      // console.debug('initial question', question)
+      setIsReady(false)
+      const newSession = { ...session, question }
+      // console.debug('new session', newSession)
+      setSession(newSession)
+      port.postMessage({ session: newSession })
+    } else if (
+      question &&
+      (!prevQuestion || prevQuestion === '' || prevQuestion !== question) &&
+      isReady
+    ) {
+      // console.debug('new question', question)
+      const newQuestion = new ChatItemData('question', question + '\n', session)
       const newAnswer = new ChatItemData('answer', 'Waiting for response...', session)
       setChatItemData([...chatItemData, newQuestion, newAnswer])
       setIsReady(false)
+
+      const newSession = { ...session, question }
+      setSession(newSession)
+      port.postMessage({ session: newSession })
     }
-  }, [props.question, isReady, prevQuestion, chatItemData, session])
+    setPrevQuestion(question)
+  }, [props.question, isReady, prevQuestion, chatItemData, session, port])
 
   useEffect(() => {
     if (bodyRef.current) {
@@ -103,16 +122,7 @@ function ChatCard(props: ChatCardProps) {
     }
   }, [chatItemData, config.lockWhenAnswer])
 
-  useEffect(() => {
-    // when the page is responsive, session may accumulate redundant data and needs to be cleared after remounting and before making a new request
-    if (props.question) {
-      const newSession = initSession({ question: props.question })
-      setSession(newSession)
-      port.postMessage({ session: newSession })
-    }
-  }, [port, props.question]) // usually only triggered once
-
-  const UpdateAnswer = useCallback(
+  const updateAnswer = useCallback(
     (value: string, appended: boolean, newType: ChatItemType, done = false) => {
       setChatItemData((old) => {
         const copy = [...old]
@@ -146,19 +156,19 @@ function ChatCard(props: ChatCardProps) {
       error: string
     }) => {
       if (msg.answer) {
-        UpdateAnswer(msg.answer, false, 'answer')
+        updateAnswer(msg.answer, false, 'answer')
       }
       if (msg.session) {
         setSession(msg.session)
       }
       if (msg.done) {
-        UpdateAnswer('\n', true, 'answer', true)
+        updateAnswer('\n', true, 'answer', true)
         setIsReady(true)
       }
       if (msg.error) {
         switch (msg.error) {
           case 'UNAUTHORIZED' || 'CLOUDFLARE':
-            UpdateAnswer(
+            updateAnswer(
               `**ACCESS DENIED**: Kindly log in at [https://chat.openai.com](https://chat.openai.com) first.
               Afterward, refresh this webpage or re-enter your inquiry. 
               You may also want to create an API key at 
@@ -167,6 +177,15 @@ function ChatCard(props: ChatCardProps) {
               false,
               'error',
             )
+            break
+          case 'RETRY':
+            updateAnswer(
+              'Please wait a moment and try again. (refreshing the page may help)',
+              false,
+              'error',
+            )
+            // reset connection
+            port.disconnect()
             break
           default:
             setChatItemData([...chatItemData, new ChatItemData('error', msg.error + '\n')])
@@ -179,7 +198,7 @@ function ChatCard(props: ChatCardProps) {
     return () => {
       port.onMessage.removeListener(listener)
     }
-  }, [UpdateAnswer, chatItemData, port.onMessage])
+  }, [updateAnswer, chatItemData, port.onMessage, port])
 
   const openOptionsPage = useCallback(() => {
     Browser.runtime.sendMessage({ type: 'OPEN_OPTIONS_PAGE' })
@@ -248,7 +267,7 @@ function ChatCard(props: ChatCardProps) {
           try {
             port.postMessage({ session: newSession })
           } catch (e) {
-            UpdateAnswer((e as Error).toString(), false, 'error')
+            updateAnswer((e as Error).toString(), false, 'error')
           }
         }}
       />

@@ -7,7 +7,6 @@ import {
   generateAnswersWithChatgptWebApi,
   generateAnswersWithGptCompletionApi,
   sendMessageFeedback,
-  setConversationProperty,
 } from '../apis'
 import {
   chatgptApiModelKeys,
@@ -16,14 +15,17 @@ import {
   gptApiModelKeys,
   isUsingApiKey,
 } from '../configs'
-import { cache, getAccessToken, KEY_ACCESS_TOKEN } from '../utils'
+import { cache, getAccessToken, initSession, KEY_ACCESS_TOKEN } from '../utils'
 
-async function deleteConversation(conversationId: string) {
-  const accessToken = await getAccessToken()
-  if (conversationId) {
-    await setConversationProperty(accessToken, conversationId, { is_visible: false })
-  }
-}
+const sessionDataMap = new Map()
+const sessionId = location.hostname
+
+// async function deleteConversation(conversationId: string) {
+//   const accessToken = await getAccessToken()
+//   if (conversationId) {
+//     await setConversationProperty(accessToken, conversationId, { is_visible: false })
+//   }
+// }
 
 Browser.runtime.onConnect.addListener((port) => {
   console.debug('connected')
@@ -41,8 +43,9 @@ Browser.runtime.onConnect.addListener((port) => {
         const accessToken = await getAccessToken()
         session.messageId = uuidv4()
         if (session.parentMessageId == null) {
-          session.parentMessageId = uuidv4()
+          session.parentMessageId = config.messageId
         }
+        console.debug('session', session)
         await generateAnswersWithChatgptWebApi(port, session.question, session, accessToken)
       } else if (gptApiModelKeys.includes(config.modelName)) {
         await generateAnswersWithGptCompletionApi(
@@ -62,10 +65,20 @@ Browser.runtime.onConnect.addListener((port) => {
         )
       }
     } catch (err) {
-      console.error(err)
-      if (err instanceof Error && !err.message.includes('aborted')) {
-        port.postMessage({ error: err.message })
-        cache.delete(KEY_ACCESS_TOKEN)
+      if (err instanceof Error && err.message === 'RETRY') {
+        console.debug('retry')
+        const accessToken = await getAccessToken()
+        session.conversationId = null
+        session.messageId = uuidv4()
+        session.parentMessageId = uuidv4()
+        console.debug('retry session', session)
+        await generateAnswersWithChatgptWebApi(port, session.question, session, accessToken)
+      } else {
+        console.error(err)
+        if (err instanceof Error && !err.message.includes('aborted')) {
+          port.postMessage({ error: err.message })
+          cache.delete(KEY_ACCESS_TOKEN)
+        }
       }
     }
   })
@@ -83,8 +96,28 @@ Browser.runtime.onMessage.addListener(async (message) => {
     return getAccessToken()
   } else if (message.type === 'OPEN_LECTURE') {
     Browser.tabs.create({ url: 'https://lecture.entelecheia.ai' })
-  } else if (message.type === 'DELETE_CONVERSATION') {
-    deleteConversation(message.conversationId)
+    // } else if (message.type === 'DELETE_CONVERSATION') {
+    //   deleteConversation(message.conversationId)
+  } else if (message.type === 'GET_SESSION') {
+    if (sessionDataMap.has(sessionId)) {
+      const existingSession = sessionDataMap.get(sessionId)
+      const config = await getUserConfig()
+      const conversationId = config.conversationId
+      existingSession.conversationId = conversationId
+      console.debug('returning existing session', existingSession)
+      return existingSession
+    } else {
+      const newSession = initSession()
+      const config = await getUserConfig()
+      const conversationId = config.conversationId
+      newSession.conversationId = conversationId
+      sessionDataMap.set(sessionId, newSession)
+      console.debug('returning new session', newSession)
+      return newSession
+    }
+  } else if (message.type === 'SET_SESSION') {
+    console.debug('setting session', message.session)
+    sessionDataMap.set(sessionId, message.session)
   }
 })
 

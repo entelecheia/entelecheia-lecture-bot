@@ -4,8 +4,7 @@
 import { LightBulbIcon, SearchIcon } from '@primer/octicons-react'
 import { useCallback, useEffect, useState } from 'react'
 import Browser from 'webextension-polyfill'
-import { SiteConfiguration } from '../configs/siteConfig'
-import { defaultConfig, getUserConfig } from '../configs/userConfig'
+import { defaultConfig, getUserConfig, SiteConfiguration } from '../configs'
 import { getPossibleElementByQuerySelector, Session } from '../utils'
 import ChatCard from './ChatCard'
 
