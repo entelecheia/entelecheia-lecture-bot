@@ -31,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Run prebuild
-        run: npm run prebuild
+        run: npm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
