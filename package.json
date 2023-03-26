@@ -1,6 +1,6 @@
 {
     "name": "entelecheia-lecture-bot",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "description": "Chrome extension to ask questions and get answers from the ChatGPT",
     "author": "entelecheia",
     "license": "MIT",
@@ -19,7 +19,7 @@
     },
     "homepage": "https://github.com/entelecheia/entelecheia-lecture-bot#readme",
     "scripts": {
-        "prebuild": "semantic-release --dry-run",
+        "prebuild": "semantic-release --no-ci",
         "build": "node build.mjs --production",
         "dev": "node build.mjs --development",
         "lint": "eslint --ext .js,.mjs,.jsx .",
