@@ -62,7 +62,8 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "node ./.github/scripts/update-manifest-version.js ${nextRelease.version}"
+        "prepareCmd": "node ./.github/scripts/update-manifest-version.js ${nextRelease.version}",
+        "publishCmd": "node build.mjs --production"
       }
     ],
     [
