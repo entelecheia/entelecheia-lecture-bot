@@ -19,7 +19,7 @@
     },
     "homepage": "https://github.com/entelecheia/entelecheia-lecture-bot#readme",
     "scripts": {
-        "prebuild": "semantic-release",
+        "prebuild": "semantic-release --dry-run",
         "build": "node build.mjs --production",
         "dev": "node build.mjs --development",
         "lint": "eslint --ext .js,.mjs,.jsx .",
