@@ -19,7 +19,7 @@
     },
     "homepage": "https://github.com/entelecheia/entelecheia-lecture-bot#readme",
     "scripts": {
-        "prebuild": "semantic-release --no-ci --dry-run --plugins @semantic-release/commit-analyzer @semantic-release/exec --exec-cmd 'node ./.github/scripts/update-manifest-version.js ${nextRelease.version}'",
+        "prebuild": "semantic-release --no-ci --dry-run --plugins @semantic-release/commit-analyzer @semantic-release/exec",
         "build": "node build.mjs --production",
         "dev": "node build.mjs --development",
         "lint": "eslint --ext .js,.mjs,.jsx .",
