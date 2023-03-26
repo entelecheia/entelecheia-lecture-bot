@@ -19,7 +19,7 @@
     },
     "homepage": "https://github.com/entelecheia/entelecheia-lecture-bot#readme",
     "scripts": {
-        "prebuild": "semantic-release --no-ci --dry-run",
+        "prebuild": "semantic-release --no-ci",
         "build": "node build.mjs --production",
         "dev": "node build.mjs --development",
         "lint": "eslint --ext .js,.mjs,.jsx .",
@@ -55,8 +55,7 @@
         "remark-gfm": "^3.0.1",
         "remark-math": "^5.1.1",
         "swr": "^2.1.1",
-        "uuid": "^9.0.0",
-        "webextension-polyfill-ts": "^0.26.0"
+        "uuid": "^9.0.0"
     },
     "devDependencies": {
         "@semantic-release/changelog": "^6.0.2",
