@@ -47,9 +47,6 @@ verify-release: ## verify release
 .PHONY: build
 build: ## build the project
 	@npm run build
-	
-dev-build: ## build the project in dev mode
-	@npm run dev
 		
 ##@ Setup
 
