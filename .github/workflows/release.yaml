@@ -32,9 +32,13 @@ jobs:
 
       - name: Run prebuild
         run: npm run prebuild
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run build
         run: npm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Semantic release
         id: semantic_release
