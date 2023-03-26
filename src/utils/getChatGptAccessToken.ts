@@ -5,7 +5,7 @@ import { isSafari } from './isSafari'
 export const KEY_ACCESS_TOKEN = 'accessToken'
 export const cache = new ExpiryMap(10 * 1000)
 
-async function getAccessToken(): Promise<string> {
+async function getChatGptAccessToken(): Promise<string> {
   if (cache.get(KEY_ACCESS_TOKEN)) {
     return cache.get(KEY_ACCESS_TOKEN)
   }
@@ -30,4 +30,4 @@ async function getAccessToken(): Promise<string> {
   return cache.get(KEY_ACCESS_TOKEN)
 }
 
-export { getAccessToken }
+export { getChatGptAccessToken as getAccessToken }
