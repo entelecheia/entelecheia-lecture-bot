@@ -1,6 +1,6 @@
 {
     "name": "entelecheia-lecture-bot",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "description": "Chrome extension to ask questions and get answers from the ChatGPT",
     "author": "entelecheia",
     "license": "MIT",
