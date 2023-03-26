@@ -1,3 +1,10 @@
+## [1.0.15](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.14...v1.0.15) (2023-03-26)
+
+
+### Bug Fixes
+
+* build script, configs ([e10d9ea](https://github.com/entelecheia/entelecheia-lecture-bot/commit/e10d9ea35e9b159cf50181805f3d0de59ffb1387))
+
 ## [1.0.14](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.13...v1.0.14) (2023-03-26)
 
 
