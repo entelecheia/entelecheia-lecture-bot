@@ -104,7 +104,7 @@ function getBodyContent() {
 
     // Append the limiting message
     const limitingMessage =
-      'Summarize the conent in a few words. Please keep the discussion within the scope of this conten.'
+      'Summarize the conent in a few words. Please keep the discussion within the scope of this content from now on.'
     const initialMessage = `${trimmedContent}\n\n${limitingMessage}`
 
     return initialMessage

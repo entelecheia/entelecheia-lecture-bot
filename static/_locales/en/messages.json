@@ -4,8 +4,5 @@
   },
   "appDesc": {
     "message": "It offers contextual understanding, seamless integration, and user-friendly interface for an enhanced learning experience."
-  },
-  "limitingMessage": {
-    "message": "Summarize the content in a few words. Please keep the discussion within the scope of this content."
   }
 }
