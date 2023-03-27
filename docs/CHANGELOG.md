@@ -1,3 +1,10 @@
+## [1.0.17](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.16...v1.0.17) (2023-03-27)
+
+
+### Bug Fixes
+
+* show the latest version @ Options ([dda9f25](https://github.com/entelecheia/entelecheia-lecture-bot/commit/dda9f250e1af97ed4c93c8e0edba94ce9fc67fb2))
+
 ## [1.0.16](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.15...v1.0.16) (2023-03-27)
 
 
