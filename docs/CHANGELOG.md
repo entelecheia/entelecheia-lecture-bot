@@ -1,3 +1,10 @@
+## [1.0.16](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.15...v1.0.16) (2023-03-27)
+
+
+### Bug Fixes
+
+* initial prompt ([9445f0e](https://github.com/entelecheia/entelecheia-lecture-bot/commit/9445f0e5b3308a5d368b8ffb580a0f2fe17d6dac))
+
 ## [1.0.15](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.14...v1.0.15) (2023-03-26)
 
 
