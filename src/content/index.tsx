@@ -7,7 +7,7 @@ import '../../styles/base.css'
 import '../../styles/styles.scss'
 import ChatContainer from '../components/ChatContainer'
 import FloatingToolbar from '../components/FloatingToolbar'
-import { SiteConfiguration, ThemeMode, updateUserConfig } from '../configs'
+import { getPreferredLanguage, SiteConfiguration, ThemeMode, updateUserConfig } from '../configs'
 import { createElementAtPosition, Session } from '../utils'
 
 async function mountChatContainer(
@@ -94,7 +94,7 @@ const siteConfig = {
   // appendContainerQuery: ['.sidebar-secondary-items.sidebar-secondary__inner'],
 }
 
-function getBodyContent() {
+async function getBodyContent() {
   const bodyElement = document.querySelector(siteConfig.bodyContainerQuery[0])
   if (bodyElement) {
     const maxLength = 1000 // Set the desired max length of the content
@@ -102,9 +102,9 @@ function getBodyContent() {
     const trimmedContent =
       bodyContent.length > maxLength ? bodyContent.slice(0, maxLength) + '...' : bodyContent
 
+    const preferredLanguage = await getPreferredLanguage()
     // Append the limiting message
-    const limitingMessage =
-      'Summarize the conent in a few words. Please keep the discussion within the scope of this content from now on.'
+    const limitingMessage = `Summarize the conent in a few words in ${preferredLanguage}. Please keep the discussion within the scope of this content from now on. Answer in ${preferredLanguage}.`
     const initialMessage = `${trimmedContent}\n\n${limitingMessage}`
 
     return initialMessage
@@ -143,7 +143,7 @@ async function getSessionData() {
 
 async function run() {
   console.debug('Mount LectureBotfor ἐντελέχεια.άι on', siteName)
-  const initialQuestion = getBodyContent()
+  const initialQuestion = await getBodyContent()
   // const session = initSession()
   const session = await getSessionData()
 

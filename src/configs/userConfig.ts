@@ -122,8 +122,8 @@ export const actionConfig: ActionConfigType = {
     genPrompt: async (selection: string) => {
       const preferredLanguage = await getPreferredLanguage()
       return (
-        `Translate the following into ${preferredLanguage} and only show me the translated content.` +
-        `If it is already in ${preferredLanguage},` +
+        `Translate the following into ${preferredLanguage} and only show me the translated content. ` +
+        `If it is already in ${preferredLanguage}, ` +
         `translate it into English and only show me the translated content:\n"${selection}"`
       )
     },

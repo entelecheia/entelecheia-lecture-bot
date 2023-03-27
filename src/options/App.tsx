@@ -21,6 +21,20 @@ function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode
   const [triggerMode, setTriggerMode] = useState<TriggerMode>(TriggerMode.Automatically)
   const [language, setLanguage] = useState<LanguageMode>(LanguageMode.Auto)
   const { setToast } = useToasts()
+  const [currentVersion, setCurrentVersion] = useState('')
+  const [latestVersion, setLatestVersion] = useState('')
+  const [releaseUrl, setReleaseUrl] = useState('')
+
+  useEffect(() => {
+    setCurrentVersion(getExtensionVersion())
+    fetch('https://api.github.com/repos/entelecheia/entelecheia-lecture-bot/releases/latest').then(
+      (response) =>
+        response.json().then((data) => {
+          setLatestVersion(data.tag_name.replace('v', ''))
+          setReleaseUrl(data.html_url)
+        }),
+    )
+  }, [])
 
   useEffect(() => {
     getUserConfig().then((config) => {
@@ -55,6 +69,10 @@ function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode
     [setToast],
   )
 
+  const openReleasePage = useCallback(() => {
+    Browser.tabs.create({ url: releaseUrl })
+  }, [releaseUrl])
+
   return (
     <Fragment>
       <div className="container mx-auto">
@@ -63,6 +81,11 @@ function OptionsPage(props: { theme: ThemeMode; onThemeChange: (theme: ThemeMode
             <img src={favicon} className="w-10 h-10 rounded-lg" />
             <span className="font-semibold">
               LectureBot for ἐντελέχεια.άι(v{getExtensionVersion()})
+            </span>
+            <span className="cursor-pointer leading-[0]" onClick={openReleasePage}>
+              {currentVersion === latestVersion
+                ? '🎉 Latest version 🎉'
+                : `🚨 Latest version: v${latestVersion} 🚨`}
             </span>
           </div>
         </nav>
