@@ -1,11 +1,14 @@
 # LectureBot for ἐντελέχεια.άι
 
+[![chrome-web-store-image]][chrome-web-store-url]
 [![version-image]][release-url]
 [![release-date-image]][release-url]
 [![license-image]][license-url]
 
 <!-- Links: -->
 
+[chrome-web-store-image]: https://img.shields.io/chrome-web-store/v/lfgfgbomindbccgidgalhhndggddpagd
+[chrome-web-store-url]: https://chrome.google.com/webstore/detail/lecturebot-for-%E1%BC%90%CE%BD%CF%84%CE%B5%CE%BB%CE%AD%CF%87%CE%B5%CE%B9%CE%B1/lfgfgbomindbccgidgalhhndggddpagd
 [license-image]: https://img.shields.io/github/license/entelecheia/entelecheia-lecture-bot
 [license-url]: https://github.com/entelecheia/entelecheia-lecture-bot/blob/main/LICENSE
 [version-image]: https://img.shields.io/github/v/release/entelecheia/entelecheia-lecture-bot?sort=semver
@@ -32,7 +35,21 @@ Introducing ἐντελέχεια.άι LectureBot - the ultimate Chrome extensio
 
 Transform your browsing experience with ἐντελέχεια.άι LectureBot, and unlock the potential of a personalized AI tutor to help you better comprehend and engage with the digital world.
 
-## Installation
+## Installation from the [Chrome Web Store](https://chrome.google.com/webstore/detail/lecturebot-for-%E1%BC%90%CE%BD%CF%84%CE%B5%CE%BB%CE%AD%CF%87%CE%B5%CE%B9%CE%B1/lfgfgbomindbccgidgalhhndggddpagd)
+
+To install the ἐντελέχεια.άι LectureBot Chrome extension from the Chrome Web Store, follow these steps:
+
+### Install the extension in Google Chrome:
+
+- a. Open Chrome and navigate to the [extension page](https://chrome.google.com/webstore/detail/lecturebot-for-%E1%BC%90%CE%BD%CF%84%CE%B5%CE%BB%CE%AD%CF%87%CE%B5%CE%B9%CE%B1/lfgfgbomindbccgidgalhhndggddpagd) in the Chrome Web Store.
+- b. Click on the "Add to Chrome" button.
+
+### Using the extension:
+
+- a. Click on the ἐντελέχεια.άι LectureBot icon in your browser's toolbar to open the lecture site.
+- b. Browse to a web page and start asking questions or highlighting text to receive contextual information and answers.
+
+## Installation using [GitHub releases](https://github.com/entelecheia/entelecheia-lecture-bot/releases)
 
 To install the ἐντελέχεια.άι LectureBot Chrome extension using GitHub releases, follow these steps:
 
@@ -50,14 +67,9 @@ To install the ἐντελέχεια.άι LectureBot Chrome extension using GitH
 - c. Click on the "Load unpacked" button and browse to the folder where you extracted the release files in step 1.
 - d. Select the folder and click "Open." The ἐντελέχεια.άι LectureBot extension should now be installed and visible in your extensions list.
 
-### Using the extension:
-
-- a. Click on the ἐντελέχεια.άι LectureBot icon in your browser's toolbar to open the lecture site.
-- b. Browse to a web page and start asking questions or highlighting text to receive contextual information and answers.
-
 Remember to periodically check the GitHub releases page for updates and new releases. To update the extension, download the latest release, and follow the steps above to reload the extension in your browser.
 
-## Manual Installation
+## Installation from source manually
 
 To manually install the ἐντελέχεια.άι LectureBot Chrome extension from the GitHub repository, follow these steps:
 
@@ -79,11 +91,6 @@ To manually install the ἐντελέχεια.άι LectureBot Chrome extension f
 - b. Enable "Developer mode" by toggling the switch in the top-right corner of the page.
 - c. Click on the "Load unpacked" button and browse to the dist or build folder created in step 2.
 - d. Select the folder and click "Open." The ἐντελέχεια.άι LectureBot extension should now be installed and visible in your extensions list.
-
-### Using the extension:
-
-- a. Click on the ἐντελέχεια.άι LectureBot icon in your browser's toolbar to open the lecture site.
-- b. Browse to a web page and start asking questions or highlighting text to receive contextual information and answers.
 
 ## Changelog
 
