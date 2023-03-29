@@ -1,3 +1,10 @@
+## [1.0.18](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.17...v1.0.18) (2023-03-29)
+
+
+### Bug Fixes
+
+* **ChatCard:** add error message for Cloudflare security check ([ec83b19](https://github.com/entelecheia/entelecheia-lecture-bot/commit/ec83b198981fe788f5236dfa6ce8839af967f738))
+
 ## [1.0.17](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.16...v1.0.17) (2023-03-27)
 
 
