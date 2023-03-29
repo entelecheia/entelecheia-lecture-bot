@@ -167,13 +167,24 @@ function ChatCard(props: ChatCardProps) {
       }
       if (msg.error) {
         switch (msg.error) {
-          case 'UNAUTHORIZED' || 'CLOUDFLARE':
+          case 'UNAUTHORIZED':
             updateAnswer(
               `**ACCESS DENIED**: Kindly log in at [https://chat.openai.com](https://chat.openai.com) first.
               Afterward, refresh this webpage or re-enter your inquiry. 
               You may also want to create an API key at 
               [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
               for enhanced functionality.`,
+              false,
+              'error',
+            )
+            break
+          case 'CLOUDFLARE':
+            updateAnswer(
+              `**Security Check Required**: Please open [https://chat.openai.com](https://chat.openai.com) first.
+                Afterward, refresh this webpage or re-enter your inquiry. 
+                You may also want to create an API key at 
+                [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)
+                for enhanced functionality.`,
               false,
               'error',
             )
