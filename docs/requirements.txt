@@ -1,4 +1,5 @@
 mkdocs-material
 markdown-include
 mkdocs-toc-md
+mkdocs-video
 html5lib
