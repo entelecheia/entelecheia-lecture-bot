@@ -1,4 +1,4 @@
-# Privacy Policy for `LectureBot for ἐντελέχεια.άι`
+# Privacy Policy
 
 Last updated: 03/31/2023
 
