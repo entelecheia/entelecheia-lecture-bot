@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last updated: 03/31/2023
+Last updated: 4/1/2023
 
 This Privacy Policy describes how `LectureBot for ἐντελέχεια.άι` ("we", "us", or "our") collects, uses, and discloses your personal and sensitive information when you use our `LectureBot for ἐντελέχεια.άι` browser extension ("the Extension"). By using the Extension, you agree to the collection and use of information in accordance with this policy.
 
@@ -8,9 +8,9 @@ This Privacy Policy describes how `LectureBot for ἐντελέχεια.άι` ("
 
 While using our Extension, we may collect certain personally identifiable information that can be used to contact or identify you. This information may include, but is not limited to:
 
-- Authentication information: passwords, credentials, security questions, or personal identification numbers (PINs)
+- Authentication information: passwords, credentials, or other information used to authenticate you
 - User activity: network monitoring, clicks, mouse positions, scrolling, or keystroke logging
-- Website content: text, images, sounds, videos, or hyperlinks
+- Website content: text, images, hyperlinks, or other information on the websites you visit
 
 We use this information to provide and improve the Extension, to understand how you use the Extension, and to offer personalized features.
 
@@ -36,4 +36,4 @@ We may update our Privacy Policy from time to time. We will notify you of any ch
 
 ## Contact Us
 
-If you have any questions about this Privacy Policy, please contact us at [entelecheia@hotmail.com](entelecheia@hotmail.com).
+If you have any questions about this Privacy Policy, please contact us at [entelecheia@hotmail.com](mailto:entelecheia@hotmail.com)
