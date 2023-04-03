@@ -43,7 +43,7 @@
         "prop-types": "^15.8.1",
         "punycode": "^2.1.1",
         "react": "npm:@preact/compat@^17.1.2",
-        "react-bootstrap-icons": "^1.10.2",
+        "react-bootstrap-icons": "^1.10.3",
         "react-dom": "npm:@preact/compat@^17.1.2",
         "react-draggable": "^4.4.5",
         "react-icons": "^4.8.0",
