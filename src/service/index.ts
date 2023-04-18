@@ -7,6 +7,7 @@ import {
   generateAnswersWithChatgptWebApi,
   generateAnswersWithGptCompletionApi,
   sendMessageFeedback,
+  setTitle,
 } from '../apis'
 import {
   chatgptApiModelKeys,
@@ -14,6 +15,7 @@ import {
   getUserConfig,
   gptApiModelKeys,
   isUsingApiKey,
+  updateUserConfig,
 } from '../configs'
 import { cache, getAccessToken, initSession, KEY_ACCESS_TOKEN } from '../utils'
 
@@ -47,6 +49,16 @@ Browser.runtime.onConnect.addListener((port) => {
         }
         console.debug('session', session)
         await generateAnswersWithChatgptWebApi(port, session.question, session, accessToken)
+
+        // set conversation title
+        if (session.conversationId && session.conversationTitle == null) {
+          console.debug('set title')
+          const title = await setTitle(accessToken, session.conversationId)
+          if (title) {
+            session.conversationTitle = title
+            await updateUserConfig({ conversationTitle: title })
+          }
+        }
       } else if (gptApiModelKeys.includes(config.modelName)) {
         await generateAnswersWithGptCompletionApi(
           port,
@@ -118,6 +130,19 @@ Browser.runtime.onMessage.addListener(async (message) => {
   } else if (message.type === 'SET_SESSION') {
     console.debug('setting session', message.session)
     sessionDataMap.set(sessionId, message.session)
+  } else if (message.type === 'SET_TITLE') {
+    // set conversation title
+    const accessToken = await getAccessToken()
+    const config = await getUserConfig()
+    const session = sessionDataMap.get(sessionId)
+
+    if (session.conversationId && session.conversationId !== config.conversationId) {
+      const title = await setTitle(accessToken, session.conversationId)
+      if (title) {
+        session.conversationTitle = title
+        await updateUserConfig({ conversationTitle: title })
+      }
+    }
   }
 })
 

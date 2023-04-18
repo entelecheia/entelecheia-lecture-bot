@@ -147,6 +147,7 @@ type UserConfigType = {
   tokenSavedOn: number
   messageId: string | null
   conversationId: string | null
+  conversationTitle: string | null
 }
 
 export const defaultConfig: UserConfigType = {
@@ -166,6 +167,7 @@ export const defaultConfig: UserConfigType = {
   tokenSavedOn: 0,
   messageId: uuidv4(),
   conversationId: null,
+  conversationTitle: null,
 }
 
 export async function getUserConfig(): Promise<UserConfigType> {

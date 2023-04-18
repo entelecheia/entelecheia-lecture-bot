@@ -9,6 +9,7 @@ export interface Session {
   conversationId: string | null
   messageId: string | null
   parentMessageId: string | null
+  conversationTitle: string | null
   conversationRecords: ConversationRecord[] | null
   useApiKey: boolean | null
 }
@@ -18,6 +19,7 @@ export function initSession({
   conversationId = null,
   messageId = null,
   parentMessageId = null,
+  conversationTitle = null,
   conversationRecords = [],
   useApiKey = null,
 }: Partial<Session> = {}): Session {
@@ -26,6 +28,7 @@ export function initSession({
     conversationId,
     messageId,
     parentMessageId,
+    conversationTitle,
     conversationRecords,
     useApiKey,
   }

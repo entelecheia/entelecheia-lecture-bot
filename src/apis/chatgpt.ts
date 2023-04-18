@@ -33,6 +33,22 @@ export async function setConversationProperty(
   await request(token, 'PATCH', `/conversation/${conversationId}`, propertyObject)
 }
 
+export async function setTitle(accessToken: string, conversationId: string) {
+  const title = 'ἐντελέχεια.άι'
+  if (conversationId) {
+    const ret = await request(accessToken, 'PATCH', `/conversation/${conversationId}`, {
+      title: title,
+    })
+    const data = JSON.parse(ret.responseText)
+    console.debug('set_title', data)
+    if (data.sucssess === true) {
+      return title
+    } else {
+      return null
+    }
+  }
+}
+
 export async function sendModerations(
   token: string,
   question: string,
