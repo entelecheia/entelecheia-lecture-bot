@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.18...v1.1.0) (2023-04-18)
+
+
+### Features
+
+* set conversation title ([5972bf9](https://github.com/entelecheia/entelecheia-lecture-bot/commit/5972bf9e3e8438337635ffcd8972f2f0fc69b710))
+
 ## [1.0.18](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.17...v1.0.18) (2023-03-29)
 
 
