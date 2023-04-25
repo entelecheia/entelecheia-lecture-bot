@@ -85,7 +85,7 @@ async function attachToolbar(
   })
 }
 
-const siteRegex = /lecture\.entelecheia\.ai/
+const siteRegex = /\.entelecheia\.ai/
 const siteName = location.hostname.match(siteRegex)![0]
 const siteConfig = {
   bodyContainerQuery: ['.bd-article'],
