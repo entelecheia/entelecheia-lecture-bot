@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.1.0...v1.1.1) (2023-04-25)
+
+
+### Bug Fixes
+
+* **dependencies:** remove dotenv from package-lock and package.json ([7002e82](https://github.com/entelecheia/entelecheia-lecture-bot/commit/7002e8214e11a0a5fc0eaf6eeef78160d1a94784))
+
 ## [1.1.0](https://github.com/entelecheia/entelecheia-lecture-bot/compare/v1.0.18...v1.1.0) (2023-04-18)
 
 
