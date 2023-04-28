@@ -18,6 +18,8 @@ markdown_extensions:
       permalink: True
 theme:
   name: material
+  favicon: https://assets.entelecheia.ai/favicon.png
+  logo: https://assets.entelecheia.ai/favicon.png
   palette:
     scheme: slate
   features:
