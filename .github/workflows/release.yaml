@@ -8,6 +8,10 @@ on:
     branches:
       - main
       - beta
+    paths:
+      - 'src/**'
+      - 'static/**'
+      - 'package.json'
 
 permissions:
   contents: write
