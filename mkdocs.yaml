@@ -1,10 +1,12 @@
 site_name: LectureBot for ἐντελέχεια.άι
 site_url: 'https://lecture-bot.entelecheia.ai/'
 site_description: 'ChatGPT answers your questions about the content of the page you are currently viewing.'
-site_author: entelecheia
+site_author: Young Joon Lee <entelecheia@hotmail.com>
 docs_dir: docs/
 repo_name: entelecheia/entelecheia-lecture-bot
 repo_url: 'https://github.com/entelecheia/entelecheia-lecture-bot'
+edit_uri: edit/main/docs/
+
 plugins:
   - search
   - mkdocs-video
@@ -14,8 +16,13 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
   - admonition
-  - toc:
-      permalink: True
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
 theme:
   name: material
   favicon: https://assets.entelecheia.ai/favicon.png
@@ -24,7 +31,14 @@ theme:
     scheme: slate
   features:
     - navigation.expand
-    # - navigation.tabs
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    # - content.tabs.link
+    - content.tooltips
+    - navigation.indexes
+
 extra:
   analytics:
     provider: google
