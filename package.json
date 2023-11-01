@@ -35,7 +35,7 @@
         "eventsource-parser": "^1.1.1",
         "expiry-map": "^2.0.0",
         "file-saver": "^2.0.5",
-        "github-markdown-css": "^5.3.0",
+        "github-markdown-css": "^5.4.0",
         "highlight.js": "^11.9.0",
         "inter-ui": "^3.19.3",
         "lodash-es": "^4.17.21",
