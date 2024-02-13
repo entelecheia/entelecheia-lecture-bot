@@ -32,7 +32,7 @@
         "@react-icons/all-files": "^4.1.0",
         "countries-list": "^3.0.6",
         "esbuild-plugin-sass": "^1.0.1",
-        "eventsource-parser": "^1.1.1",
+        "eventsource-parser": "^1.1.2",
         "expiry-map": "^2.0.0",
         "file-saver": "^2.0.5",
         "github-markdown-css": "^5.5.1",
