@@ -30,7 +30,7 @@
         "@geist-ui/core": "^2.3.8",
         "@primer/octicons-react": "^19.8.0",
         "@react-icons/all-files": "^4.1.0",
-        "countries-list": "^3.0.6",
+        "countries-list": "^3.1.0",
         "esbuild-plugin-sass": "^1.0.1",
         "eventsource-parser": "^1.1.2",
         "expiry-map": "^2.0.0",
